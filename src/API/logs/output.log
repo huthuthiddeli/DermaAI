@@ -1,0 +1,506 @@
+{"level":30,"time":1727071290225,"pid":3184,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727073000831,"pid":25296,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727073000832,"pid":25296,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727073000855,"pid":25296,"hostname":"MSI","msg":"Connectionstring has been found!"}
+{"level":30,"time":1727073226223,"pid":18720,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727073226289,"pid":18720,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727073295266,"pid":17648,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727073295342,"pid":17648,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727073415537,"pid":5016,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727073415539,"pid":5016,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727073415561,"pid":5016,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727073880701,"pid":21848,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727073880703,"pid":21848,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727073880725,"pid":21848,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727073914770,"pid":14348,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727073914771,"pid":14348,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727073914793,"pid":14348,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727077493976,"pid":23136,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727077494031,"pid":23136,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727077494128,"pid":23136,"hostname":"MSI","msg":"Various connections will be closed!"}
+{"level":30,"time":1727078229782,"pid":16440,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727078229784,"pid":16440,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727078229810,"pid":16440,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727078243870,"pid":16440,"hostname":"MSI","msg":"Getting all Data from Database!"}
+<<<<<<< Updated upstream
+=======
+{"level":30,"time":1727089670343,"pid":33856,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727089670421,"pid":33856,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727089670518,"pid":33856,"hostname":"MSI","msg":"Various connections will be closed!"}
+{"level":30,"time":1727090339705,"pid":20760,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727090339707,"pid":20760,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727090339739,"pid":20760,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091062839,"pid":34576,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091062841,"pid":34576,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091062866,"pid":34576,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091110962,"pid":12544,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091110964,"pid":12544,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091110995,"pid":12544,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091116052,"pid":30772,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091116053,"pid":30772,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091116077,"pid":30772,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091149464,"pid":2436,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091149465,"pid":2436,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091149495,"pid":2436,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091158663,"pid":1912,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091158665,"pid":1912,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091158699,"pid":1912,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091200379,"pid":35340,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091200381,"pid":35340,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091200411,"pid":35340,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091270329,"pid":22736,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091270330,"pid":22736,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091270352,"pid":22736,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091311288,"pid":30388,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091311290,"pid":30388,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091311311,"pid":30388,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091326654,"pid":18812,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091326655,"pid":18812,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091326687,"pid":18812,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091341992,"pid":18812,"hostname":"MSI"}
+{"level":30,"time":1727091353931,"pid":31104,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091353933,"pid":31104,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091353957,"pid":31104,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091361814,"pid":5084,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091361815,"pid":5084,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091361838,"pid":5084,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091367347,"pid":10600,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091367349,"pid":10600,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091367383,"pid":10600,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091375202,"pid":12316,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091375204,"pid":12316,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091375226,"pid":12316,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091436160,"pid":35032,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091436163,"pid":35032,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091436197,"pid":35032,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091447762,"pid":21888,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091447764,"pid":21888,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091447788,"pid":21888,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091451909,"pid":5296,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091451910,"pid":5296,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091451932,"pid":5296,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091476965,"pid":30368,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091476967,"pid":30368,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091476995,"pid":30368,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091494155,"pid":12448,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091494156,"pid":12448,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091494180,"pid":12448,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091503825,"pid":35564,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091503827,"pid":35564,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091503861,"pid":35564,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091620375,"pid":28640,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091620377,"pid":28640,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091620410,"pid":28640,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091622216,"pid":28640,"hostname":"MSI","msg":"Size of string: %d"}
+{"level":30,"time":1727091639147,"pid":21296,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091639149,"pid":21296,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091639180,"pid":21296,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091639462,"pid":21296,"hostname":"MSI","msg":"Size of string: undefined"}
+{"level":30,"time":1727091874283,"pid":33544,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091874285,"pid":33544,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091874313,"pid":33544,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091921364,"pid":18276,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091921365,"pid":18276,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091921388,"pid":18276,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091949300,"pid":16472,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091949302,"pid":16472,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091949323,"pid":16472,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727091960979,"pid":30204,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727091960980,"pid":30204,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727091961003,"pid":30204,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092001546,"pid":12624,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092001547,"pid":12624,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092001583,"pid":12624,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092006068,"pid":33976,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092006070,"pid":33976,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092006101,"pid":33976,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092145955,"pid":28384,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092145956,"pid":28384,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092145983,"pid":28384,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092152243,"pid":7620,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092152245,"pid":7620,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092152270,"pid":7620,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092157772,"pid":7620,"hostname":"MSI","msg":"No body"}
+{"level":30,"time":1727092236460,"pid":24636,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092236462,"pid":24636,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092236487,"pid":24636,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092239342,"pid":24636,"hostname":"MSI","msg":"No body"}
+{"level":30,"time":1727092239342,"pid":24636,"hostname":"MSI","msg":0}
+{"level":30,"time":1727092328767,"pid":30660,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092328769,"pid":30660,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092328806,"pid":30660,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092331214,"pid":30660,"hostname":"MSI","msg":"No body"}
+{"level":30,"time":1727092331214,"pid":30660,"hostname":"MSI","msg":0}
+{"level":30,"time":1727092356731,"pid":33404,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092356732,"pid":33404,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092356755,"pid":33404,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092360411,"pid":28552,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092360413,"pid":28552,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092360442,"pid":28552,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092365176,"pid":31384,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092365178,"pid":31384,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092365204,"pid":31384,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092366823,"pid":31384,"hostname":"MSI","msg":"No body"}
+{"level":30,"time":1727092366823,"pid":31384,"hostname":"MSI","msg":0}
+{"level":30,"time":1727092382325,"pid":11312,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092382327,"pid":11312,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092382353,"pid":11312,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092385635,"pid":11312,"hostname":"MSI","msg":"No body"}
+{"level":30,"time":1727092385635,"pid":11312,"hostname":"MSI","msg":0}
+{"level":30,"time":1727092449772,"pid":15768,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092449773,"pid":15768,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092449796,"pid":15768,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092464524,"pid":24300,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092464526,"pid":24300,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092464553,"pid":24300,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092519423,"pid":25100,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092519426,"pid":25100,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092519449,"pid":25100,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092530977,"pid":35344,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092530978,"pid":35344,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092531000,"pid":35344,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092701722,"pid":16696,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092701724,"pid":16696,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092701754,"pid":16696,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092756521,"pid":16696,"hostname":"MSI","msg":"No body"}
+{"level":30,"time":1727092756522,"pid":16696,"hostname":"MSI","msg":0}
+{"level":30,"time":1727092767039,"pid":16696,"hostname":"MSI","msg":"No body"}
+{"level":30,"time":1727092767039,"pid":16696,"hostname":"MSI","msg":0}
+{"level":30,"time":1727092768362,"pid":16696,"hostname":"MSI","msg":"No body"}
+{"level":30,"time":1727092768362,"pid":16696,"hostname":"MSI","msg":0}
+{"level":30,"time":1727092785869,"pid":28404,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092785871,"pid":28404,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092785898,"pid":28404,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092823647,"pid":10428,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092823649,"pid":10428,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092823672,"pid":10428,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092828456,"pid":30460,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092828458,"pid":30460,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092828483,"pid":30460,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092881565,"pid":27812,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092881566,"pid":27812,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092881589,"pid":27812,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092936666,"pid":37868,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092936668,"pid":37868,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092936693,"pid":37868,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092945235,"pid":13428,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092945237,"pid":13428,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092945262,"pid":13428,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092952779,"pid":21844,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092952781,"pid":21844,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092952803,"pid":21844,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092956418,"pid":12788,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092956420,"pid":12788,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092956442,"pid":12788,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727092998255,"pid":20980,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727092998256,"pid":20980,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727092998277,"pid":20980,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093017990,"pid":22124,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093017992,"pid":22124,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093018019,"pid":22124,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093030757,"pid":36912,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093030759,"pid":36912,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093030782,"pid":36912,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093042135,"pid":21296,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093042136,"pid":21296,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093042159,"pid":21296,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093057134,"pid":21296,"hostname":"MSI","msg":"Status: true"}
+{"level":30,"time":1727093082329,"pid":31080,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093082331,"pid":31080,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093082356,"pid":31080,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093084838,"pid":31080,"hostname":"MSI","msg":"User saved successfully:"}
+{"level":30,"time":1727093084838,"pid":31080,"hostname":"MSI","msg":"Status: true"}
+{"level":30,"time":1727093115608,"pid":34408,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093115610,"pid":34408,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093115644,"pid":34408,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093120166,"pid":34408,"hostname":"MSI","msg":"User saved successfully: savedUser"}
+{"level":30,"time":1727093120167,"pid":34408,"hostname":"MSI","msg":"Status: true"}
+{"level":30,"time":1727093134871,"pid":16368,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093134873,"pid":16368,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093134901,"pid":16368,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093137050,"pid":16368,"hostname":"MSI","msg":"User saved successfully: {\n  data: { vorname: 'jonas', nachname: 'maier' },\n  _id: new ObjectId('66f159913343aebe70d469e5'),\n  __v: 0\n}"}
+{"level":30,"time":1727093137050,"pid":16368,"hostname":"MSI","msg":"Status: true"}
+{"level":30,"time":1727093548335,"pid":25936,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093548336,"pid":25936,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093548360,"pid":25936,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093556793,"pid":32296,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093556795,"pid":32296,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093556820,"pid":32296,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093570564,"pid":30048,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093570567,"pid":30048,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093570603,"pid":30048,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093609728,"pid":33372,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093609729,"pid":33372,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093609765,"pid":33372,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093622385,"pid":3560,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093622386,"pid":3560,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093622409,"pid":3560,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093657879,"pid":26976,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093657880,"pid":26976,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093657902,"pid":26976,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093676942,"pid":37020,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093676944,"pid":37020,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093676970,"pid":37020,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093923625,"pid":21536,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093923626,"pid":21536,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093923650,"pid":21536,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093931585,"pid":13268,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093931586,"pid":13268,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093931612,"pid":13268,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727093943062,"pid":8796,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727093943064,"pid":8796,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727093943088,"pid":8796,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727095461578,"pid":18064,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727095461580,"pid":18064,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727095461607,"pid":18064,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727095481024,"pid":28452,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727095481026,"pid":28452,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727095481048,"pid":28452,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727095505417,"pid":32704,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727095505419,"pid":32704,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727095505453,"pid":32704,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727095519892,"pid":32704,"hostname":"MSI","msg":"User saved successfully: {\n  data: { vorname: 'jonas', nachname: 'maier' },\n  _id: new ObjectId('66f162df8dc783a8b6b88db6'),\n  __v: 0\n}"}
+{"level":30,"time":1727095519892,"pid":32704,"hostname":"MSI","msg":"Request received! Body: true"}
+{"level":30,"time":1727095585954,"pid":32704,"hostname":"MSI","msg":"User saved successfully: {\n  data: { vorname: 'jonas', nachname: 'maier' },\n  _id: new ObjectId('66f163218dc783a8b6b88db8'),\n  __v: 0\n}"}
+{"level":30,"time":1727095585954,"pid":32704,"hostname":"MSI","msg":"Request received! Body: true"}
+{"level":30,"time":1727095610103,"pid":23044,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727095610105,"pid":23044,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727095610139,"pid":23044,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727095611846,"pid":23044,"hostname":"MSI","msg":"User saved successfully: {\n  data: { vorname: 'jonas', nachname: 'maier' },\n  _id: new ObjectId('66f1633b5a21447eb3ebd1c7'),\n  __v: 0\n}"}
+{"level":30,"time":1727095611846,"pid":23044,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1727097023024,"pid":35356,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727097023026,"pid":35356,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727097023061,"pid":35356,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727097348740,"pid":33988,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1727097348742,"pid":33988,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727097348763,"pid":33988,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727100386672,"pid":18308,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1727100386730,"pid":18308,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1727100386842,"pid":18308,"hostname":"MSI","msg":"Various connections will be closed!"}
+{"level":30,"time":1727100386843,"pid":18308,"hostname":"MSI","msg":"STR-C detected!"}
+>>>>>>> Stashed changes
+{"level":30,"time":1728160953153,"pid":26408,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728160953252,"pid":26408,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728160953384,"pid":26408,"hostname":"MSI","msg":"Various connections will be closed!"}
+{"level":30,"time":1728160953386,"pid":26408,"hostname":"MSI","msg":"STR-C detected!"}
+{"level":30,"time":1728160998749,"pid":21100,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728160998751,"pid":21100,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728160998777,"pid":21100,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728161071853,"pid":21100,"hostname":"MSI","msg":"Getting all Data from Database!"}
+{"level":30,"time":1728161400651,"pid":21100,"hostname":"MSI","msg":"Getting all Data from Database!"}
+{"level":30,"time":1728161419407,"pid":21100,"hostname":"MSI","msg":"User saved successfully: {\n  data: { any: 'nigger' },\n  _id: new ObjectId('6701a68b110f1ca1a0fc7efa'),\n  __v: 0\n}"}
+{"level":30,"time":1728161419408,"pid":21100,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1728161515500,"pid":19416,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728161515502,"pid":19416,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728161515525,"pid":19416,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728161532993,"pid":19416,"hostname":"MSI","msg":"User saved successfully: {\n  data: { any: 'niggefsfr' },\n  _id: new ObjectId('6701a6fcf0074ef04ff24303'),\n  __v: 0\n}"}
+{"level":30,"time":1728161532993,"pid":19416,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1728161591009,"pid":20204,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728161591011,"pid":20204,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728161591034,"pid":20204,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728161607981,"pid":20204,"hostname":"MSI","msg":"User saved successfully: {\n  data: { any: 'niggefsfr' },\n  _id: new ObjectId('6701a747c95d7b72a21697fc'),\n  __v: 0\n}"}
+{"level":30,"time":1728161607981,"pid":20204,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1728161627919,"pid":26004,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728161627921,"pid":26004,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728161627943,"pid":26004,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728161631050,"pid":26004,"hostname":"MSI","msg":"User saved successfully: {\n  data: { any: 'niggefsfr' },\n  _id: new ObjectId('6701a75f4cffcc747fc10e98'),\n  __v: 0\n}"}
+{"level":30,"time":1728161631050,"pid":26004,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1728161764169,"pid":27668,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728161764170,"pid":27668,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728161764195,"pid":27668,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728161768733,"pid":27668,"hostname":"MSI","msg":"User saved successfully: {\n  data: { any: 'niggefsfr' },\n  _id: new ObjectId('6701a7e81a0635b35257933b'),\n  __v: 0\n}"}
+{"level":30,"time":1728161768733,"pid":27668,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1728161828476,"pid":23436,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728161828478,"pid":23436,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728161828509,"pid":23436,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728161836217,"pid":23436,"hostname":"MSI","msg":"User saved successfully: {\n  data: { any: 'niggefsfr' },\n  _id: new ObjectId('6701a82c5daa9bbaf0dc8000'),\n  __v: 0\n}"}
+{"level":30,"time":1728161836217,"pid":23436,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1728162205892,"pid":19584,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728162205893,"pid":19584,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728162205922,"pid":19584,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728162207928,"pid":19584,"hostname":"MSI","msg":"User saved successfully: {\n  data: { any: 'test' },\n  _id: new ObjectId('6701a99fa5302f826df7d9b1'),\n  __v: 0\n}"}
+{"level":30,"time":1728162207928,"pid":19584,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1728162308706,"pid":22640,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728162308708,"pid":22640,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728162308730,"pid":22640,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728162311250,"pid":22640,"hostname":"MSI","msg":"User saved successfully: {\n  data: { any: 'test' },\n  _id: new ObjectId('6701aa078765c6bac21ca8e7'),\n  __v: 0\n}"}
+{"level":30,"time":1728162311250,"pid":22640,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1728162331537,"pid":5752,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728162331538,"pid":5752,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728162331567,"pid":5752,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728162339399,"pid":5752,"hostname":"MSI","msg":"User saved successfully: {\n  data: { any: 'test' },\n  _id: new ObjectId('6701aa2363278ae2b4feb8c0'),\n  __v: 0\n}"}
+{"level":30,"time":1728162339399,"pid":5752,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1728162393430,"pid":14520,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728162393431,"pid":14520,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728162393453,"pid":14520,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728162396841,"pid":14520,"hostname":"MSI","msg":"User saved successfully: {\n  data: { any: 'test' },\n  _id: new ObjectId('6701aa5c018d2e98c5d43d28'),\n  __v: 0\n}"}
+{"level":30,"time":1728162396841,"pid":14520,"hostname":"MSI","msg":"Request received! Saved: true"}
+{"level":30,"time":1728163225176,"pid":27256,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728163225178,"pid":27256,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728163225203,"pid":27256,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728163227325,"pid":27256,"hostname":"MSI","msg":"Data has been created:\n{\n  data: { any: 'test' },\n  _id: new ObjectId('6701ad9ba5a6e1a78466e825'),\n  __v: 0\n}"}
+{"level":30,"time":1728163761096,"pid":15020,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728163761098,"pid":15020,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728163761120,"pid":15020,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728163767890,"pid":15020,"hostname":"MSI","msg":"Data has been created:\n{\n  data: { any: 'test' },\n  _id: new ObjectId('6701afb73c8280d20294d747'),\n  __v: 0\n}"}
+{"level":30,"time":1728248489676,"pid":25744,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728248489678,"pid":25744,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728248489712,"pid":25744,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728248536478,"pid":9888,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728248536479,"pid":9888,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728248536501,"pid":9888,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728248536501,"pid":9888,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728248536501,"pid":9888,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728248676950,"pid":28572,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728248676952,"pid":28572,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728248676977,"pid":28572,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728248676977,"pid":28572,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728248676977,"pid":28572,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728248680001,"pid":28572,"hostname":"MSI","msg":"Picture saved: [object Promise]"}
+{"level":30,"time":1728248700219,"pid":23216,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728248700220,"pid":23216,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728248700246,"pid":23216,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728248700246,"pid":23216,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728248700246,"pid":23216,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728248702806,"pid":23216,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('6702fb7ed77668987ccbe92b'),\n  __v: 0\n}"}
+{"level":30,"time":1728248737055,"pid":23976,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728248737056,"pid":23976,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728248737078,"pid":23976,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728248737078,"pid":23976,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728248737078,"pid":23976,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728248738276,"pid":23976,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('6702fba2a54ab5cc205ca2f6'),\n  __v: 0\n}"}
+{"level":30,"time":1728282929615,"pid":24024,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728282929710,"pid":24024,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728282929710,"pid":24024,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728282929710,"pid":24024,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728282929822,"pid":24024,"hostname":"MSI","msg":"Various connections will be closed!"}
+{"level":30,"time":1728282929824,"pid":24024,"hostname":"MSI","msg":"STR-C detected!"}
+{"level":30,"time":1728282990188,"pid":8884,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728282990190,"pid":8884,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728282990216,"pid":8884,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728282990216,"pid":8884,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728282990216,"pid":8884,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728283000812,"pid":8884,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('67038178b7859118e048c1b6'),\n  __v: 0\n}"}
+{"level":30,"time":1728283363835,"pid":18776,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728283363836,"pid":18776,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728283363865,"pid":18776,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728283363865,"pid":18776,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728283363865,"pid":18776,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728283366050,"pid":18776,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('670382e6b6ab5a25b86fb3ab'),\n  __v: 0\n}"}
+{"level":30,"time":1728284964247,"pid":29412,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728284964249,"pid":29412,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728284964284,"pid":29412,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728284964284,"pid":29412,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728284964284,"pid":29412,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728284966090,"pid":29412,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('6703892632f344d1999f7d8a'),\n  __v: 0\n}"}
+{"level":30,"time":1728284966090,"pid":29412,"hostname":"MSI","status":true}
+{"level":30,"time":1728285255789,"pid":9500,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728285255790,"pid":9500,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728285255813,"pid":9500,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285255814,"pid":9500,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728285255814,"pid":9500,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285257339,"pid":9500,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('67038a4981cf2ea3ce7906b3'),\n  __v: 0\n}"}
+{"level":30,"time":1728285287774,"pid":17948,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728285287775,"pid":17948,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728285287797,"pid":17948,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285287797,"pid":17948,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728285287797,"pid":17948,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285289530,"pid":17948,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('67038a69b1b7c44027062781'),\n  __v: 0\n}"}
+{"level":30,"time":1728285308430,"pid":23900,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728285308431,"pid":23900,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728285308453,"pid":23900,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285308453,"pid":23900,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728285308454,"pid":23900,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285309803,"pid":23900,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('67038a7d6b37f1f944f952c7'),\n  __v: 0\n}"}
+{"level":30,"time":1728285350156,"pid":20476,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728285350158,"pid":20476,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728285350181,"pid":20476,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285350181,"pid":20476,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728285350181,"pid":20476,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285351534,"pid":20476,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('67038aa7b0a119f1300b1e9c'),\n  __v: 0\n}"}
+{"level":30,"time":1728285372666,"pid":15540,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728285372669,"pid":15540,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728285372694,"pid":15540,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285372694,"pid":15540,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728285372694,"pid":15540,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285374314,"pid":15540,"hostname":"MSI","$__":{"activePaths":{"paths":{"picture":"require"},"states":{"require":{"picture":true},"default":{},"modify":{}}},"op":null,"saving":null,"$versionError":null,"saveOptions":null,"validating":null,"cachedRequired":{},"backup":{"activePaths":{"modify":{"picture":true},"default":{"_id":true}},"validationError":null},"inserting":true,"savedState":{}},"_doc":{"picture":"02421958102510","_id":"67038abed54f784a6dd96ae3","__v":0},"$isNew":false}
+{"level":30,"time":1728285374320,"pid":15540,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('67038abed54f784a6dd96ae3'),\n  __v: 0\n}"}
+{"level":30,"time":1728285428192,"pid":28804,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728285428193,"pid":28804,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728285428215,"pid":28804,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285428215,"pid":28804,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728285428215,"pid":28804,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285430853,"pid":28804,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('67038af6f7f91e0f6a2214d8'),\n  __v: 0\n}"}
+{"level":30,"time":1728285470237,"pid":26684,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728285470238,"pid":26684,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728285470260,"pid":26684,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285470260,"pid":26684,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728285470260,"pid":26684,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285473228,"pid":26684,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('67038b21b9f5712ee0a5c095'),\n  __v: 0\n}"}
+{"level":30,"time":1728285502127,"pid":16172,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728285502129,"pid":16172,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728285502151,"pid":16172,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285502152,"pid":16172,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728285502152,"pid":16172,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728285504253,"pid":16172,"hostname":"MSI","msg":"Picture saved: {\n  picture: '02421958102510',\n  _id: new ObjectId('67038b40d7d05abae5bc1f6b'),\n  __v: 0\n}"}
+{"level":30,"time":1728293663947,"pid":31848,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728293663949,"pid":31848,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728293663974,"pid":31848,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728293663974,"pid":31848,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728293663974,"pid":31848,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728293800080,"pid":23820,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728293800081,"pid":23820,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728293800112,"pid":23820,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728293800112,"pid":23820,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728293800112,"pid":23820,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728293826837,"pid":13692,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728293826839,"pid":13692,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728293826863,"pid":13692,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728293826864,"pid":13692,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728293826864,"pid":13692,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728293828158,"pid":13692,"hostname":"MSI","msg":"Getting all Data from Database!"}
+{"level":30,"time":1728299240202,"pid":27964,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728299240204,"pid":27964,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728299240230,"pid":27964,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728299240230,"pid":27964,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728299240230,"pid":27964,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728299298481,"pid":33372,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728299298482,"pid":33372,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728299298504,"pid":33372,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728299298504,"pid":33372,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728299298504,"pid":33372,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728299343085,"pid":33372,"hostname":"MSI","msg":"Picture saved: {\n  picture: '1p274pfdsjfjksjf',\n  _id: new ObjectId('6703c14f7f6f68834d846eb2'),\n  __v: 0\n}"}
+{"level":30,"time":1728299631615,"pid":20744,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728299631617,"pid":20744,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728299631643,"pid":20744,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728299631643,"pid":20744,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728299631643,"pid":20744,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728299643327,"pid":20744,"hostname":"MSI","msg":"Data has been created:\n{ _id: new ObjectId('6703c27b22200807f81c3bff'), __v: 0 }"}
+{"level":30,"time":1728299813987,"pid":20592,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728299813989,"pid":20592,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728299814024,"pid":20592,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728299814024,"pid":20592,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728299814024,"pid":20592,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728299839222,"pid":32956,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728299839224,"pid":32956,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728299839252,"pid":32956,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728299839252,"pid":32956,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728299839252,"pid":32956,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728299857925,"pid":32956,"hostname":"MSI","msg":"Data has been created:\n{\n  data: { picture: 'fölkjöalskjfl' },\n  _id: new ObjectId('6703c35197a1453f060c90f5'),\n  __v: 0\n}"}
+{"level":30,"time":1728300034681,"pid":32012,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728300034683,"pid":32012,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728300034708,"pid":32012,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728300034708,"pid":32012,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728300034708,"pid":32012,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728302925371,"pid":2464,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728302925373,"pid":2464,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728302925402,"pid":2464,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728302925402,"pid":2464,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728302925402,"pid":2464,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728302931083,"pid":2464,"hostname":"MSI","msg":"Data has been created:\n{\n  data: { hund: 'nigger' },\n  _id: new ObjectId('6703cf5320acd4e2c3f4a5db'),\n  __v: 0\n}"}
+{"level":30,"time":1728302976920,"pid":25832,"hostname":"MSI","msg":"started HTTP server on localhost:3333"}
+{"level":30,"time":1728302976921,"pid":25832,"hostname":"MSI","msg":"Boot completed! Connecting!..."}
+{"level":30,"time":1728302976948,"pid":25832,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728302976948,"pid":25832,"hostname":"MSI","msg":"PictureProvider ready!"}
+{"level":30,"time":1728302976948,"pid":25832,"hostname":"MSI","msg":"Connected!"}
+{"level":30,"time":1728302981356,"pid":25832,"hostname":"MSI","msg":"Data has been created:\n{\n  data: { hund: 'nigger' },\n  _id: new ObjectId('6703cf852917e6b00e2cf8b8'),\n  __v: 0\n}"}

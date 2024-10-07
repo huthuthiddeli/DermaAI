@@ -1,0 +1,5 @@
+npm run dev
+
+docker compose up --build
+
+open http://localhost:3333
