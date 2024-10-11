@@ -11,3 +11,4 @@ class SlideshowViewModel : ViewModel() {
     }
     val text: LiveData<String> = _text
 }
+

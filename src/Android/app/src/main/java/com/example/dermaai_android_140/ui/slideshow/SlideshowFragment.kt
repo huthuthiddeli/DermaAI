@@ -1,11 +1,13 @@
 package com.example.dermaai_android_140.ui.slideshow
 
 import android.Manifest
-import android.app.Activity.RESULT_OK
+import android.app.Activity
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -15,25 +17,27 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.databinding.FragmentSlideshowBinding
-import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.CameraProvider
-import androidx.camera.core.CameraX
-import androidx.camera.core.impl.ConfigProvider
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.findViewTreeLifecycleOwner
-import com.example.dermaai_android_140.R
+import org.json.JSONObject
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class SlideshowFragment : Fragment() {
 
     private var _binding: FragmentSlideshowBinding? = null
+    private val CAMERA_PERMISSION_CODE = 1
+    private val CAMERA_REQUEST_CODE = 1
+
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,60 +59,66 @@ class SlideshowFragment : Fragment() {
         val takePhotoBtn: Button = binding.takePhotoBtn
 
 
-        //launcher
-        var takePictureLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if (result.resultCode == RESULT_OK) {
-                    // Get the URI of the photo taken
-                    val imageUri: Uri? = result.data?.data
-                    if (imageUri != null) {
-                        var imageView = binding.takenPhoto
-                        imageView.setImageURI(imageUri) // Show
-                    }
-                }
+        takePhotoBtn.setOnClickListener {
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                openCamera()
+            } else {
+                ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
             }
-
-        takePhotoBtn.setOnClickListener({
-            openCamera(takePictureLauncher)
-            }
-        )
-        //
+        }
 
         return root
     }
 
+
+    private fun openCamera() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+
+        val photoFile = createImageFile()
+        val photoUri = Uri.fromFile(photoFile)
+        val dir = requireActivity().getFilesDir()
+
+        if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
+            startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE)
+        }
+    }
+
+    private fun createImageFile(): File {
+
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        )
+    }
+
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+
+        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val imageUri = data?.data
+            val imageContent = data?.getData()
+            // Get the image from the Uri
+            val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
+            // Use the bitmap as needed
+        }
+        else
+        {
+            val test = 12
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 
-
-    //
-    private fun openCamera(takePictureLauncher : ActivityResultLauncher<Intent>) {
-
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestCameraPermission(takePictureLauncher)
-        } else {
-            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            takePictureLauncher.launch(intent)
-
-        }
-    }
-
-
-    private fun requestCameraPermission(takePictureLauncher : ActivityResultLauncher<Intent>) {
-
-        val cameraPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            if (granted) {
-
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                takePictureLauncher.launch(intent)
-            } else {
-                Toast.makeText(context, "Camera permission denied", Toast.LENGTH_SHORT).show()
-            }
-        }
-        cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
-    }
     
     //
 }
