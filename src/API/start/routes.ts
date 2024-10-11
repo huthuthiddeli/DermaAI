@@ -11,6 +11,7 @@ import router from '@adonisjs/core/services/router'
 import { writeToDatabase, getAllFromDatabase } from '../app/providers/mongoprovider.js'
 import logger from '@adonisjs/core/services/logger'
 import {getAllPictues, savePicture} from '../app/providers/pictureProvider.js'
+import saveUser from '../app/providers/userProvider.js'
 
 router.get('/', async () => {
   return {
@@ -56,4 +57,12 @@ router.get('/getAllPictures', async () => {
   }
 
   return 0;
+})
+
+router.post('/saveUser', async ({request}) => {
+  
+  let body = request.body()
+
+
+  return await saveUser(body)
 })
