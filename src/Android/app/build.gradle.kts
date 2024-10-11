@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dermaai_androidapp"
+    namespace = "com.example.dermaai_android_140"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.dermaai_androidapp"
-        minSdk = 24
+        applicationId = "com.example.dermaai_android_140"
+        minSdk = 34
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -48,7 +48,20 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    implementation(libs.androidx.junit.ktx)
     implementation(libs.androidx.camera.core)
+    implementation(libs.androidx.camera.lifecycle)
+    implementation(libs.filament.android)
+    implementation(libs.androidx.camera.view)
+    implementation(libs.androidx.material.icons.extended)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.extensions)
+    implementation(libs.androidx.ui.tooling)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.activity.ktx)
+    implementation(libs.androidx.activity.ktx)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }

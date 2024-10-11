@@ -1,4 +1,4 @@
-package com.example.dermaai_androidapp
+package com.example.dermaai_android_140
 
 import org.junit.Test
 

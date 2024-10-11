@@ -1,4 +1,4 @@
-package com.example.dermaai_androidapp.ui.home
+package com.example.dermaai_android_140.ui.home
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
