@@ -43,8 +43,6 @@ const connectToDatabase = async (): Promise<boolean> => {
       process.exitCode = -1
       return false
     }
-  
-    logger.info("Connected!")
     return true
 }
 
