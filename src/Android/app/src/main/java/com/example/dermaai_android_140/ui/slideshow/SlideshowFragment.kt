@@ -3,8 +3,11 @@ package com.example.dermaai_android_140.ui.slideshow
 import android.Manifest
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -24,8 +27,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.databinding.FragmentSlideshowBinding
 import org.json.JSONObject
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.stream.Stream
 
 class SlideshowFragment : Fragment() {
 
@@ -74,16 +81,14 @@ class SlideshowFragment : Fragment() {
     private fun openCamera() {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
-        val photoFile = createImageFile()
-        val photoUri = Uri.fromFile(photoFile)
-        val dir = requireActivity().getFilesDir()
-
         if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
             startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE)
         }
     }
 
-    private fun createImageFile(): File {
+
+
+    private fun createUniqueImagePath(): File {
 
         // Create an image file name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
@@ -93,26 +98,56 @@ class SlideshowFragment : Fragment() {
             ".jpg",
             storageDir
         )
-    }
 
+    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val imageUri = data?.data
-            val imageContent = data?.getData()
-            // Get the image from the Uri
-            val bitmap = MediaStore.Images.Media.getBitmap(requireActivity().contentResolver, imageUri)
-            // Use the bitmap as needed
-        }
-        else
-        {
-            val test = 12
+            val bitmap = data?.extras?.get("data") as Bitmap
+            saveFileToStorage(bitmap)
+
+            val images = retrieveImagesFromStorage(
+                
+            )
         }
     }
+
+
+    private fun retrieveImagesFromStorage(): MutableList<Bitmap> {
+
+        val folder = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val images = mutableListOf<Bitmap>()
+
+        if (folder != null && folder.isDirectory) {
+            // !!
+            for (file in folder.listFiles()) {
+
+                if (file.extension == "jpg" && folder.listFiles() != null) {
+                    val bitmap = BitmapFactory.decodeFile(file.absolutePath)
+                    if (bitmap != null) {
+                        images.add(bitmap)
+                    }
+                }
+
+            }
+        }
+        return images
+    }
+
+
+
+    private fun saveFileToStorage(bitmap : Bitmap)
+    {
+        val filePath = createUniqueImagePath()
+        val outputStream: OutputStream = FileOutputStream(filePath)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        outputStream.flush()
+        outputStream.close()
+    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
