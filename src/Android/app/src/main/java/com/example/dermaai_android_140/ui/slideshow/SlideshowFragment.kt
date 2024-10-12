@@ -24,6 +24,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.dermaai_android_140.MyClasses.Storage
 import com.example.dermaai_android_140.databinding.FragmentSlideshowBinding
 import org.json.JSONObject
 import java.io.File
@@ -87,66 +88,20 @@ class SlideshowFragment : Fragment() {
     }
 
 
-
-    private fun createUniqueImagePath(): File {
-
-        // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile(
-            "JPEG_${timeStamp}_",
-            ".jpg",
-            storageDir
-        )
-
-    }
-
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
             val bitmap = data?.extras?.get("data") as Bitmap
-            saveFileToStorage(bitmap)
 
-            val images = retrieveImagesFromStorage(
-                
-            )
+            val storage = Storage()
+            
+            storage.saveFileToStorage(bitmap, requireActivity(), requireContext())
+
         }
     }
 
-
-    private fun retrieveImagesFromStorage(): MutableList<Bitmap> {
-
-        val folder = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val images = mutableListOf<Bitmap>()
-
-        if (folder != null && folder.isDirectory) {
-            // !!
-            for (file in folder.listFiles()) {
-
-                if (file.extension == "jpg" && folder.listFiles() != null) {
-                    val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-                    if (bitmap != null) {
-                        images.add(bitmap)
-                    }
-                }
-
-            }
-        }
-        return images
-    }
-
-
-
-    private fun saveFileToStorage(bitmap : Bitmap)
-    {
-        val filePath = createUniqueImagePath()
-        val outputStream: OutputStream = FileOutputStream(filePath)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-        outputStream.flush()
-        outputStream.close()
-    }
 
 
     override fun onDestroyView() {
