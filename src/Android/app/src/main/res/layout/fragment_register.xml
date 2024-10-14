@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/loginContainer"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.login.LoginFragment">
-
+    android:layout_height="match_parent">
 
     <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/login_fragment_accountinfo"
+        android:id="@+id/register_fragment_accountinfo"
         android:name="com.example.dermaai_android_140.ui.accountinfo.AccountinfoFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -19,28 +15,26 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/loginBtn"
+        android:id="@+id/switchToLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_loginBtn"
+        android:text="@string/fragment_SwitchToLoginBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
+        app:layout_constraintHorizontal_bias="0.802"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.852"
-        android:onClick="onSwitchToRegisterClick"/>
+        app:layout_constraintVertical_bias="0.846" />
 
     <Button
-        android:id="@+id/switchToRegisterBtn"
+        android:id="@+id/registerBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/fragment_SwitchToRegisterBtn"
+        android:text="@string/fragment_RegisterBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.925"
+        app:layout_constraintHorizontal_bias="0.232"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.852" />
-
+        app:layout_constraintVertical_bias="0.846" />
 </androidx.constraintlayout.widget.ConstraintLayout>

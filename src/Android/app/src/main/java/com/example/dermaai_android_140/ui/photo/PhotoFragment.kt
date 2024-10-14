@@ -1,43 +1,27 @@
-package com.example.dermaai_android_140.ui.slideshow
+package com.example.dermaai_android_140.ui.photo
 
 import android.Manifest
 import android.app.Activity
-import android.content.ActivityNotFoundException
-import android.content.ContentResolver
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.MyClasses.Storage
-import com.example.dermaai_android_140.databinding.FragmentSlideshowBinding
-import org.json.JSONObject
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.OutputStream
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.stream.Stream
+import com.example.dermaai_android_140.databinding.FragmentPhotoBinding
 
-class SlideshowFragment : Fragment() {
+class PhotoFragment : Fragment() {
 
-    private var _binding: FragmentSlideshowBinding? = null
+    private var _binding: FragmentPhotoBinding? = null
     private val CAMERA_PERMISSION_CODE = 1
     private val CAMERA_REQUEST_CODE = 1
 
@@ -52,14 +36,14 @@ class SlideshowFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val slideshowViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+        val photoViewModel =
+            ViewModelProvider(this).get(PhotoViewModel::class.java)
 
-        _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
+        _binding = FragmentPhotoBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
+        photoViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
 
@@ -74,7 +58,7 @@ class SlideshowFragment : Fragment() {
                 ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
             }
         }
-
+        
         return root
     }
 
@@ -102,7 +86,7 @@ class SlideshowFragment : Fragment() {
         }
     }
 
-
+    
 
     override fun onDestroyView() {
         super.onDestroyView()

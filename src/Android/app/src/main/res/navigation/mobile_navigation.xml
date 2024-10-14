@@ -18,8 +18,10 @@
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.dermaai_android_140.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_photo"
+        android:name="com.example.dermaai_android_140.ui.photo.PhotoFragment"
+        android:label="@string/menu_photo"
+        tools:layout="@layout/fragment_photo" />
+
+
 </navigation>

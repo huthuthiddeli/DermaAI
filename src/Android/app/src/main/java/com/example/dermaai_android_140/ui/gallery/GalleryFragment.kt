@@ -1,9 +1,6 @@
 package com.example.dermaai_android_140.ui.gallery
 
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,9 +10,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.MyClasses.Storage
-import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.FragmentGalleryBinding
-import com.example.dermaai_android_140.ui.slideshow.SlideshowFragment
 
 class GalleryFragment : Fragment() {
 
