@@ -1,4 +1,7 @@
 package com.example.dermaai_android_140.ui.login
 
-class LoginFragment {
+import androidx.fragment.app.Fragment
+
+class LoginFragment : Fragment() {
+    
 }

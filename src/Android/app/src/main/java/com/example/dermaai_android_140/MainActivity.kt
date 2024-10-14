@@ -1,5 +1,6 @@
 package com.example.dermaai_android_140
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import com.google.android.material.snackbar.Snackbar
@@ -11,7 +12,9 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.ActivityMainBinding
+import com.example.dermaai_android_140.ui.login.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -39,6 +43,14 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+    }
+
+    fun redirectToLogin()
+    {
+        
+        //val myIntent = Intent(this, LoginFragment.class)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

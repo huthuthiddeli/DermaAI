@@ -1,4 +1,7 @@
 package com.example.dermaai_android_140.ui.login
 
-class LoginViewModel {
+import androidx.lifecycle.ViewModel
+
+class LoginViewModel : ViewModel() {
+
 }

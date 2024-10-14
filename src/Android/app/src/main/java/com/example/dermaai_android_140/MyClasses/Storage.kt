@@ -22,8 +22,8 @@ class Storage {
 
         if (folder != null && folder.isDirectory) {
             // !!
-            for (file in folder.listFiles()) {
-
+            for (file in folder.listFiles()!!) {
+                
                 if (file.extension == "jpg" && folder.listFiles() != null) {
                     val bitmap = BitmapFactory.decodeFile(file.absolutePath)
                     if (bitmap != null) {
