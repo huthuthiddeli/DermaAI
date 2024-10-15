@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.dermaai_android_140.databinding.ActivityMainBinding
+import com.example.dermaai_android_140.ui.login.LoginActivity
 import com.example.dermaai_android_140.ui.login.LoginFragment
 
 class MainActivity : AppCompatActivity() {
@@ -23,8 +24,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,12 +44,18 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-
-        redirectToPage(LoginFragment())
+        changeActivity()
 
     }
 
-    private fun redirectToPage(fragment : Fragment)
+    private fun changeActivity()
+    {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+
+    private fun replaceFragment(fragment : Fragment)
     {
         supportFragmentManager.beginTransaction()
             .replace(R.id.nav_host_fragment_content_main, fragment)
@@ -68,4 +73,5 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 }

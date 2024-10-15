@@ -15,7 +15,7 @@ import com.example.dermaai_android_140.databinding.FragmentLoginBinding
 import com.example.dermaai_android_140.databinding.FragmentPhotoBinding
 import com.example.dermaai_android_140.ui.register.RegisterFragment
 
-class LoginFragment : Fragment() {
+class LoginFragment() : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null
 
@@ -32,8 +32,8 @@ class LoginFragment : Fragment() {
         val switchToRegisterBtn = view.findViewById<Button>(R.id.switchToRegisterBtn)
         //switchToRegisterBtn = binding.switchToRegisterBtn
 
-        switchToRegisterBtn.setOnClickListener {
 
+        switchToRegisterBtn.setOnClickListener {
             val registerFragment = RegisterFragment()
             redirectToPage(registerFragment)
         }
@@ -47,6 +47,8 @@ class LoginFragment : Fragment() {
             .replace(R.id.nav_host_fragment_content_main, fragment)
             .addToBackStack(null)
             .commit()
+
+
     }
 
 
