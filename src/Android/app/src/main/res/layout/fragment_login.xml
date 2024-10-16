@@ -8,16 +8,6 @@
     tools:context=".ui.login.LoginFragment">
 
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/login_fragment_accountinfo"
-        android:name="com.example.dermaai_android_140.ui.accountinfo.AccountinfoFragment"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="wrap_content"
@@ -25,11 +15,10 @@
         android:text="@string/fragment_loginBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.216"
+        app:layout_constraintHorizontal_bias="0.232"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.852"
-        android:onClick="onSwitchToRegisterClick"/>
+        app:layout_constraintVertical_bias="0.846" />
 
     <Button
         android:id="@+id/switchToRegisterBtn"
@@ -38,9 +27,9 @@
         android:text="@string/fragment_SwitchToRegisterBtn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.925"
+        app:layout_constraintHorizontal_bias="0.802"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.852" />
+        app:layout_constraintVertical_bias="0.846" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
