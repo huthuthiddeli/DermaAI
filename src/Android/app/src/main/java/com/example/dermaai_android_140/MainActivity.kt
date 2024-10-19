@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.appBarMain.toolbar)
-
+        
 
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
@@ -48,11 +48,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun changeActivity()
-    {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-    }
+
 
 
     private fun replaceFragment(fragment : Fragment)

@@ -23,6 +23,6 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
         else{
             return inflater.inflate(R.layout.fragment_accountinfo_register, container, false)
         }
-
     }
+
 }
