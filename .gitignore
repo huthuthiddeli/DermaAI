@@ -16,6 +16,8 @@ public/assets
 # Build tools specific
 npm-debug.log
 yarn-error.log
+**/bytes_archive.json
+
 
 # Editors specific
 .fleet
@@ -39,3 +41,4 @@ yarn-error.log
 .externalNativeBuild
 .cxx
 local.properties
+.jar
