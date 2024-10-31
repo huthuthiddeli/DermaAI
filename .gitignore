@@ -42,3 +42,8 @@ yarn-error.log
 .cxx
 local.properties
 .jar
+*.jar
+*.log
+*.bin
+*.out
+/src/Android/caches

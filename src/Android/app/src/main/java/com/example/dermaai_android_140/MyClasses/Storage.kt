@@ -15,19 +15,32 @@ import java.util.Date
 class Storage {
 
 
-    fun retrieveImagesFromStorage(activity : Activity): MutableList<Bitmap> {
+    fun retrieveImagesFromStorage(activity : Activity, takenByUser: Boolean): MutableList<File> {
 
-        val folder = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val images = mutableListOf<Bitmap>()
 
-        if (folder != null && folder.isDirectory) {
-            // !!
+        
+        var subDir = ""
+        if(takenByUser)
+        {
+            subDir="Photo_User"
+        }
+        else {
+            subDir="Photo_ServerResponse"
+        }
+
+        val storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val folder = File(storageDir, subDir)
+        //val images = mutableListOf<Bitmap>()
+        val images = mutableListOf<File>()
+
+        if (folder.isDirectory) {
+
             for (file in folder.listFiles()!!) {
                 
                 if (file.extension == "jpg" && folder.listFiles() != null) {
                     val bitmap = BitmapFactory.decodeFile(file.absolutePath)
                     if (bitmap != null) {
-                        images.add(bitmap)
+                        images.add(file)
                     }
                 }
 
@@ -36,26 +49,43 @@ class Storage {
         return images
     }
 
-    fun saveFileToStorage(bitmap : Bitmap, activity : Activity, context : Context)
+    fun saveFileToStorage(bitmap : Bitmap, activity : Activity, context : Context, takenByUser : Boolean)
     {
-        val filePath = createUniqueImagePath(activity)
+        val filePath = createUniqueImagePath(activity, takenByUser)
         val outputStream: OutputStream = FileOutputStream(filePath)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
         outputStream.flush()
         outputStream.close()
         
         Toast.makeText(context, "Image successfully stored!", Toast.LENGTH_SHORT).show()
     }
 
-    private fun createUniqueImagePath(activity : Activity): File {
+    private fun createUniqueImagePath(activity : Activity, takenByUser : Boolean): File {
 
-        // Create an image file name
+        //create File name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+
         val storageDir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        var subDir = ""
+
+        if(takenByUser)
+        {
+            subDir="Photo_User"
+        }
+        else {
+            subDir="Photo_ServerResponse"
+        }
+
+        val dir =  File(storageDir, subDir)
+
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
+
         return File.createTempFile(
             "JPEG_${timeStamp}_",
             ".jpg",
-            storageDir
+            dir
         )
 
     }

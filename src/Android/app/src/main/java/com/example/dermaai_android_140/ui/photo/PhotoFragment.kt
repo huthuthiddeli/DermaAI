@@ -81,8 +81,7 @@ class PhotoFragment : Fragment() {
 
             val storage = Storage()
             
-            storage.saveFileToStorage(bitmap, requireActivity(), requireContext())
-
+            storage.saveFileToStorage(bitmap, requireActivity(), requireContext(), true)
         }
     }
 
