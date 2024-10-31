@@ -1,10 +1,16 @@
+import base64
+import io
 import os
+import zlib
+from tkinter import Image
+import pandas as pd
 import cv2
 import numpy as np
+import requests
 from matplotlib import pyplot as plt
-from sklearn import datasets
 from sklearn.preprocessing import StandardScaler
 
+api_url = "http://192.168.110.29:3333/getAllPictures"
 
 def loadImagesAs1DVector(folder_path):
     # Initialize lists to hold the feature vectors and filenames
@@ -79,3 +85,62 @@ def loadImageAs1DVector(image_path):
         return features, filename
     else:
         raise ValueError("Image could not be loaded. Please check the file path.")
+
+def loadImagesAs1DVectorFromAPI():
+    """Konvertiert die Bilddaten (Base64) und Diagnosen in ein Dataset."""
+    image_data = []
+    labels = []
+
+    data = __fetchDataFromAPI()
+
+    for entry in data:
+        # Füge die Base64-Daten zur Liste hinzu
+        image_data.append(entry['picture'])
+        labels.append(entry['diagnosis'])
+
+        # Erstelle ein DataFrame aus den Listen
+    dataset = pd.DataFrame({
+        'picture': image_data,
+        'diagnosis': labels
+    })
+
+    return dataset
+
+def decode_images():
+    for index, row in loadImagesAs1DVectorFromAPI().iterrows():
+        # Hole die komprimierten Binärdaten des Bildes
+        compressed_image_data = row['picture']
+
+        with open("test.txt", "w") as file:
+            file.write(compressed_image_data)
+
+        print(compressed_image_data)
+        # Dekomprimiere die Daten mit zlib
+        decompressed_data = zlib.decompress(compressed_image_data)
+
+        # Konvertiere die dekomprimierten Daten in ein Bild und speichere es
+        image = Image.open(io.BytesIO(decompressed_data))
+        image.save(f'image_{index}.png')
+
+def __fetchDataFromAPI():
+    try:
+        response = requests.get(api_url)
+        response.raise_for_status()
+        data = response.json()
+
+        return data
+
+    except requests.exceptions.HTTPError as errh:
+        print(f"HTTP-Error: {errh}")
+        return None
+    except requests.exceptions.ConnectionError as errc:
+        print(f"Connection-Error: {errc}")
+        return None
+    except requests.exceptions.Timeout as errt:
+        print(f"Timeout-Error: {errt}")
+        return None
+    except requests.exceptions.RequestException as err:
+        print(f"Error: {err}")
+        return None
+
+decode_images()
