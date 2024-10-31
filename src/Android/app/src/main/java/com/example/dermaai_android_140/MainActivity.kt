@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.example.dermaai_android_140.databinding.ActivityMainBinding
 import com.example.dermaai_android_140.ui.login.LoginActivity
-import com.example.dermaai_android_140.ui.login.LoginFragment
 
 class MainActivity : AppCompatActivity() {
 
