@@ -64,7 +64,9 @@ class GalleryFragment : Fragment() {
 
                 setOnClickListener {
 
-                    val intent = Intent(requireContext(), ResultActivity::class.java)
+                    val intent = Intent(requireContext(), ResultActivity::class.java).apply {
+                        putExtra("IMAGE_PATH", image.absolutePath)
+                    }
                     startActivity(intent)
 
                     //Toast.makeText(context, "Container clicked", Toast.LENGTH_LONG).show()

@@ -26,6 +26,8 @@
             android:theme="@style/Theme.DermaAI_Android_140.NoActionBar">
         </activity>
 
+        <activity android:name=".ui.result.ResultActivity" />
+
         <activity android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>

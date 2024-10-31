@@ -13,6 +13,7 @@ import com.example.dermaai_android_140.MainActivity
 import com.example.dermaai_android_140.MyClasses.LoginApi
 import com.example.dermaai_android_140.MyClasses.User
 import com.example.dermaai_android_140.R
+import com.example.dermaai_android_140.ui.result.ResultActivity
 
 
 class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
@@ -63,8 +64,7 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
                     Toast.makeText(context, "User does not exist", Toast.LENGTH_LONG).show()
                 }
 
-                val intent = Intent(requireContext(), MainActivity::class.java)
-                startActivity(intent)
+
             }
             
         } else {
