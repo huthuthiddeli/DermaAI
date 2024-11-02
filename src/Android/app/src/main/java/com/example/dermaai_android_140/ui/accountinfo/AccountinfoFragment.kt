@@ -35,12 +35,11 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
         //val viewRegister = inflater.inflate(R.layout.fragment_accountinfo_register, container, false)
 
         if (isLogin) {
-            // Set up login view buttons
+
             val switchToRegisterBtn = view.findViewById<Button>(R.id.switchToRegisterBtn)
             val loginBtn = view.findViewById<Button>(R.id.loginBtn)
 
             switchToRegisterBtn.setOnClickListener {
-                // Replace the fragment with the register view
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_placeholder_accountinfo, AccountinfoFragment(false))
                     .commit()
@@ -64,15 +63,13 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
                     Toast.makeText(context, "User does not exist", Toast.LENGTH_LONG).show()
                 }
 
-
             }
             
         } else {
-            // Set up register view buttons
+
             val switchToLoginBtn = view.findViewById<Button>(R.id.switchToLoginBtn)
 
             switchToLoginBtn.setOnClickListener {
-                // Replace the fragment with the login view
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_placeholder_accountinfo, AccountinfoFragment(true))
                     .commit()

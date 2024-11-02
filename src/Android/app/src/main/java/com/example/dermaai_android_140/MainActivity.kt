@@ -12,9 +12,7 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.dermaai_android_140.databinding.ActivityMainBinding
-import com.example.dermaai_android_140.ui.login.LoginActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //setContentView(R.layout.activity_main)
 
         setSupportActionBar(binding.appBarMain.toolbar)
         
@@ -44,9 +44,7 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
 
        //changeActivity()
-
     }
-
 
 
 

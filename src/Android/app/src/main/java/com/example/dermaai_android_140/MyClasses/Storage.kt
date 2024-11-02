@@ -60,11 +60,9 @@ class Storage {
         Toast.makeText(context, "Image successfully stored!", Toast.LENGTH_SHORT).show()
     }
 
-    private fun createUniqueImagePath(activity : Activity, takenByUser : Boolean): File {
-
+    fun createUniqueImagePath(activity : Activity, takenByUser : Boolean): File {
         //create File name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-
         val storageDir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         var subDir = ""
 
