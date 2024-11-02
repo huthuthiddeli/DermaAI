@@ -1,6 +1,7 @@
 package com.example.dermaai_android_140.ui.gallery
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -47,8 +48,11 @@ class GalleryFragment : Fragment() {
 
         for (image in images) {
 
-            val bitmap = BitmapFactory.decodeFile(image.absolutePath)
+            var bitmap = BitmapFactory.decodeFile(image.absolutePath)
             var imageName = image.name
+
+            // thumbnail
+            bitmap = Bitmap.createScaledBitmap(bitmap, 300, 200, false)
 
             // horizontal Container config
             val horizontalContainer = LinearLayout(requireContext()).apply {
