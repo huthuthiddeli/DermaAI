@@ -16,15 +16,16 @@
 
     <EditText
         android:id="@+id/editTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="397dp"
+        android:layout_height="52dp"
         android:layout_marginTop="12dp"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="12dp"
         android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:icon="@drawable/ic_menu_camera"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextPassword"
