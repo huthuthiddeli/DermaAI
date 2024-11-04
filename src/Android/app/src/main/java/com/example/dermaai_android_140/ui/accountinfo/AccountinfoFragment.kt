@@ -9,11 +9,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.MainActivity
-import com.example.dermaai_android_140.MyClasses.LoginApi
-import com.example.dermaai_android_140.MyClasses.User
+import com.example.dermaai_android_140.myClasses.LoginApi
+import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.R
-import com.example.dermaai_android_140.ui.result.ResultActivity
+import com.example.dermaai_android_140.ui.home.HomeViewModel
 
 
 class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
@@ -25,6 +26,7 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
     ): View? {
 
         var view: View? = null
+        val viewModel = ViewModelProvider(this).get(AccountinfoViewModel::class.java)
 
         if (isLogin) {
             view = inflater.inflate(R.layout.fragment_accountinfo_login, container, false)
@@ -52,18 +54,21 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
 
                 val email = editTextEmail.text.toString()
                 val password = editTextPassword.text.toString()
-
-                val loginApi = LoginApi()
-                val user: User? = loginApi.login(email, password)
                 
+                viewModel.login(email, password)
+
+            }
+
+
+            viewModel.user.observe(viewLifecycleOwner, { user ->
                 if (user != null) {
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(context, "User does not exist", Toast.LENGTH_LONG).show()
                 }
+            })
 
-            }
             
         } else {
 

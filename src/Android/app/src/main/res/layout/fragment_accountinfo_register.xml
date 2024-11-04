@@ -3,28 +3,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment_accountinfo_register"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="182dp"
-        android:layout_height="208dp"
-        app:defaultNavHost="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:navGraph="@navigation/mobile_navigation" />
-
+    android:layout_height="match_parent"
+    tools:context=".ui.login.LoginActivity">
 
 
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_email"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="12dp"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="@android:color/darker_gray"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
@@ -32,11 +25,14 @@
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="21dp"
+        android:drawableStart="@drawable/ic_key"
         android:hint="Confirm Password"
         android:inputType="textPassword"
         android:padding="12dp"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="@android:color/darker_gray"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/editTextConfirmPassword"
         tools:layout_editor_absoluteX="0dp" />
@@ -45,10 +41,13 @@
         android:id="@+id/editTextConfirmPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="21dp"
+        android:drawableStart="@drawable/ic_password"
         android:hint="Password"
         android:inputType="textPassword"
         android:padding="12dp"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="@android:color/darker_gray"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
         tools:layout_editor_absoluteX="0dp" />

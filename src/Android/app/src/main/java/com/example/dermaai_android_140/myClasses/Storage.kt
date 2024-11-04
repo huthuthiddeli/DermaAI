@@ -1,4 +1,4 @@
-package com.example.dermaai_android_140.MyClasses
+package com.example.dermaai_android_140.myClasses
 
 import android.app.Activity
 import android.content.Context

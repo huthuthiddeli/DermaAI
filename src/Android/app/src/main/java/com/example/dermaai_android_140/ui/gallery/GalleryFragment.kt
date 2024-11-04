@@ -10,11 +10,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.dermaai_android_140.MainActivity
-import com.example.dermaai_android_140.MyClasses.Storage
+import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.databinding.FragmentGalleryBinding
 import com.example.dermaai_android_140.ui.result.ResultActivity
 

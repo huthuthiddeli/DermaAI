@@ -5,40 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/nav_host_fragment_accountinfo_login"
-        android:name="androidx.navigation.fragment.NavHostFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/mobile_navigation"/>
-
 
     <EditText
         android:id="@+id/editTextEmail"
-        android:layout_width="397dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/ic_email"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:padding="12dp"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="@android:color/darker_gray"
         android:textSize="20sp"
-        app:icon="@drawable/ic_menu_camera"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="21dp"
+        android:drawableStart="@drawable/ic_password"
         android:hint="Password"
         android:inputType="textPassword"
         android:padding="12dp"
+        android:textColor="@android:color/darker_gray"
+        android:textColorHint="@android:color/darker_gray"
         android:textSize="20sp"
         app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
         tools:layout_editor_absoluteX="0dp" />
-
 
     <Button
         android:id="@+id/loginBtn"
@@ -50,7 +47,8 @@
         app:layout_constraintHorizontal_bias="0.232"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.846" />
+        app:layout_constraintVertical_bias="0.846"
+        app:icon="@drawable/ic_menu_camera"/>
 
     <Button
         android:id="@+id/switchToRegisterBtn"
@@ -62,7 +60,8 @@
         app:layout_constraintHorizontal_bias="0.925"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.846" />
+        app:layout_constraintVertical_bias="0.846"
+        app:icon="@drawable/ic_menu_camera"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

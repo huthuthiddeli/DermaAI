@@ -1,21 +1,32 @@
-package com.example.dermaai_android_140.MyClasses
+package com.example.dermaai_android_140.myClasses
 
-import android.widget.Toast
-import com.google.gson.Gson
+import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.encodeToJsonElement
-import org.json.JSONObject
-import java.io.OutputStreamWriter
-import java.net.HttpURLConnection
-import java.net.URL
-import kotlin.text.Charsets.UTF_8
+import com.example.dermaai_android_140.myClasses.Api
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class LoginApi : Api() {
 
-    fun login(email : String, password : String) : User?
+    
+    fun login2(username: String, token: String) {
+        // Create a new coroutine to move the execution off the UI thread
+        viewModelScope.launch(Dispatchers.IO) {
+            val jsonBody = "{ username: \"$username\", token: \"$token\"}"
+            loginRepository.makeLoginRequest(jsonBody)
+        }
+    }
+
+    suspend fun login(email : String, password : String) : User? = withContext(Dispatchers.IO)
     {
-        val user = User(email,password)
-/*
+        val user : User = User(email,password)
+
+        println()
+
+
+
+
+        /*
         val url : String = ""
 
         val connection = URL(url).openConnection() as HttpURLConnection
