@@ -12,9 +12,16 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.databinding.FragmentGalleryBinding
+import com.example.dermaai_android_140.myClasses.LoginApi
 import com.example.dermaai_android_140.ui.result.ResultActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 
 class GalleryFragment : Fragment() {
 
@@ -37,71 +44,88 @@ class GalleryFragment : Fragment() {
             textView.text = it
         }
 
-        val storage = Storage()
-        val images = storage.retrieveImagesFromStorage(requireActivity(), true)
-        val imageContainer = binding.imageContainer
-
-        imageContainer.removeAllViews()
-
-
-        for (image in images) {
-
-            var bitmap = BitmapFactory.decodeFile(image.absolutePath)
-            var imageName = image.name
-
-            // thumbnail
-            bitmap = Bitmap.createScaledBitmap(bitmap, 300, 200, false)
-
-            // horizontal Container config
-            val horizontalContainer = LinearLayout(requireContext()).apply {
-                orientation = LinearLayout.HORIZONTAL
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-
-                setPadding(12, 12, 12, 12)
 
 
 
-                setOnClickListener {
+        fillView()
 
-                    val intent = Intent(requireContext(), ResultActivity::class.java).apply {
-                        putExtra("IMAGE_PATH", image.absolutePath)
-                    }
-                    startActivity(intent)
-
-                    //Toast.makeText(context, "Container clicked", Toast.LENGTH_LONG).show()
-                }
-            }
-
-            // image View config
-            val imageView = ImageView(requireContext()).apply {
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                setImageBitmap(bitmap)
-                scaleType = ImageView.ScaleType.CENTER_CROP
-            }
-
-            // add Text
-            val textLabel = TextView(requireContext()).apply {
-                text = imageName
-                layoutParams = LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT
-                )
-                setPadding(12, 0, 0, 0)
-            }
-
-            // Add to Views
-            horizontalContainer.addView(imageView)
-            horizontalContainer.addView(textLabel)
-            imageContainer.addView(horizontalContainer)
-        }
-
+        
         return root
+    }
+
+
+
+    // TODO: coroutine
+    private fun fillView()
+    {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO)
+        {
+            
+            val storage = Storage()
+            val images = storage.retrieveImagesFromStorage(requireActivity(), true)
+            val imageContainer = binding.imageContainer
+
+            imageContainer.removeAllViews()
+
+
+            for (image in images) {
+
+                var bitmap = BitmapFactory.decodeFile(image.absolutePath)
+                var imageName = image.name
+
+                // thumbnail
+                bitmap = Bitmap.createScaledBitmap(bitmap, 300, 200, false)
+
+                // horizontal Container config
+                val horizontalContainer = LinearLayout(requireContext()).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+
+                    setPadding(12, 12, 12, 12)
+
+
+
+                    setOnClickListener {
+
+                        val intent = Intent(requireContext(), ResultActivity::class.java).apply {
+                            putExtra("IMAGE_PATH", image.absolutePath)
+                        }
+                        startActivity(intent)
+
+                        //Toast.makeText(context, "Container clicked", Toast.LENGTH_LONG).show()
+                    }
+                }
+
+                // image View config
+                val imageView = ImageView(requireContext()).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    setImageBitmap(bitmap)
+                    scaleType = ImageView.ScaleType.CENTER_CROP
+                }
+
+                // add Text
+                val textLabel = TextView(requireContext()).apply {
+                    text = imageName
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    setPadding(12, 0, 0, 0)
+                }
+
+                // Add to Views
+                horizontalContainer.addView(imageView)
+                horizontalContainer.addView(textLabel)
+                imageContainer.addView(horizontalContainer)
+
+            }
+        }
     }
 
     override fun onDestroyView() {

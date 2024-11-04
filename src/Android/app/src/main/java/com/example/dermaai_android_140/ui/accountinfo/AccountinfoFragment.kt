@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.compose.runtime.produceState
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.MainActivity
@@ -36,6 +37,9 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
 
         //val viewRegister = inflater.inflate(R.layout.fragment_accountinfo_register, container, false)
 
+
+
+
         if (isLogin) {
 
             val switchToRegisterBtn = view.findViewById<Button>(R.id.switchToRegisterBtn)
@@ -47,6 +51,7 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
                     .commit()
             }
 
+
             val editTextEmail = view.findViewById<EditText>(R.id.editTextEmail)
             val editTextPassword = view.findViewById<EditText>(R.id.editTextPassword)
 
@@ -54,20 +59,21 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
 
                 val email = editTextEmail.text.toString()
                 val password = editTextPassword.text.toString()
-                
+
                 viewModel.login(email, password)
 
             }
 
-
-            viewModel.user.observe(viewLifecycleOwner, { user ->
-                if (user != null) {
+            viewModel.isLoggedIn.observe(viewLifecycleOwner, { isLoggedIn ->
+                if (isLoggedIn) {
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(context, "User does not exist", Toast.LENGTH_LONG).show()
                 }
             })
+
+
 
             
         } else {

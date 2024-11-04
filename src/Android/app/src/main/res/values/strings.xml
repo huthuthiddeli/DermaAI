@@ -5,7 +5,8 @@
 
     <string name="header_title">DermaAI</string>
     <string name="nav_header_subtitle">DermaAI-Desc</string>
-    <string name="home_describtion">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</string>
+    <string name="home_describtion">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren.</string>
+    <string name="home_describtion2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren.</string>
 
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
@@ -19,10 +20,13 @@
     <string name="fragment_SwitchToRegisterBtn">Switch to Register</string>
     <string name="fragment_SwitchToLoginBtn">Switch to Login</string>
 
-
     <string name ="take_photo">Take Photo</string>
     <string name ="view_results">View Results</string>
     <string name ="app_title">DermaAI</string>
+
+    <string name="base">baseurl.com/</string>
+    <string name="loginController">loginController/</string>
+    <string name="loginEndpoint">login</string>
 
 
 </resources>

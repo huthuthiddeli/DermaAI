@@ -1,43 +1,31 @@
 package com.example.dermaai_android_140.myClasses
 
+import com.google.gson.Gson
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.json.Json
-import com.example.dermaai_android_140.myClasses.Api
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.net.HttpURLConnection
+import java.net.URL
 
 class LoginApi : Api() {
 
-    
-    fun login2(username: String, token: String) {
-        // Create a new coroutine to move the execution off the UI thread
-        viewModelScope.launch(Dispatchers.IO) {
-            val jsonBody = "{ username: \"$username\", token: \"$token\"}"
-            loginRepository.makeLoginRequest(jsonBody)
-        }
-    }
 
-    suspend fun login(email : String, password : String) : User? = withContext(Dispatchers.IO)
+    fun login(email : String, password : String) : User? //= withContext(Dispatchers.IO)
     {
         val user : User = User(email,password)
-
-        println()
-
-
 
 
         /*
         val url : String = ""
-
         val connection = URL(url).openConnection() as HttpURLConnection
         connection.requestMethod = "POST"
         connection.setRequestProperty("Content-Type", "application/json")
 
+
         return try {
 
-            val gson = Gson()
-            //val json : Json = Json.encodeToJsonElement(user)
-            val json = gson.toJson(user)
+            val json = Gson().toJson(user)
 
 
             OutputStreamWriter(connection.outputStream, UTF_8).use { os ->
@@ -65,7 +53,7 @@ class LoginApi : Api() {
             connection.disconnect()
         }
 */
-        return User("T","T")
+        return user
     }
 
     fun register()
