@@ -12,18 +12,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.MainActivity
 import com.example.dermaai_android_140.R
-import com.example.dermaai_android_140.repo.LoginRepo
-import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
-import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
-import com.example.dermaai_android_140.ui.home.HomeViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import kotlin.getValue
+
 
 class AccountinfoFragment() : Fragment() {
 
     private var isLogin: Boolean = false
 
-    //val accountinfoViewModel: AccountinfoViewModel by viewModel()
+    //val viewModel: AccountinfoViewModel by viewModel()
 
     companion object {
         fun newInstance(isLogin: Boolean): AccountinfoFragment {
@@ -41,9 +36,9 @@ class AccountinfoFragment() : Fragment() {
 
         var view: View? = null
 
+
         val viewModel = ViewModelProvider(this).get(AccountinfoViewModel::class.java)
         
-
         if (isLogin) {
             view = inflater.inflate(R.layout.fragment_accountinfo_login, container, false)
         } else {

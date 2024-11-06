@@ -61,9 +61,11 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.gson)
     implementation(libs.google.material)
-    implementation(libs.org.jetbrains.kotlin.plugin.serialization.gradle.plugin)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.koin.androidx.viewmodel)
+    implementation(libs.androidx.exifinterface)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.koin.android)
 }

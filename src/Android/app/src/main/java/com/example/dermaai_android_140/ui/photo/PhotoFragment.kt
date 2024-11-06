@@ -51,9 +51,7 @@ class PhotoFragment : Fragment() {
 
         //
 
-        photoViewModel.currentImage.observe(viewLifecycleOwner, {currentImage ->
-            photoViewModel.sendImage()
-        })
+
 
         val takePhotoBtn: Button = binding.takePhotoBtn
 
@@ -98,6 +96,8 @@ class PhotoFragment : Fragment() {
         startActivity(intent)
     }
 
+
+
     private fun openCamera(photoViewModel : PhotoViewModel) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
@@ -105,14 +105,13 @@ class PhotoFragment : Fragment() {
         if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
 
             val storage = Storage()
-
             photoFile = storage.createUniqueImagePath(requireActivity(), true)
+            photoViewModel.setTmpImage(photoFile)
+
 
             photoFile.also {
                 val photoURI : Uri = FileProvider.getUriForFile(requireContext(), requireActivity().packageName + ".fileprovider", it)
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-
-                //photoViewModel.currentImage =
 
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE)
             }
@@ -120,14 +119,20 @@ class PhotoFragment : Fragment() {
     }
 
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
 
         val photoViewModel =
             ViewModelProvider(this).get(PhotoViewModel::class.java)
 
-        val test = photoViewModel.currentImage
+
+
+        photoViewModel.currentImage.observe(viewLifecycleOwner, {currentImage ->
+            photoViewModel.sendImage(currentImage)
+        })
+
+        photoViewModel.setCurrentImage(photoFile)
 
         val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
         val storage = Storage()

@@ -4,7 +4,6 @@ import com.example.dermaai_android_140.repo.LoginRepo
 import com.example.dermaai_android_140.myClasses.User
 
 
-
 class LoginRepoImpl : LoginRepo {
 
     override fun login(email : String, password : String) : User?
@@ -15,7 +14,6 @@ class LoginRepoImpl : LoginRepo {
         val connection = URL(url).openConnection() as HttpURLConnection
         connection.requestMethod = "POST"
         connection.setRequestProperty("Content-Type", "application/json")
-
 
         return try {
 
@@ -52,7 +50,6 @@ class LoginRepoImpl : LoginRepo {
 
     override fun register() : User?
     {
-
         return User("a","a")
     }
 }

@@ -5,20 +5,25 @@ import com.example.dermaai_android_140.repo.LoginRepo
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import com.example.dermaai_android_140.ui.accountinfo.AccountinfoViewModel
-import com.example.dermaai_android_140.ui.photo.PhotoViewModel
-
+import kotlinx.serialization.descriptors.StructureKind
+import kotlinx.serialization.descriptors.StructureKind.OBJECT
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
+
 import org.koin.dsl.module
+
 
 val appModule = module {
 
-    single<LoginRepo> { LoginRepoImpl() }
 
-    single<ImageRepo> { ImageRepoImpl() }
+    single { LoginRepoImpl() }
+    single { ImageRepoImpl() }
 
-    viewModel{ AccountinfoViewModel(get()) }
-
-    viewModel { PhotoViewModel(get()) }
-
+    /*
+    single<Repo>(named("login")) { LoginRepoImpl() }
+    single<Repo>(named("image")) { ImageRepoImpl() }
+    */
 
 }
+
+

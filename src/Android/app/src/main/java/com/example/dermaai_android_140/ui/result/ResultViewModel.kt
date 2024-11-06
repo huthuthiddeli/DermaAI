@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 
 class ResultViewModel : ViewModel() {
 
-    private val _result = MutableLiveData<String>()
-    val result: LiveData<String> get() = _result
 
 
 

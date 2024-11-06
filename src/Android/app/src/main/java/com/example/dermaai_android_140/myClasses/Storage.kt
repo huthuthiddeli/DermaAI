@@ -4,10 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.media.ExifInterface
 import android.os.Environment
 import android.widget.Toast
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -18,7 +20,6 @@ class Storage {
 
 
     fun retrieveImagesFromStorage(filesDir : File?, takenByUser: Boolean): MutableList<File> {
-
         
         var subDir = getSubDir(takenByUser)
 
@@ -58,12 +59,35 @@ class Storage {
             dir.mkdirs()
         }
 
-        return File.createTempFile(
+
+        val tempFile = File.createTempFile(
             "JPEG_${timeStamp}_",
             ".jpg",
             dir
         )
+
+        Storage().addMetadata(tempFile)
+
+        return tempFile
     }
+
+
+    private fun removeMetadata()
+    {
+
+    }
+
+    fun addMetadata(image : File)
+    {
+        try {
+            val exif = ExifInterface(image)
+            exif.setAttribute(ExifInterface.TAG_USER_COMMENT, "Text")
+            exif.saveAttributes()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
 
 
     private fun getSubDir(takenByUser : Boolean) : String

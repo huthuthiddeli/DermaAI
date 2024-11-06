@@ -33,8 +33,7 @@ class GalleryViewModel : ViewModel() {
             _images.postValue(retrievedImages)
         }
     }
-
-
+    
 
 
 }
