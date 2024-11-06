@@ -4,34 +4,42 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dermaai_android_140.myClasses.LoginApi
 import com.example.dermaai_android_140.myClasses.User
+import com.example.dermaai_android_140.repo.ImageRepo
+import com.example.dermaai_android_140.repo.LoginRepo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+//import org.koin.core.Koin
 
-class AccountinfoViewModel : ViewModel() {
+
+class AccountinfoViewModel(private val loginRepo: LoginRepo) : ViewModel() {
+
 
     private val _user = MutableLiveData<User?>()
     val user: LiveData<User?> get() = _user
 
-    private val _isLoggedIn = MutableLiveData<Boolean>(false)
+    private val _isLoggedIn = MutableLiveData<Boolean>()
     val isLoggedIn: LiveData<Boolean> get() = _isLoggedIn
+
+
 
     fun login(email : String, password : String)
     {
+        //loginRepo?.login("Test","test")
+
         viewModelScope.launch(Dispatchers.IO) {
 
             val loginDeferred = async(Dispatchers.IO) {
-                val loginApi = LoginApi()
-                loginApi.login(email, password)
+
+                //loginRepo.login(email, password)
             }
 
             val receivedUser = loginDeferred.await()
 
             if (receivedUser != null) {
                 _isLoggedIn.postValue(true)
-                _user.postValue(receivedUser)
+                //_user.postValue(receivedUser)
                 println("successful")
             } else {
                 println("failed")
@@ -41,6 +49,6 @@ class AccountinfoViewModel : ViewModel() {
 
         println()
     }
-    
+
 
 }

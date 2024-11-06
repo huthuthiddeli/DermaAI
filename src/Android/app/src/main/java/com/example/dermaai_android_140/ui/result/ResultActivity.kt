@@ -14,13 +14,16 @@ class ResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //setContentView(R.layout.activity_result)
+        setContentView(R.layout.activity_result)
 
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val imagePath = intent.getStringExtra("IMAGE_PATH")
+        val imagePath = intent.getStringExtra("EXTRA_IMAGE_PATH")
         val bitmap = BitmapFactory.decodeFile(imagePath)
         binding.fullscreenImage.setImageBitmap(bitmap)
+
+
+
     }
 }

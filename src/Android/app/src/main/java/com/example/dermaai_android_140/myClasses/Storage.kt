@@ -11,47 +11,32 @@ import java.io.FileOutputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class Storage {
 
 
-    fun retrieveImagesFromStorage(activity : Activity, takenByUser: Boolean): MutableList<File> {
 
+    fun retrieveImagesFromStorage(filesDir : File?, takenByUser: Boolean): MutableList<File> {
 
         
-        var subDir = ""
-        if(takenByUser)
-        {
-            subDir="Photo_User"
-        }
-        else {
-            subDir="Photo_ServerResponse"
-        }
+        var subDir = getSubDir(takenByUser)
 
-        val storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        val folder = File(storageDir, subDir)
-        //val images = mutableListOf<Bitmap>()
+        val folder = File(filesDir, subDir)
         val images = mutableListOf<File>()
 
         if (folder.isDirectory) {
-
             for (file in folder.listFiles()!!) {
-                
-                if (file.extension == "jpg" && folder.listFiles() != null) {
-                    val bitmap = BitmapFactory.decodeFile(file.absolutePath)
-                    if (bitmap != null) {
-                        images.add(file)
-                    }
+                if (file.extension == "jpg") {
+                    images.add(file)
                 }
-
             }
         }
         return images
     }
 
-    fun saveFileToStorage(bitmap : Bitmap, activity : Activity, context : Context, takenByUser : Boolean)
+    fun saveFileToStorage(bitmap : Bitmap, context : Context, filePath : String)
     {
-        val filePath = createUniqueImagePath(activity, takenByUser)
         val outputStream: OutputStream = FileOutputStream(filePath)
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
         outputStream.flush()
@@ -62,17 +47,10 @@ class Storage {
 
     fun createUniqueImagePath(activity : Activity, takenByUser : Boolean): File {
         //create File name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
         val storageDir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        var subDir = ""
 
-        if(takenByUser)
-        {
-            subDir="Photo_User"
-        }
-        else {
-            subDir="Photo_ServerResponse"
-        }
+        var subDir = getSubDir(takenByUser)
 
         val dir =  File(storageDir, subDir)
 
@@ -85,7 +63,18 @@ class Storage {
             ".jpg",
             dir
         )
+    }
 
+
+    private fun getSubDir(takenByUser : Boolean) : String
+    {
+        if(takenByUser)
+        {
+            return "Photo_User"
+        }
+        else {
+            return "Photo_ServerResponse"
+        }
     }
 
 }

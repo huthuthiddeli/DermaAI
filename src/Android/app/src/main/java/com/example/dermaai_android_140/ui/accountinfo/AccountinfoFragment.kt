@@ -8,17 +8,30 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import androidx.compose.runtime.produceState
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.MainActivity
-import com.example.dermaai_android_140.myClasses.LoginApi
-import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.R
+import com.example.dermaai_android_140.repo.LoginRepo
+import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
+import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import com.example.dermaai_android_140.ui.home.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.getValue
 
+class AccountinfoFragment() : Fragment() {
 
-class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
+    private var isLogin: Boolean = false
+
+    //val accountinfoViewModel: AccountinfoViewModel by viewModel()
+
+    companion object {
+        fun newInstance(isLogin: Boolean): AccountinfoFragment {
+            val fragment = AccountinfoFragment()
+            fragment.isLogin = isLogin
+            return fragment
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,7 +40,9 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
     ): View? {
 
         var view: View? = null
+
         val viewModel = ViewModelProvider(this).get(AccountinfoViewModel::class.java)
+        
 
         if (isLogin) {
             view = inflater.inflate(R.layout.fragment_accountinfo_login, container, false)
@@ -41,13 +56,12 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
 
 
         if (isLogin) {
-
             val switchToRegisterBtn = view.findViewById<Button>(R.id.switchToRegisterBtn)
             val loginBtn = view.findViewById<Button>(R.id.loginBtn)
 
             switchToRegisterBtn.setOnClickListener {
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_placeholder_accountinfo, AccountinfoFragment(false))
+                    .replace(R.id.fragment_placeholder_accountinfo, AccountinfoFragment.newInstance(false))
                     .commit()
             }
 
@@ -82,7 +96,7 @@ class AccountinfoFragment(private val isLogin : Boolean) : Fragment() {
 
             switchToLoginBtn.setOnClickListener {
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_placeholder_accountinfo, AccountinfoFragment(true))
+                    .replace(R.id.fragment_placeholder_accountinfo, AccountinfoFragment.newInstance(true))
                     .commit()
             }
         }

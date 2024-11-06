@@ -1,18 +1,18 @@
 package com.example.dermaai_android_140.ui.photo
 
 import android.Manifest
-import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.databinding.FragmentPhotoBinding
+import com.example.dermaai_android_140.repo.ImageRepo
 import java.io.File
 
 class PhotoFragment : Fragment() {
@@ -30,8 +31,6 @@ class PhotoFragment : Fragment() {
 
 
     private lateinit var photoFile: File
-    private lateinit var photoURI: Uri
-
 
 
     // This property is only valid between onCreateView and
@@ -46,66 +45,101 @@ class PhotoFragment : Fragment() {
         val photoViewModel =
             ViewModelProvider(this).get(PhotoViewModel::class.java)
 
+
         _binding = FragmentPhotoBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
-        photoViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-
         //
+
+        photoViewModel.currentImage.observe(viewLifecycleOwner, {currentImage ->
+            photoViewModel.sendImage()
+        })
+
         val takePhotoBtn: Button = binding.takePhotoBtn
 
-
         takePhotoBtn.setOnClickListener {
+
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                openCamera()
-            } else {
+                openCamera(photoViewModel)
+            }else{
                 ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
+                photoViewModel.requestCameraPermission()
             }
         }
+
+        photoViewModel.requestCameraPermission.observe(viewLifecycleOwner, {requestCount ->
+            if(requestCount == 5)
+            {
+                showPermissionSettingsDialog()
+                photoViewModel.resetCameraPermissionRequest()
+            }
+        })
         
         return root
     }
-    
 
-    private fun openCamera() {
+
+    private fun showPermissionSettingsDialog() {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Permission Required")
+            .setMessage("Camera permission is required to take photos. Enable it in the app settings.")
+            .setPositiveButton("Go to Settings")
+            { _, _ ->
+                openAppSettings()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun openAppSettings() {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+        val uri: Uri = Uri.fromParts("package", requireActivity().packageName, null)
+        intent.data = uri
+        startActivity(intent)
+    }
+
+    private fun openCamera(photoViewModel : PhotoViewModel) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
         // if Camera app exists
         if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
+
             val storage = Storage()
+
             photoFile = storage.createUniqueImagePath(requireActivity(), true)
+
             photoFile.also {
-                val photoURI = FileProvider.getUriForFile(
-                    requireContext(),
-                    requireActivity().packageName + ".fileprovider",
-                    it
-                )
+                val photoURI : Uri = FileProvider.getUriForFile(requireContext(), requireActivity().packageName + ".fileprovider", it)
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+
+                //photoViewModel.currentImage =
+
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE)
             }
         }
     }
 
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (requestCode == CAMERA_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
-            val storage = Storage()
-            storage.saveFileToStorage(bitmap, requireActivity(), requireContext(), true)
-        }
-    }
+        val photoViewModel =
+            ViewModelProvider(this).get(PhotoViewModel::class.java)
 
+        val test = photoViewModel.currentImage
+
+        val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
+        val storage = Storage()
+
+        storage.saveFileToStorage(bitmap, requireContext(),photoFile.absolutePath)
+
+
+    }
 
     //
 
 
-
-
-    
 
     override fun onDestroyView() {
         super.onDestroyView()

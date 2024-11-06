@@ -1,21 +1,15 @@
-package com.example.dermaai_android_140.myClasses
+package com.example.dermaai_android_140.repoimpl
 
-import com.google.gson.Gson
-import kotlinx.serialization.SerializationStrategy
-import kotlinx.serialization.json.Json
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
-import java.net.HttpURLConnection
-import java.net.URL
-
-class LoginApi : Api() {
+import com.example.dermaai_android_140.repo.LoginRepo
+import com.example.dermaai_android_140.myClasses.User
 
 
-    fun login(email : String, password : String) : User? //= withContext(Dispatchers.IO)
+
+class LoginRepoImpl : LoginRepo {
+
+    override fun login(email : String, password : String) : User?
     {
         val user : User = User(email,password)
-
-
         /*
         val url : String = ""
         val connection = URL(url).openConnection() as HttpURLConnection
@@ -56,11 +50,9 @@ class LoginApi : Api() {
         return user
     }
 
-    fun register()
+    override fun register() : User?
     {
 
+        return User("a","a")
     }
-
-
-
 }

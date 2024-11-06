@@ -11,6 +11,7 @@ import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.ActivityMainBinding
 import com.example.dermaai_android_140.ui.accountinfo.AccountinfoFragment
 
+
 class LoginActivity : AppCompatActivity() {
     
     private lateinit var binding: ActivityMainBinding
@@ -23,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_placeholder_accountinfo, AccountinfoFragment(true))
+                .replace(R.id.fragment_placeholder_accountinfo, AccountinfoFragment.newInstance(true))
                 .commit()
         }
 

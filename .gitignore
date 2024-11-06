@@ -47,3 +47,4 @@ local.properties
 *.bin
 *.out
 /src/Android/caches
+/src/Android/.tmp

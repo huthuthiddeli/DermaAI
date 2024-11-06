@@ -12,6 +12,5 @@ class User(var email : String, var password : String)
         this.id = id
     }
 
-
 }
 
