@@ -106,6 +106,7 @@ def loadImagesAs1DVectorFromAPI():
 
     return dataset
 
+# Decode images from binary string to png files
 def decode_images():
     for index, row in loadImagesAs1DVectorFromAPI().iterrows():
         # Hole die komprimierten Binärdaten des Bildes
@@ -121,7 +122,9 @@ def decode_images():
         # Konvertiere die dekomprimierten Daten in ein Bild und speichere es
         image = Image.open(io.BytesIO(decompressed_data))
         image.save(f'image_{index}.png')
+        
 
+# get images from api in form of binary strings
 def __fetchDataFromAPI():
     try:
         response = requests.get(api_url)
