@@ -48,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.846"
-        app:icon="@drawable/ic_menu_camera"/>
+        app:icon="@drawable/ic_login"/>
 
     <Button
         android:id="@+id/switchToRegisterBtn"

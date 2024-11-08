@@ -17,5 +17,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="110dp"
+        android:layout_height="72dp"
+        android:scaleX="2"
+        android:scaleY="2"
+        android:text=""
+        android:textSize="8sp"
+        app:layout_constraintBottom_toBottomOf="@+id/fragment_placeholder_accountinfo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.368"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.631" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

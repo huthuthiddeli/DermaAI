@@ -18,7 +18,6 @@ import java.util.Locale
 class Storage {
 
 
-
     fun retrieveImagesFromStorage(filesDir : File?, takenByUser: Boolean): MutableList<File> {
         
         var subDir = getSubDir(takenByUser)
