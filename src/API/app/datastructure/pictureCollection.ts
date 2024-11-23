@@ -1,11 +1,16 @@
 import mongoose, {Schema, Document} from "mongoose";
 
 interface IPictureData extends Document{
-    picture: String;
+    picture: any,
+    diagnosis: String
 }
 
 let pictureSchema = new Schema<IPictureData>({
         picture: {
+            type: Schema.Types.Mixed,
+            required: true
+        },
+        diagnosis: {
             type: Schema.Types.String,
             required: true
         }

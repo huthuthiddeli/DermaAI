@@ -20,6 +20,7 @@ const bodyParserConfig = defineConfig({
    * Config for the JSON parser
    */
   json: {
+    limit: '100mb',
     convertEmptyStringsToNull: true,
     types: [
       'application/json',
@@ -28,7 +29,6 @@ const bodyParserConfig = defineConfig({
       'application/csp-report',
     ],
   },
-
   /**
    * Config for the "multipart/form-data" content-type parser.
    * File uploads are handled by the multipart parser.
@@ -47,7 +47,7 @@ const bodyParserConfig = defineConfig({
      * Maximum limit of data to parse including all files
      * and fields
      */
-    limit: '20mb',
+    limit: '100mb',
     types: ['multipart/form-data'],
   },
 })

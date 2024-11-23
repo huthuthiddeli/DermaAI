@@ -5,6 +5,7 @@ import { prettyPrintError } from "@adonisjs/core";
 import env from '#start/env'
 import { pictureModel, pictureSchema } from "../datastructure/pictureCollection.js";
 
+
 app.ready(() => {
     logger.info("PictureProvider ready!")
     connectToDatabase()
@@ -46,12 +47,12 @@ const connectToDatabase = async (): Promise<boolean> => {
     return true
 }
 
-const savePicture = async (pictureString: String): Promise<{status: boolean, data: any}>  => {
+const savePicture = async (record: Record<string, string>): Promise<{status: boolean, data: any}>  => {
 
     await checkState()
 
-    if(!pictureString){
-        logger.info("No picturestring was given!")
+    if(Object.keys(record).length != 2){
+        logger.info("Parameters didnt work!")
         return {status: false, data: undefined}        
     }
 
@@ -59,7 +60,8 @@ const savePicture = async (pictureString: String): Promise<{status: boolean, dat
 
     try{
         const schema = new pictureModel({
-            picture: pictureString
+            picture: record["picture"],
+            diagnosis: record["diagnosis"]
         })
 
         savedPicture = await schema.save()
@@ -70,7 +72,6 @@ const savePicture = async (pictureString: String): Promise<{status: boolean, dat
         return {status: false, data: savedPicture}
     }
 
-    logger.info("Picture saved: %s", savedPicture)
     return {status: true, data: savedPicture}
 }
 
