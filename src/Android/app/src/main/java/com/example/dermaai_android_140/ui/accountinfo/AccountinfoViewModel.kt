@@ -21,15 +21,31 @@ class AccountinfoViewModel() : ViewModel() {
 
     private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
 
-    private val _user = MutableLiveData<User?>()
-    val user: LiveData<User?> get() = _user
+    private val _email = MutableLiveData<String>()
+    val email: LiveData<String> get() = _email
 
+    private val _password = MutableLiveData<String>()
+    val password: LiveData<String> get() = _password
+    
     private val _isLoggedIn = MutableLiveData<Boolean>()
     val isLoggedIn: LiveData<Boolean> get() = _isLoggedIn
 
+    private val _stayLoggedIn = MutableLiveData<Boolean>()
+    val stayLoggedIn: LiveData<Boolean> get() = _stayLoggedIn
+
+
+    fun setStayLoggedIn(stayLoggedIn: Boolean)
+    {
+        _stayLoggedIn.value = stayLoggedIn
+    }
 
     fun login(email : String, password : String)
     {
+        if(stayLoggedIn.value == true)
+        {
+
+        }
+
         viewModelScope.launch(Dispatchers.IO) {
 
             val loginDeferred = async(Dispatchers.IO) {
@@ -50,6 +66,5 @@ class AccountinfoViewModel() : ViewModel() {
 
         println()
     }
-
 
 }

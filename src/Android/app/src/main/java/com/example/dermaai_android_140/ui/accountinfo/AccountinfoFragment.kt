@@ -54,6 +54,8 @@ class AccountinfoFragment() : Fragment() {
             val switchToRegisterBtn = view.findViewById<Button>(R.id.switchToRegisterBtn)
             val loginBtn = view.findViewById<Button>(R.id.loginBtn)
 
+            val stayLoggedInContainer = view.findViewById<View>(R.id.stayLoggedInContainer)
+
             switchToRegisterBtn.setOnClickListener {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_placeholder_accountinfo, AccountinfoFragment.newInstance(false))

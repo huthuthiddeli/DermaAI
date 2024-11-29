@@ -28,7 +28,6 @@ class PhotoViewModel() : ViewModel() {
 
     private lateinit var tmpImage : File
 
-
     private val imageRepo: ImageRepoImpl by KoinJavaComponent.inject(ImageRepoImpl::class.java)
 
     fun requestCameraPermission()
@@ -45,7 +44,6 @@ class PhotoViewModel() : ViewModel() {
     {
         _currentImage.postValue(photoFile)
     }
-
 
     fun setTmpImage(tmpImage : File)
     {

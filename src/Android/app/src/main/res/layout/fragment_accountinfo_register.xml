@@ -63,8 +63,9 @@
         app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.846" />
-
+        app:layout_constraintVertical_bias="0.846"
+        app:icon="@drawable/ic_switchleft"/>
+    
     <Button
         android:id="@+id/registerBtn"
         android:layout_width="wrap_content"
@@ -77,6 +78,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.846"
         app:icon="@drawable/ic_register"/>
-    
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
