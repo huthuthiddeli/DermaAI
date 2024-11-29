@@ -10,8 +10,9 @@
 import router from '@adonisjs/core/services/router'
 import { writeToDatabase, getAllFromDatabase } from '../app/providers/mongoprovider.js'
 import logger from '@adonisjs/core/services/logger'
-import {getAllPictues, savePicture} from '../app/providers/pictureProvider.js'
+import {getAllPictues} from '../app/providers/pictureProvider.js'
 import saveUser from '../app/providers/userProvider.js'
+import PostsController from '#controllers/posts_controller'
 
 router.get('/', async () => {
   return {
@@ -23,11 +24,6 @@ router.post('/article', async ({request, response}) => {
   let bodyText = request.body()
   let data = await writeToDatabase(bodyText)
 
-  if(data.status){
-    logger.info("Data has been created:\n%s", data.data)
-    return data.data
-  }
-
   response.status(400).send(data.data)
 })
 
@@ -36,20 +32,20 @@ router.get('/any', async () => {
   }
 )
 
-router.post('/picture', async ({request}) => {
-    let body = request.body()
+router.post('/picture', [PostsController, 'picture'])
 
-    for(let key in body){
-      
-      if(key == 'picture'){
-        return await savePicture(body[key])
-      }
-    }
-  }
-)
+
+
+
+// router.post('/picture', async ({request}) => {
+//   let body = request.body()
+//   return savePicture(body)
+// }
+// )
 
 router.get('/getAllPictures', async () => {
-
+  
+  logger.info("Request received")
   let data = await getAllPictues()
 
   if(data.length != 0){
