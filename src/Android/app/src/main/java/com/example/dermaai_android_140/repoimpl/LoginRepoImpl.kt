@@ -6,9 +6,16 @@ import com.example.dermaai_android_140.myClasses.User
 
 class LoginRepoImpl : LoginRepo {
 
-    override fun login(email : String, password : String) : User?
+
+    override fun login(email : String, password : String, mfa : Boolean, key : String) : User?
     {
-        val user : User = User(email,password)
+        val user : User = User(email,password, mfa,key)
+
+
+        //TODO
+        // send if 2FA is enabled/disabled
+        // store 2FA key on Server
+
         /*
         val url : String = ""
         val connection = URL(url).openConnection() as HttpURLConnection
@@ -50,6 +57,10 @@ class LoginRepoImpl : LoginRepo {
 
     override fun register() : User?
     {
-        return User("a","a")
+        return User("a","a", false, "")
+    }
+
+    override fun getUser(): User? {
+        return User("a","a", false, "")
     }
 }

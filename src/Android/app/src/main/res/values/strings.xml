@@ -38,6 +38,29 @@
     <string name="loginEndpoint">login</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Preference Titles -->
+    <string name="mfa_header">Two-Factor Authentication</string>
+    <string name="sync_header">Sync</string>
 
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <string name="two_factor_authentication_header">Two-Factor Authentication</string>
+    <string name="enable_2fa_title">2FA</string>
+    <string name="enable_2fa_on">enabled</string>
+    <string name="enable_2fa_off">disabled</string>
+    <string name="enter_key">Enter Key to enable 2FA</string>
+    <string name="verify_key">Verify!</string>
+    <string name="mfa_disabled">Disabled</string>
+    <string name="logout_header">Logout</string>
 
 </resources>

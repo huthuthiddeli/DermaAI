@@ -1,5 +1,6 @@
 package com.example.dermaai_android_140.ui.login
 
+import android.content.Context
 import android.os.Bundle
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
@@ -26,9 +27,7 @@ class LoginActivity : AppCompatActivity() {
 
         //val switch = findViewById<Switch>(R.)
 
-
-
-
     }
+
 
 }

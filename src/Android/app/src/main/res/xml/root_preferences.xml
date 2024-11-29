@@ -1,0 +1,38 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        app:title="@string/mfa_header">
+
+    <SwitchPreferenceCompat
+        app:key="enable_2fa"
+        app:title="@string/enable_2fa_title"
+        app:summaryOn="@string/enable_2fa_on"
+        app:summaryOff="@string/enable_2fa_off"
+        app:defaultValue="false"
+        app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="two_fa_key"
+            app:title="@string/enter_key"
+            android:inputType="text"
+            app:defaultValue=""
+            app:useSimpleSummaryProvider="true"
+            app:summaryOn="@string/verify_key"
+            app:summaryOff="@string/mfa_disabled"
+            app:enabled="false"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="@string/logout_header">
+
+        <Preference
+            android:key="logout"
+            android:title="@string/logout_header"
+            android:onClick="onLogoutClicked" />
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

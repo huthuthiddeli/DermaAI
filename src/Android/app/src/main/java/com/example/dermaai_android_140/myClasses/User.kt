@@ -3,12 +3,12 @@ package com.example.dermaai_android_140.myClasses
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerializationStrategy
 
-class User(var email : String, var password : String)
+class User(var email : String, var password : String, var mfa : Boolean,var key : String)
 {
     var id : String? = ""
 
-    constructor(email: String, password: String, id: String?)
-            : this(email, password) {
+    constructor(email: String, password: String, id: String?, mfa : Boolean,key : String)
+            : this(email, password, mfa, key) {
         this.id = id
     }
 

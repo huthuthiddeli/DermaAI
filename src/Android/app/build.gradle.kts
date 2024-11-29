@@ -26,6 +26,13 @@ android {
             )
         }
     }
+
+    packagingOptions {
+        exclude("META-INF/DEPENDENCIES")
+        exclude("META-INF/NOTICE")
+        exclude("META-INF/LICENSE")
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -64,6 +71,10 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.koin.androidx.viewmodel)
     implementation(libs.androidx.exifinterface)
+    implementation(libs.androidx.ui)
+    implementation(libs.googleauth)
+    implementation(libs.totp)
+    implementation(libs.androidx.preference)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

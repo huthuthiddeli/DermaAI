@@ -66,8 +66,8 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/stayLoggedInContainer"
         android:name="com.example.dermaai_android_140.ui.stayLoggedIn.StayLoggedInFragment"
-        android:layout_width="397dp"
-        android:layout_height="523dp"
+        android:layout_width="366dp"
+        android:layout_height="153dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

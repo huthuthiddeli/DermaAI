@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.ImageRepo
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
@@ -27,37 +28,93 @@ class AccountinfoViewModel() : ViewModel() {
     private val _password = MutableLiveData<String>()
     val password: LiveData<String> get() = _password
     
-    private val _isLoggedIn = MutableLiveData<Boolean>()
+    private val _isLoggedIn = MutableLiveData<Boolean>(false)
     val isLoggedIn: LiveData<Boolean> get() = _isLoggedIn
 
-    private val _stayLoggedIn = MutableLiveData<Boolean>()
-    val stayLoggedIn: LiveData<Boolean> get() = _stayLoggedIn
+    private val _mfaEnabled = MutableLiveData<Boolean>(false)
+    val mfaEnabled: LiveData<Boolean> get() = _mfaEnabled
 
+    private var _key = String()
+    private var _user : User? = null
 
+    //private val _stayLoggedIn = MutableLiveData<Boolean>(false)
+    //val stayLoggedIn: LiveData<Boolean> get() = _stayLoggedIn
+
+/*
     fun setStayLoggedIn(stayLoggedIn: Boolean)
     {
         _stayLoggedIn.value = stayLoggedIn
     }
 
+    fun getStayLoggedIn() : Boolean?
+    {
+        return stayLoggedIn.value
+    }*/
+
+    fun setEmail(email: String) {
+        _email.value = email
+    }
+
+    fun setPassword(password: String) {
+        _password.value = password
+    }
+
+    fun setIsLoggedIn(isLoggedIn : Boolean)
+    {
+        _isLoggedIn.value = isLoggedIn
+    }
+
+    fun getKey() : String
+    {
+        return _key
+    }
+
+    fun setUser(user : User?)
+    {
+        _user = user
+    }
+
     fun login(email : String, password : String)
     {
+        /*
         if(stayLoggedIn.value == true)
         {
 
-        }
+        }*/
 
         viewModelScope.launch(Dispatchers.IO) {
 
             val loginDeferred = async(Dispatchers.IO) {
-                loginRepo.login(email, password)
+                loginRepo.login(email, password, false, "")
             }
 
             val receivedUser = loginDeferred.await()
 
+            // succesfull
             if (receivedUser != null) {
-                _isLoggedIn.postValue(true)
+
                 //_user.postValue(receivedUser)
-                println("successful")
+
+
+                if(receivedUser.mfa)
+                {
+                    _mfaEnabled.value = receivedUser.mfa
+                    _key = receivedUser.key
+
+                    /*
+                    val auth = Authentication()
+                    val enteredCode = 0
+
+                    if(auth.validateTOTP(receivedUser.key,enteredCode.toString()))
+                    {
+                        _isLoggedIn.postValue(true)
+                    }*/
+                }
+                // failed
+                else{
+                    _isLoggedIn.postValue(true)
+                }
+
             } else {
                 println("failed")
             }
@@ -66,5 +123,18 @@ class AccountinfoViewModel() : ViewModel() {
 
         println()
     }
+
+
+    fun getUser(): User? {
+
+        var user : User? = null
+
+        viewModelScope.launch(Dispatchers.IO) {
+            user = loginRepo.getUser()
+        }
+
+        return user
+    }
+
 
 }
