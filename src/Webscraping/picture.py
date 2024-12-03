@@ -1,6 +1,3 @@
-import json
-
-
 class Picture:
 
     def __init__(self, pic, diagnosis):

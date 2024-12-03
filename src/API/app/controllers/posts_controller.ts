@@ -5,9 +5,6 @@ import { savePicture } from '../providers/pictureProvider.js';
 
 export default class PostsController {
   
-
-
-
   async picture({request, response}: HttpContext) {
     const file = request.file('file', {
       extnames: ['json'],

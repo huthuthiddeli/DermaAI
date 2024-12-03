@@ -164,9 +164,6 @@ def crop_image(array_shape: tuple, mem_name: str):
     # Crop the ROI from the image for processing
     center_region = image[roi_y1:roi_y2, roi_x1:roi_x2]
 
-    # normalized_img = cv2.normalize(center_region, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-    # cv2.imshow("IMAGE", normalized_img)
-
     # Apply GaussianBlur to reduce noise
     gray = cv2.cvtColor(center_region, cv2.COLOR_BGR2GRAY)
 
@@ -194,26 +191,17 @@ def crop_image(array_shape: tuple, mem_name: str):
 
             # Crop the detected spot from the original image
             detected_spot = cv2.cvtColor(image[y:y + h, x:x + w], cv2.COLOR_BGR2GRAY)
-            # cv2.imshow("fetected", detected_spot)
             # Save the cropped spot as a separate file
             filepath = find_path(my_object)
             print(f'FILEPATH: {filepath}')
             cv2.imwrite(filepath, detected_spot)
-            # cv2.imwrite(filepath_default, image)
 
     # Optional: Draw the ROI rectangle for reference
     cv2.rectangle(output_image, (roi_x1, roi_y1), (roi_x2, roi_y2), (255, 0, 0), 2)
 
-    # cv2.imshow("TEST", detected_spot)
-    #
-    # cv2.imshow("TEST3", output_image)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
-
     # Clean up shared memory when done
     shm.close()
     shm.unlink()
-    # return image, output_image, detected_spot
 
 
 if __name__ == '__main__':

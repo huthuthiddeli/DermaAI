@@ -49,3 +49,6 @@ local.properties
 *.out
 /src/Android/caches
 /src/Android/.tmp
+
+# Log files
+/src/API/logs/
