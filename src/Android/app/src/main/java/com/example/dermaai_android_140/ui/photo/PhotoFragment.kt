@@ -116,7 +116,9 @@ class PhotoFragment : Fragment() {
                 startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE)
             }
         }
+        
     }
+
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

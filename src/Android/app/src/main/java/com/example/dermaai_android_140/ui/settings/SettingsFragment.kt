@@ -35,6 +35,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
+
         logoutBtn?.setOnPreferenceClickListener {
             logout()
             true

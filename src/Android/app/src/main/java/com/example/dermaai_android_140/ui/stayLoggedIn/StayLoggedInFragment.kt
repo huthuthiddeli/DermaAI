@@ -29,13 +29,13 @@ class StayLoggedInFragment : Fragment() {
         val loginViewModel: LoginViewModel by activityViewModels()
 
         val switch : Switch = view.findViewById<Switch>(R.id.stayLoggedInSwitch)
-        
-        switch.setOnCheckedChangeListener { _, isChecked ->
+
+
+        switch.setOnCheckedChangeListener {_, isChecked ->
             loginViewModel.setStayLoggedIn(isChecked)
             //accountInfoViewModel.setStayLoggedIn(isChecked)
         }
-
-
+        
         return view
 
 
