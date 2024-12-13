@@ -1,11 +1,12 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.baselineprofile)
 }
 
 android {
     namespace = "com.example.dermaai_android_140"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.dermaai_android_140"
@@ -15,6 +16,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        versionNameSuffix = rootProject.extra["sourceCompatibility"] as String
+        applicationIdSuffix = rootProject.extra["sourceCompatibility"] as String
     }
 
     buildTypes {
@@ -26,16 +29,15 @@ android {
             )
         }
     }
-
     packagingOptions {
-        exclude("META-INF/DEPENDENCIES")
-        exclude("META-INF/NOTICE")
-        exclude("META-INF/LICENSE")
+        resources {
+            excludes += setOf("META-INF/DEPENDENCIES", "META-INF/NOTICE", "META-INF/LICENSE")
+        }
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = rootProject.extra["sourceCompatibility"] as String
+        targetCompatibility = rootProject.extra["sourceCompatibility"] as String
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -43,6 +45,9 @@ android {
     buildFeatures {
         viewBinding = true
     }
+    flavorDimensions += listOf()
+    ndkVersion = "28.0.12674087 rc2"
+    buildToolsVersion = "36.0.0 rc1"
 }
 
 dependencies {
@@ -75,8 +80,11 @@ dependencies {
     implementation(libs.googleauth)
     implementation(libs.totp)
     implementation(libs.androidx.preference)
+    implementation(libs.androidx.profileinstaller)
+    implementation(libs.support.annotations)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.koin.android)
+    "baselineProfile"(project(":baselineprofile"))
 }

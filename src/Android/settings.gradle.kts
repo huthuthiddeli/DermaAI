@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "DermaAI_Android_14.0"
 include(":app")
- 
+include(":baselineprofile")
