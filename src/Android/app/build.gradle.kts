@@ -1,43 +1,45 @@
+import org.gradle.api.JavaVersion.VERSION_1_8
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.baselineprofile)
 }
 
 android {
     namespace = "com.example.dermaai_android_140"
     compileSdk = 35
 
+    packaging {
+        resources.excludes.add("META-INF/DEPENDENCIES")
+    }
+
     defaultConfig {
         applicationId = "com.example.dermaai_android_140"
-        minSdk = 34
-        targetSdk = 34
+        targetSdk = 35
+        minSdk = 30
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        versionNameSuffix = rootProject.extra["sourceCompatibility"] as String
-        applicationIdSuffix = rootProject.extra["sourceCompatibility"] as String
     }
 
+
+    // Performance / Shrinking
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-        }
-    }
-    packagingOptions {
-        resources {
-            excludes += setOf("META-INF/DEPENDENCIES", "META-INF/NOTICE", "META-INF/LICENSE")
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
     compileOptions {
-        sourceCompatibility = rootProject.extra["sourceCompatibility"] as String
-        targetCompatibility = rootProject.extra["sourceCompatibility"] as String
+        sourceCompatibility = VERSION_1_8
+        targetCompatibility = VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -45,14 +47,13 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    flavorDimensions += listOf()
-    ndkVersion = "28.0.12674087 rc2"
-    buildToolsVersion = "36.0.0 rc1"
 }
 
 dependencies {
 
+    implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
+    implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
@@ -67,24 +68,15 @@ dependencies {
     implementation(libs.androidx.camera.extensions)
     implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.activity.ktx)
-    implementation(libs.androidx.fragment)
-    implementation(libs.androidx.legacy.support.v4)
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.kotlinx.serialization.json)
-    implementation(libs.gson)
-    implementation(libs.google.material)
-    implementation(libs.kotlinx.coroutines.android)
-    implementation(libs.koin.androidx.viewmodel)
-    implementation(libs.androidx.exifinterface)
-    implementation(libs.androidx.ui)
-    implementation(libs.googleauth)
     implementation(libs.totp)
-    implementation(libs.androidx.preference)
-    implementation(libs.androidx.profileinstaller)
-    implementation(libs.support.annotations)
+    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.googleauth)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.preference.ktx)
+    implementation(libs.coil)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.koin.android)
-    "baselineProfile"(project(":baselineprofile"))
+    implementation(libs.koin.androidx.viewmodel)
 }

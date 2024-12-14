@@ -9,7 +9,7 @@
     <setting name="sync" value="true" />
     <setting name="disableUpdateCheck" value="false" />
     <method v="2">
-      <option name="AppEngine.Gradle.BeforeRunTask" enabled="true" tasks="" />
+      <option name="AppEngine.Gradle.BeforeRunTask" enabled="true" tasks=":assemble" />
     </method>
   </configuration>
 </component>
