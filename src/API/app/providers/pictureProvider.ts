@@ -3,7 +3,7 @@ import logger from "@adonisjs/core/services/logger";
 import mongoose from 'mongoose'
 import { prettyPrintError } from "@adonisjs/core";
 import env from '#start/env'
-import { pictureModel, pictureSchema } from "../datastructure/pictureCollection.js";
+import { pictureModel } from "../datastructure/pictureCollection.js";
 
 
 app.ready(() => {
