@@ -1,10 +1,6 @@
 import mongoose, {Schema, Document} from "mongoose";
+import paginate from 'mongoose-paginate-v2';
 
-
-
-interface IArticledata extends Document{
-    data: any;
-}
 
 
 var thingSchema = new Schema<IArticledata>({
@@ -17,6 +13,12 @@ var thingSchema = new Schema<IArticledata>({
     collection: "test"
 }
 );
+
+thingSchema.plugin(paginate);
+
+interface IArticledata extends Document {
+    data: any;
+}
 
 
 const dataModel = mongoose.model<IArticledata>('articel', thingSchema, 'articles')
