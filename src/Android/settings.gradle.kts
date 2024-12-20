@@ -1,5 +1,8 @@
 @file:Suppress("DEPRECATION")
 
+include(":benchmark")
+
+
 pluginManagement {
     repositories {
         google {
