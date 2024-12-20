@@ -41,42 +41,5 @@ export default class PostsController {
       console.error('Error reading the file:', error);
       return response.internalServerError('Failed to read file content');
     }
-
   }
-  
-  async saveUser({request, response}: HttpContext){
-    const file = request.file('file', {
-      extnames: ['json'],
-      size: '5mb'
-    });
-
-    // Check if the file exists
-    if (!file) {
-      return response.badRequest('No file uploaded');
-    }
-
-    // Validate file
-    if (!file.isValid) {
-      return response.badRequest(file.errors);
-    }
-
-    // Move the file to a temporary location
-    const filePath = `./tmp/${file.clientName}`;
-    await file.move('./tmp', { name: file.clientName });
-
-    try{
-
-        const content = await fs.readFile(filePath, 'utf-8');
-        const jsonData: Record<string, string> = JSON.parse(content);
-
-        // TODO: Add user saving logic
-
-    }catch(err){
-      logger.error("An unexcpected error occured:" + err);
-      return response.internalServerError('Failed to read file content');
-    }
-  }
-
-  // async update({}: HttpContext) {}
-  
 }

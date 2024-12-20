@@ -1,19 +1,21 @@
 import mongoose, {Schema, Document} from "mongoose";
+import paginate from "mongoose-paginate-v2";
+
 
 interface IUserData extends Document{
     firstname: string,
-    secondname: string,
+    lastname: string,
     email: string,
     password: string
 }
 
-let userSchema = new Schema<IUserData>({
+export const userSchema = new Schema<IUserData>({
 
         firstname: {
             type: Schema.Types.String,
             required: true
         },
-        secondname: {
+        lastname: {
             type: Schema.Types.String,
             required: true
         },
@@ -31,6 +33,7 @@ let userSchema = new Schema<IUserData>({
     }
 )
 
-const userDataModel = mongoose.model<IUserData>('userData', userSchema)
+userSchema.plugin(paginate);
 
-export {userSchema, userDataModel}
+
+export const userDataModel = mongoose.model<IUserData, mongoose.PaginateModel<IUserData>>('userData', userSchema)

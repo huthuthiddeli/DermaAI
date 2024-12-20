@@ -87,7 +87,7 @@ let page: number = 1;
 const findPictures = async (ctx: HttpContext) => {
     let queryParams = ctx.request.qs();
 
-    Object.keys(queryParams).forEach(e => logger.info(query));
+    // Object.keys(queryParams).forEach(e => logger.info(query));
 
     const options = {
         page: page,
