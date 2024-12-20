@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import env from '#start/env'
 import { prettyPrintError } from "@adonisjs/core"
-import { dataModel } from "../datastructure/test.js"
+import { dataModel } from "../datastructure/pictureFileCollection.js"
 import logger from '@adonisjs/core/services/logger'
 import app from '@adonisjs/core/services/app'
 

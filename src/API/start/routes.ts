@@ -34,15 +34,6 @@ router.get('/any', async () => {
 
 router.post('/picture', [PostsController, 'picture'])
 
-
-
-
-// router.post('/picture', async ({request}) => {
-//   let body = request.body()
-//   return savePicture(body)
-// }
-// )
-
 router.get('/getAllPictures', async () => {
   
   logger.info("Request received")
