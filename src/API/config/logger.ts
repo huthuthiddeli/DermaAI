@@ -9,18 +9,6 @@ const loggerConfig = defineConfig({
    * By default, we configure only one logger (named "app").
    */
   loggers: {
-    // app: {
-    //   enabled: true,
-    //   name: env.get('APP_NAME'),
-    //   level: env.get('LOG_LEVEL'),
-    //   transport: {
-    //     targets: targets()
-    //       .pushIf(!app.inProduction, targets.pretty())
-    //       .pushIf(app.inProduction, targets.file({ destination: 1 }))
-    //       .toArray(),
-    //   },
-    // },
-
     app: {
       enabled: true,
       name: env.get('APP_NAME'),
@@ -29,21 +17,25 @@ const loggerConfig = defineConfig({
       transport: {
         targets: [
           {
-            target: 'pino/file',
-            level: 'info',
-            options: {
-              destination: './Logs/output.log'
-            }
-          },
-          {
             target: 'pino-pretty',
             level: 'info',
             options: {}
+          },
+          {
+            target: 'pino-roll',
+            level: 'info',
+            options: {
+              file: 'logs/log',
+              frequency: 'daily',
+              mkdir: true
+            }
           }
         ]
       }
-    }
-  }
+    },
+  },
+
+  
 })
 
 export default loggerConfig

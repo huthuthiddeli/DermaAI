@@ -6,6 +6,7 @@ import mongoose from 'mongoose'
 import { userDataModel } from '../datastructure/userDataCollection.js'
 import { HttpContext } from '@adonisjs/core/http'
 import { hashPassword } from '../utils/hash.js'
+import { ObjectId } from 'mongodb'
 
 app.ready(() => {
     logger.info("userProvider ready!")
@@ -18,7 +19,6 @@ interface IUserData {
     email: string,
     password: string
 }
-
 
 const checkState = async (): Promise<void> => {
     let state = mongoose.connection.readyState
@@ -49,6 +49,7 @@ function getRequestProperties(body: Record<string, any>) {
   let firstname: string = "";
   let lastname: string = "";
   let email: string = "";
+  let id: any = undefined;
 
   Object.keys(body).forEach(key => {
     switch (key){
@@ -64,10 +65,13 @@ function getRequestProperties(body: Record<string, any>) {
       case "password":
         password = body[key];
         break;
+      case "id":
+        id = body[key];
+        break;
     }
   });
 
-  return {firstname, lastname, email, password};
+  return id === undefined ? {firstname, lastname, email, password}: {firstname, lastname, email, password, id};
 }
 
 const connectToDatabase = async (): Promise<boolean> => {
@@ -116,10 +120,11 @@ export const validateUser = async (ctx: HttpContext) => {
   }
 
   let data = getRequestProperties(body);
-
   data["password"] = await hashPassword(data["password"]);
+  const newOBj = new ObjectId(data.id);
 
-  const existingUser = await userDataModel.findOne({firstname: data.firstname, lastname: data.lastname, email: data.email, password: data.password})
+  
+  const existingUser = await userDataModel.findOne({_id: newOBj})
 
   if (!existingUser) {
     return ctx.response.status(404).send("User not found");
@@ -129,4 +134,23 @@ export const validateUser = async (ctx: HttpContext) => {
   const {password, ...safeData} = existingUser.toObject();
 
   return ctx.response.status(200).json(safeData);
+}
+
+export const clearCollection = async (ctx: HttpContext) => {
+  await userDataModel.deleteMany({});
+
+  let data = await getAllUsers();
+
+  if(data.length === 0){
+    return ctx.response.status(200);
+  }else{
+    return ctx.response.status(500);
+  }
+}
+
+
+export const getAllUsers = async () =>{
+  let data = await userDataModel.find({});
+
+  return data;
 }

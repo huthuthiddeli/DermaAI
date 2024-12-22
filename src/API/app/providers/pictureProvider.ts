@@ -54,7 +54,7 @@ const connectToDatabase = async (): Promise<boolean> => {
 /*
 * Acutal function used to save to the databse
 */
-const savePicture = async (record: Record<string, string>): Promise<{status: boolean, data: any}>  => {
+export const savePicture = async (record: Record<string, string>): Promise<{status: boolean, data: any}>  => {
 
     await checkState()
 
@@ -82,12 +82,15 @@ const savePicture = async (record: Record<string, string>): Promise<{status: boo
     return {status: true, data: savedPicture}
 }
 
-let page: number = 1;
-
-const findPictures = async (ctx: HttpContext) => {
+export const findPictures = async (ctx: HttpContext) => {
     let queryParams = ctx.request.qs();
+    let page = 1;
 
-    // Object.keys(queryParams).forEach(e => logger.info(query));
+    Object.keys(queryParams).forEach(e => {
+        if(e == "page"){
+            page = queryParams[e];
+        }
+    });
 
     const options = {
         page: page,
@@ -97,24 +100,11 @@ const findPictures = async (ctx: HttpContext) => {
         },
     };
  
-    page += 1;
-
     try {
-
         let data = await pictureModel.paginate({}, options)
-
-        //console.log(data)
-
         return ctx.response.status(200).json(data);
-        // await pictureModel.paginate({}, options)
-        // return ctx.response.status(200).json(allPictures);
     } catch (error) {
         console.error(error);
         return ctx.response.status(500).json({ message: 'An error occurred' });
     }
-   
-    
-    return;
 }
-
-export {savePicture, findPictures}
