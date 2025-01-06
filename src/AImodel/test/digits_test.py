@@ -36,7 +36,7 @@ print(
 )
 
 # Modell speichern
-joblib.dump(knn, 'trained_models/trained_knn.joblib')
+joblib.dump(knn, '../trained_models/trained_knn.joblib')
 
 # 6. Funktion zum Laden und Verarbeiten eines Bildes
 def load_image_as_1d_vector(image_path):
@@ -64,7 +64,7 @@ def load_image_as_1d_vector(image_path):
         raise ValueError("Image could not be loaded. Please check the file path.")
 
 # 7. Vorhersage für ein neues Bild machen
-image_path = 'test_images/sechs1.png'
+image_path = '../test_images/sechs1.png'
 features = load_image_as_1d_vector(image_path)
 prediction = knn.predict(features)
 print(f"Die vorhergesagte Ziffer für das Bild ist: {prediction[0]}")

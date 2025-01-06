@@ -18,4 +18,4 @@ plt.axis('off')
 plt.show()
 
 # Speichere das Bild
-cv2.imwrite("test_images/drei_generated.png", digit_image)
+cv2.imwrite("../test_images/drei_generated.png", digit_image)
