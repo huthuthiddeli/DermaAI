@@ -50,6 +50,7 @@ def loadImagesAs1DVector(folder_path):
     # Convert the list to a NumPy array and return it
     return (np.array(features_list), np.array(filenames_list))
 
+
 def loadImageAs1DVector(image_path):
     # Bild laden
     image = cv2.imread(image_path)
@@ -86,6 +87,7 @@ def loadImageAs1DVector(image_path):
     else:
         raise ValueError("Image could not be loaded. Please check the file path.")
 
+
 def loadImagesAs1DVectorFromAPI():
     """Konvertiert die Bilddaten (Base64) und Diagnosen in ein Dataset."""
     image_data = []
@@ -105,6 +107,7 @@ def loadImagesAs1DVectorFromAPI():
     })
 
     return dataset
+
 
 # Decode images from binary string to png files
 def decode_images():

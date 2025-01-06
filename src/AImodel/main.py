@@ -9,12 +9,12 @@ def main(image_path):
     model = joblib.load('trained_models/trained_knn.joblib')
 
     # prepare image
-    features, filename = loadImageAs1DVector(image_path)
+    features, filename = loadImagesAs1DVector(image_path)
 
     # prediction
     prediction = model.predict(features)
     print("Classification for '", filename, "':", prediction[0])
 
 if __name__ == "__main__":
-    image_path = 'test_images/sechs_generated.png'
+    image_path = 'C:\\Users\Besitzer\Documents\GitHub\DermaAI\src\AImodel\test_images'
     main(image_path)
