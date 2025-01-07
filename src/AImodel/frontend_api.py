@@ -1,11 +1,9 @@
 from fastapi import FastAPI, UploadFile, File, HTTPException
 import joblib
-import numpy as np
 from PIL import Image as PILImage
-from matplotlib import pyplot as plt
-
 from images import ImageProcessor
 import io
+
 
 class APIHandler:
     def __init__(self, model_path, reshape_size):

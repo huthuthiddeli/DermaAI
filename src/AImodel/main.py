@@ -1,5 +1,3 @@
-import joblib
-from matplotlib import pyplot as plt
 from images import ImageProcessor
 from frontend_api import APIHandler
 from training.training import ModelTrainer
@@ -24,7 +22,7 @@ def main():
 
     # TRAIN ALL MODELS
     print('\n# ----------- STARTING TRAINING ----------- #\n')
-    #model_trainer.train_all_models()
+    model_trainer.train_all_models()
 
     # SHOW TEST PREDICTIONS FOR TRAINED MODELS
     print('\n# ----------- STARTING PREDICTIONS ----------- #\n')
@@ -32,7 +30,7 @@ def main():
 
     # START API FOR FRONTEND
     print('\n# ----------- STARTING APPLICATION ----------- #\n')
-    #APIHandler(PATH_TO_MODEL, RESHAPE_SIZE).start()
+    APIHandler(PATH_TO_MODEL, RESHAPE_SIZE).start()
 
 
 if __name__ == "__main__":

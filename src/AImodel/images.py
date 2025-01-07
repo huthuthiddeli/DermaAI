@@ -1,18 +1,13 @@
-import base64
-import io
 import json
 import os
-import zlib
-from tkinter import Image
-
 import PIL
-import pandas as pd
 from PIL import Image as PILImage
 import cv2
 import numpy as np
 import requests
 from matplotlib import pyplot as plt
 from sklearn.preprocessing import StandardScaler
+
 
 class ImageProcessor:
     def __init__(self, api_url, reshape_size):
