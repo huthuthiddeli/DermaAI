@@ -16,7 +16,7 @@ flowchart TD
     end
 
     %% Database Section
-    subgraph MongoDB[MongoDB Database]
+    subgraph MongoDB[Datenbank Backend]
         TrainingData[(Provide Training Data)]
         UserData[(Store User Data)]
     end
