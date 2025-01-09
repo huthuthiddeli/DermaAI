@@ -85,16 +85,20 @@ export const savePicture = async (record: Record<string, string>): Promise<{stat
 export const findPictures = async (ctx: HttpContext) => {
     let queryParams = ctx.request.qs();
     let page = 1;
+    let limit = 1;
 
     Object.keys(queryParams).forEach(e => {
         if(e == "page"){
             page = queryParams[e];
+        }else if(e == "limit"){
+            limit = queryParams[e];
         }
+
     });
 
     const options = {
         page: page,
-        limit: Number(env.get('DOC_AMMOUNT')),
+        limit: limit,
         collation: {
             locale: 'en',
         },
