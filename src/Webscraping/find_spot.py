@@ -1,7 +1,6 @@
 import os
 import cv2
 import sys
-import numpy as np
 from multiprocessing import shared_memory
 import ast
 import pickle
@@ -125,71 +124,47 @@ def find_path(obj: Picture.Picture) -> str:
     return filepath
 
 
-def crop_image(array_shape: tuple, mem_name: str):
-    # Replace 'name_of_shared_memory' with the name printed by the first script
-    # shm = shared_memory.SharedMemory(name=mem_name)
-
-    array_shape = ast.literal_eval(array_shape)
-
-    assert array_shape is not tuple, "Array_shape is not tuple"
-
-    # Create a NumPy array backed by the shared memory
-    array_dtype = np.uint8  # Replace with the dtype of the original array
-    # shared_array = np.ndarray(array_shape, dtype=array_dtype, buffer=shm.buf)
-
-    # Connect to existing shared memory
-    shm = shared_memory.SharedMemory(name=mem_name)
-
-    # Read the serialized data from shared memory
-    serialized_data = bytes(shm.buf[:])  # Copy the data into a bytes object
-
-    # Deserialize the object
-    my_object = pickle.loads(serialized_data)
-
-
-    # print(f'\033[31mShared Memory: {my_object.to_dict()}\033[0m')
-
-    # Access the shared memory data
-    # print(f'\033[31mShared Memory: {shared_array}\033[0m')
-
-    image = my_object.get_picture()
-
-    # Define the central region of interest (ROI)
+#Region of Interest
+def define_ROI(image):
+    ROI_area = [100, 200, 300, 400]
     height, width = image.shape[:2]
     center_x, center_y = width // 2, height // 2
     roi_size = 100  # Adjust this value to set the size of the central region
     roi_x1, roi_y1 = center_x - roi_size, center_y - roi_size
     roi_x2, roi_y2 = center_x + roi_size, center_y + roi_size
+    center_region = image[roi_y1:roi_y2, roi_x1:roi_x2]
+    return center_region
 
-    # Crop the ROI from the image for processing
+
+def crop_image(array_shape: tuple, mem_name: str):
+    array_shape = ast.literal_eval(array_shape)
+    shm = shared_memory.SharedMemory(name=mem_name)
+    serialized_data = bytes(shm.buf[:])  # Copy the data into a bytes object
+    my_object = pickle.loads(serialized_data)
+    image = my_object.get_picture()
+
+    # REPLACE THIS STUFF
+
+    height, width = image.shape[:2]
+    center_x, center_y = width // 2, height // 2
+    roi_size = 100  # Adjust this value to set the size of the central region
+    roi_x1, roi_y1 = center_x - roi_size, center_y - roi_size
+    roi_x2, roi_y2 = center_x + roi_size, center_y + roi_size
     center_region = image[roi_y1:roi_y2, roi_x1:roi_x2]
 
-    # Apply GaussianBlur to reduce noise
+    center_region = define_ROI(image)
     gray = cv2.cvtColor(center_region, cv2.COLOR_BGR2GRAY)
-
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-
-    # Use thresholding to highlight areas that differ in intensity
     _, thresholded = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY_INV)
-
-    # Find contours in the thresholded image within the central ROI
     contours, _ = cv2.findContours(thresholded, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-    # Minimum area threshold for filtering small contours
     min_area = 500  # Adjust based on the size of small anomalies to ignore
-
-    # Draw contours on the original image and save each highlighted spot
     output_image = image.copy()
     for idx, contour in enumerate(contours):
         if cv2.contourArea(contour) > min_area:  # Only consider large enough contours
             # Offset contour coordinates to match the original image
             contour += [roi_x1, roi_y1]
             cv2.drawContours(output_image, [contour], -1, (0, 255, 0), 2)
-
-            # Get bounding box around the contour
             x, y, w, h = cv2.boundingRect(contour)
-
-            # Crop the detected spot from the original image
             detected_spot = cv2.cvtColor(image[y:y + h, x:x + w], cv2.COLOR_BGR2GRAY)
             # Save the cropped spot as a separate file
             filepath = find_path(my_object)
