@@ -22,23 +22,16 @@ try:
     if response.status_code == 200:
         np_array = np.frombuffer(response.content, np.uint8)
         image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
-
         picture = Picture.Picture(image, item['diagnosis'])
-
         serialized_obj = pickle.dumps(picture)
-
         # Create shared memory
-        shm = shared_memory.SharedMemory(create=True, size=len(serialized_obj))
-
+        shm = shared_memory.SharedMemory(create=TrueS, size=len(serialized_obj))
         # Write the serialized data to shared memory
         shm.buf[:len(serialized_obj)] = serialized_obj
-
         print(f"Shared memory name: {shm.name}")
-
         array_shape = str(image.shape)
 
         subprocess.run([sys.executable, 'find_spot.py', array_shape, shm.name], cwd=os.getcwd())
-
     else:
         print("ERROR", file=sys.stderr)
 
