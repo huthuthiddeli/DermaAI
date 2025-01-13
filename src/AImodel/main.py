@@ -1,20 +1,37 @@
-import joblib
-from matplotlib import pyplot as plt
-from sklearn import datasets
-from loadImages import loadImageAs1DVector
+from images import ImageProcessor
+from frontend_api import APIHandler
+from training.training import ModelTrainer
 
-# ----------- test for number recognition -----------
-def main(image_path):
-    # load model
-    model = joblib.load('trained_models/trained_knn.joblib')
+# ----------- CONFIGURATION ----------- #
+PATH_TO_MODEL = 'trained_models/trained_knnc.joblib'
+MODEL_SAVE_PATH = 'trained_models/'
+PATH_TO_TESTDATA = 'test/IMAGES.images.json'
+RESHAPE_SIZE = 128
+DB_API_URI = 'http://192.168.110.29:3333/getAllPictures'
 
-    # prepare image
-    features, filename = loadImageAs1DVector(image_path)
 
-    # prediction
-    prediction = model.predict(features)
-    print("Classification for '", filename, "':", prediction[0])
+# ----------- START APPLICATION ----------- #
+def main():
+    # FETCH DATASET FROM DATABASE
+    print('\n# ----------- FETCHING DATA FROM DATABASE ----------- #\n')
+    dataset = ImageProcessor(DB_API_URI, RESHAPE_SIZE).loadImagesAs1DVectorFromJson(PATH_TO_TESTDATA)
+    print('Received data with length of: ', dataset[0].__len__())
+
+    # CREATE MODEL TRAINER WITH EXISTING DATASET
+    model_trainer = ModelTrainer(dataset, RESHAPE_SIZE, MODEL_SAVE_PATH)
+
+    # TRAIN ALL MODELS
+    print('\n# ----------- STARTING TRAINING ----------- #\n')
+    model_trainer.train_all_models()
+
+    # SHOW TEST PREDICTIONS FOR TRAINED MODELS
+    print('\n# ----------- STARTING PREDICTIONS ----------- #\n')
+    model_trainer.show_prediction()
+
+    # START API FOR FRONTEND
+    print('\n# ----------- STARTING APPLICATION ----------- #\n')
+    APIHandler(PATH_TO_MODEL, RESHAPE_SIZE).start()
+
 
 if __name__ == "__main__":
-    image_path = 'test_images/sechs_generated.png'
-    main(image_path)
+    main()
