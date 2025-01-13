@@ -1,19 +1,13 @@
-
-import org.gradle.api.JavaVersion
-
+import org.gradle.api.JavaVersion.VERSION_1_8
 
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    id("org.jetbrains.compose")
-
-    //alias(libs.plugins.compose.compiler)
-    //id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
-    //id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
 }
+
 android {
     namespace = "com.example.dermaai_android_140"
-    compileSdkVersion(rootProject.extra["compileSdkVersionExtra"] as Int)
+    compileSdk = 35
 
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
@@ -21,13 +15,12 @@ android {
 
     defaultConfig {
         applicationId = "com.example.dermaai_android_140"
-        targetSdkVersion(rootProject.extra["compileSdkVersionExtra"] as Int)
-        minSdk = 31
+        targetSdk = 35
+        minSdk = 30
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig = signingConfigs.getByName("debug")
     }
 
 
@@ -41,47 +34,22 @@ android {
                 "proguard-rules.pro"
             )
             signingConfig = signingConfigs.getByName("debug")
-            //multiDexEnabled = true
-            //matchingFallbacks += listOf()// Consider using a release signing config
-
-        }
-        create("benchmark") {
-            initWith(buildTypes.getByName("release"))
-            isDebuggable = false
         }
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = VERSION_1_8
+        targetCompatibility = VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "1.8"
     }
-
     buildFeatures {
-
-        compose = true
         viewBinding = true
-    }
-
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
-
-    flavorDimensions += listOf()
-    dependenciesInfo {
-        includeInApk = true
-        includeInBundle = true
     }
 }
 
 dependencies {
-    /*
-    implementation("com.example:some-library:1.0.0") {
-        exclude(group = "com.intellij", module = "annotations")
-    }*/
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -98,6 +66,7 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.extensions)
+    implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.totp)
     implementation(libs.kotlinx.serialization.json)
@@ -105,29 +74,9 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.coil)
-    implementation(libs.play.services.cronet)
-    implementation(libs.androidx.runtime)
-    implementation(libs.kotlin.stdlib)
-    implementation(libs.androidx.room.compiler)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-
-
-    implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.viewmodel)
-    androidTestImplementation(platform(libs.androidx.compose.bom))
-
-    /*
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.graphics)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
-*/
 }

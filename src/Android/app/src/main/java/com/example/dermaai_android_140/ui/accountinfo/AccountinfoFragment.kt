@@ -76,8 +76,6 @@ class AccountinfoFragment() : Fragment() {
             view = inflater.inflate(R.layout.fragment_accountinfo_register, container, false)
         }
 
-        //val viewRegister = inflater.inflate(R.layout.fragment_accountinfo_register, container, false)
-
 
 
         if (isLogin) {

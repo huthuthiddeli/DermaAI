@@ -62,7 +62,5 @@
     <string name="verify_key">Verify!</string>
     <string name="mfa_disabled">Disabled</string>
     <string name="logout_header">Logout</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_l">L</string>
 
 </resources>

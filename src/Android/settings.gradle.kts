@@ -1,8 +1,5 @@
 @file:Suppress("DEPRECATION")
 
-include(":benchmark")
-
-
 pluginManagement {
     repositories {
         google {
@@ -13,7 +10,6 @@ pluginManagement {
             }
         }
         mavenCentral()
-        google()
         gradlePluginPortal()
     }
 }
@@ -22,7 +18,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        google()
     }
 }
 

@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Unnamed" type="AppEngineRunConfiguration" factoryName="App Engine DevAppServer" singleton="false" nameIsGenerated="true">
-    <module name="DermaAI_Android_14.0.app.main" />
+    <module name="DermaAI_Android_14.0.app" />
     <setting name="serverAddress" value="" />
     <setting name="sdkPath" value="" />
     <setting name="serverPort" value="" />
@@ -9,7 +9,7 @@
     <setting name="sync" value="true" />
     <setting name="disableUpdateCheck" value="false" />
     <method v="2">
-      <option name="AppEngine.Gradle.BeforeRunTask" enabled="true" tasks=":assemble" />
+      <option name="AppEngine.Gradle.BeforeRunTask" enabled="true" tasks=":app:assemble" externalProjectPath="$PROJECT_DIR$/app" />
     </method>
   </configuration>
 </component>

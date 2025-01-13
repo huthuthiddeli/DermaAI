@@ -56,7 +56,7 @@ class PhotoFragment : Fragment() {
         val takePhotoBtn: Button = binding.takePhotoBtn
 
         takePhotoBtn.setOnClickListener {
-
+            
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 openCamera(photoViewModel)
             }else{
