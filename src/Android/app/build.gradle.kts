@@ -1,13 +1,16 @@
-import com.sun.tools.javac.resources.compiler
-import org.gradle.api.JavaVersion.VERSION_1_8
-import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
+
+import org.gradle.api.JavaVersion
+
 
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    //alias(libs.plugins.compose.compiler)
-}
+    id("com.android.application")
+    kotlin("android")
+    id("org.jetbrains.compose")
 
+    //alias(libs.plugins.compose.compiler)
+    //id("org.jetbrains.kotlin.plugin.serialization") version "1.8.21"
+    //id("org.jetbrains.kotlin.android")
+}
 android {
     namespace = "com.example.dermaai_android_140"
     compileSdkVersion(rootProject.extra["compileSdkVersionExtra"] as Int)
@@ -15,10 +18,6 @@ android {
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
     }
-/*
-    compileOptions{
-        kotlinCompilerOptions()
-    }*/
 
     defaultConfig {
         applicationId = "com.example.dermaai_android_140"
@@ -41,9 +40,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-                    signingConfig = signingConfigs.getByName("debug")
-            multiDexEnabled = true
-            matchingFallbacks += listOf()// Consider using a release signing config
+            signingConfig = signingConfigs.getByName("debug")
+            //multiDexEnabled = true
+            //matchingFallbacks += listOf()// Consider using a release signing config
 
         }
         create("benchmark") {
@@ -53,16 +52,20 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = VERSION_1_8
-        targetCompatibility = VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
+
     buildFeatures {
-        viewBinding = true
+
         compose = true
+        viewBinding = true
     }
+
+
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
@@ -72,11 +75,13 @@ android {
         includeInApk = true
         includeInBundle = true
     }
-    buildToolsVersion = "35.0.0"
-    ndkVersion = "28.0.12674087 rc2"
 }
 
 dependencies {
+    /*
+    implementation("com.example:some-library:1.0.0") {
+        exclude(group = "com.intellij", module = "annotations")
+    }*/
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -93,7 +98,6 @@ dependencies {
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.camera.camera2)
     implementation(libs.androidx.camera.extensions)
-    implementation(libs.androidx.ui.tooling)
     implementation(libs.androidx.activity.ktx)
     implementation(libs.totp)
     implementation(libs.kotlinx.serialization.json)
@@ -102,18 +106,28 @@ dependencies {
     implementation(libs.androidx.preference.ktx)
     implementation(libs.coil)
     implementation(libs.play.services.cronet)
-    implementation(libs.org.jetbrains.kotlin.plugin.compose.gradle.plugin)
-    implementation(libs.org.jetbrains.kotlin.android.gradle.plugin)
-    implementation(libs.com.google.devtools.ksp.gradle.plugin)
+    implementation(libs.androidx.runtime)
+    implementation(libs.kotlin.stdlib)
     implementation(libs.androidx.room.compiler)
-    implementation(libs.support.annotations)
-    implementation(libs.androidx.annotation)
-    implementation(libs.kotlin.ksp)
-    implementation(libs.com.android.legacy.kapt.gradle.plugin)
-    implementation(libs.support.v4)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.activity.compose)
+    implementation(platform(libs.androidx.compose.bom))
+
+
+    implementation(libs.androidx.material3)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.viewmodel)
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+
+    /*
+    implementation(libs.androidx.compose.ui)
+    implementation(libs.androidx.compose.ui.graphics)
+    implementation(libs.androidx.compose.ui.tooling.preview)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit4)
+    debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
+*/
 }

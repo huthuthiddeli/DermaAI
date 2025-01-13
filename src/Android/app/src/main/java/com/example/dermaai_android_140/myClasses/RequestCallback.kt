@@ -47,11 +47,11 @@ class RequestCallback : UrlRequest.Callback {
         byteBuffer: ByteBuffer
     ) {
         Log.d(TAG, "Read completed, bytes received: ${byteBuffer.remaining()}")
-
+/*
         scope.launch(Dispatchers.IO) {
             // Process data asynchronously
             
-        }
+        }*/
     }
 
     override fun onSucceeded(
@@ -60,6 +60,7 @@ class RequestCallback : UrlRequest.Callback {
     ) {
         TODO("Not yet implemented")
     }
+
 
     override fun onFailed(
         request: UrlRequest,

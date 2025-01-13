@@ -22,4 +22,6 @@
     <style name="Theme.DermaAI_Android_140.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.DermaAI_Android_140.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Theme.Material3.Dark" parent="android:Theme.Material.Light.NoActionBar" />
 </resources>

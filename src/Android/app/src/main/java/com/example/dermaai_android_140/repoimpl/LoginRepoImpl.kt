@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.dermaai_android_140.repo.LoginRepo
 import com.example.dermaai_android_140.myClasses.User
 import org.chromium.net.CronetEngine
+import org.chromium.net.UrlRequest
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
@@ -64,19 +65,20 @@ class LoginRepoImpl : LoginRepo {
 
     fun test(context : Context)
     {
-        /*
+
         val myBuilder = CronetEngine.Builder(context)
         val cronetEngine: CronetEngine = myBuilder.build()
-*/
+
         val executor: Executor = Executors.newSingleThreadExecutor()
 
+        /*
         val requestBuilder = cronetEngine.newUrlRequestBuilder(
             "http://10.10.1.193:8080/",
             MyUrlRequestCallback(),
             executor
         )
 
-        val request: UrlRequest = requestBuilder.build()
+        val request: UrlRequest = requestBuilder.build()*/
 
     }
     
