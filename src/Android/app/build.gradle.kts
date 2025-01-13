@@ -1,34 +1,26 @@
-import com.sun.tools.javac.resources.compiler
 import org.gradle.api.JavaVersion.VERSION_1_8
-import org.gradle.kotlin.dsl.support.kotlinCompilerOptions
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    //alias(libs.plugins.compose.compiler)
 }
 
 android {
     namespace = "com.example.dermaai_android_140"
-    compileSdkVersion(rootProject.extra["compileSdkVersionExtra"] as Int)
+    compileSdk = 35
 
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
     }
-/*
-    compileOptions{
-        kotlinCompilerOptions()
-    }*/
 
     defaultConfig {
         applicationId = "com.example.dermaai_android_140"
-        targetSdkVersion(rootProject.extra["compileSdkVersionExtra"] as Int)
-        minSdk = 31
+        targetSdk = 35
+        minSdk = 30
         versionCode = 1
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig = signingConfigs.getByName("debug")
     }
 
 
@@ -41,14 +33,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-                    signingConfig = signingConfigs.getByName("debug")
-            multiDexEnabled = true
-            matchingFallbacks += listOf()// Consider using a release signing config
-
-        }
-        create("benchmark") {
-            initWith(buildTypes.getByName("release"))
-            isDebuggable = false
+            signingConfig = signingConfigs.getByName("debug")
         }
     }
 
@@ -61,19 +46,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
-        compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
-    }
-
-    flavorDimensions += listOf()
-    dependenciesInfo {
-        includeInApk = true
-        includeInBundle = true
-    }
-    buildToolsVersion = "35.0.0"
-    ndkVersion = "28.0.12674087 rc2"
 }
 
 dependencies {
@@ -101,16 +74,6 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.coil)
-    implementation(libs.play.services.cronet)
-    implementation(libs.org.jetbrains.kotlin.plugin.compose.gradle.plugin)
-    implementation(libs.org.jetbrains.kotlin.android.gradle.plugin)
-    implementation(libs.com.google.devtools.ksp.gradle.plugin)
-    implementation(libs.androidx.room.compiler)
-    implementation(libs.support.annotations)
-    implementation(libs.androidx.annotation)
-    implementation(libs.kotlin.ksp)
-    implementation(libs.com.android.legacy.kapt.gradle.plugin)
-    implementation(libs.support.v4)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

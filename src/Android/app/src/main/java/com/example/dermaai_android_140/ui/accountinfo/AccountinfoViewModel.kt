@@ -76,7 +76,6 @@ class AccountinfoViewModel() : ViewModel() {
 
     fun login(email : String, password : String)
     {
-        //loginRepo.test()
         /*
         if(stayLoggedIn.value == true)
         {
