@@ -1,0 +1,74 @@
+package com.example.dermaai_android_140.myClasses
+
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.net.HttpURLConnection
+import java.net.URL
+import com.google.gson.Gson
+import java.io.OutputStreamWriter
+import kotlin.Result
+
+class API {
+
+    companion object {
+
+        fun callApi(apiUrl: String, token: String, httpMethod: String, requestModel: Any? = null): Result<String> {
+            return try {
+                val url = URL(apiUrl)
+                val connection = url.openConnection() as HttpURLConnection
+
+                connection.requestMethod = httpMethod
+
+                //setRequestHeaders(connection, token)
+                sendRequest(connection, httpMethod, requestModel)
+
+                val responseCode = connection.responseCode
+
+                if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
+                    //val test = readResponse(connection.inputStream)
+                    return Result.success(readResponse(connection.inputStream))
+                } else {
+                    val errorResponse = readResponse(connection.errorStream)
+                    println("Error Response Code: $responseCode, Message: ${connection.responseMessage}, Body: $errorResponse")
+                    return Result.failure(Exception("HTTP error code: $responseCode"))
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return Result.failure(e)
+            }
+        }
+
+        private fun setRequestHeaders(connection: HttpURLConnection, token: String) {
+            connection.setRequestProperty("Content-Type", "application/json")
+            connection.setRequestProperty("Accept", "application/json")
+            connection.setRequestProperty("Authorization", "Bearer $token")
+        }
+
+        private fun sendRequest(connection: HttpURLConnection, httpMethod: String, requestModel: Any?) {
+            if (httpMethod == "POST" || httpMethod == "PUT") {
+                connection.doOutput = true
+                requestModel?.let {
+                    val jsonInput = Gson().toJson(it)
+
+                    OutputStreamWriter(connection.outputStream).use { os ->
+                        os.write(jsonInput)
+                        os.flush()
+                    }
+
+                }
+            }
+        }
+
+        private fun readResponse(inputStream: java.io.InputStream): String {
+            val reader = BufferedReader(InputStreamReader(inputStream, "utf-8"))
+            val response = StringBuilder()
+            var line: String?
+            while (reader.readLine().also { line = it } != null) {
+                response.append(line?.trim())
+            }
+            reader.close()
+            return response.toString()
+        }
+    }
+}

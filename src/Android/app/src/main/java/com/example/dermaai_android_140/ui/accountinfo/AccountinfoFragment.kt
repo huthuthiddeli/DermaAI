@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.MainActivity
 import com.example.dermaai_android_140.R
+import com.example.dermaai_android_140.myClasses.API
 import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.ui.login.LoginViewModel
 import com.warrenstrange.googleauth.GoogleAuthenticator
@@ -136,6 +137,14 @@ class AccountinfoFragment() : Fragment() {
 
                 val email = editTextEmail.text.toString()
                 val password = editTextPassword.text.toString()
+
+
+
+                //Test-Call
+
+                viewModel.loginTest()
+
+                //
 
 
                 viewModel.login(email, password)

@@ -1,9 +1,11 @@
 package com.example.dermaai_android_140.ui.accountinfo
 
+
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.dermaai_android_140.myClasses.API
 import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.ImageRepo
@@ -12,6 +14,7 @@ import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent
 
 //import org.koin.core.Koin
@@ -55,6 +58,8 @@ class AccountinfoViewModel() : ViewModel() {
         _email.value = email
     }
 
+
+
     fun setPassword(password: String) {
         _password.value = password
     }
@@ -72,6 +77,28 @@ class AccountinfoViewModel() : ViewModel() {
     fun setUser(user : User?)
     {
         _user = user
+    }
+
+    fun loginTest()
+    {
+        data class UserRequest(val name: String, val job: String)
+        val requestModel = UserRequest(name = "John Doe", job = "Software Developer")
+
+        viewModelScope.launch(Dispatchers.IO) {
+
+            // Example URL
+            val result = API.callApi("https://reqres.in/api/users","","POST",requestModel)
+
+            withContext(Dispatchers.Main) {
+
+                if (result.isSuccess) {
+                    val receivedData = result.getOrNull()
+
+                } else if (result.isFailure) {
+
+                }
+            }
+        }
     }
 
     fun login(email : String, password : String)
