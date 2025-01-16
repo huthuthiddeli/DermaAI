@@ -87,12 +87,13 @@ class AccountinfoViewModel() : ViewModel() {
         viewModelScope.launch(Dispatchers.IO) {
 
             // Example URL
-            val result = API.callApi("https://reqres.in/api/users","","POST",requestModel)
+            val result = API.callApi("https://reqres.in/api/users","","GET",requestModel)
 
             withContext(Dispatchers.Main) {
 
                 if (result.isSuccess) {
                     val receivedData = result.getOrNull()
+
 
                 } else if (result.isFailure) {
 
