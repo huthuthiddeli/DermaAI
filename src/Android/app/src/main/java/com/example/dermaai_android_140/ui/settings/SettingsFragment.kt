@@ -64,7 +64,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     fun enable2FA() {
 
         val authentication = Authentication()
-        val key = authentication.generateSecret()
+        val key = authentication.generateSecret(requireContext())
         val FaKeySwitch: SwitchPreferenceCompat? = findPreference("enable_2fa")
         val FaKeyInput: EditTextPreference? = findPreference("two_fa_key")
 
