@@ -1,6 +1,7 @@
 package com.example.dermaai_android_140.ui.accountinfo
 
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +12,7 @@ import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.ImageRepo
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
+import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -39,6 +41,10 @@ class AccountinfoViewModel() : ViewModel() {
 
     private var _key = String()
     private var _user : User? = null
+
+    private val _verifiedUser = MutableLiveData<Boolean>(false)
+    val verifiedUser : LiveData<Boolean> get() = _verifiedUser
+
 
     //private val _stayLoggedIn = MutableLiveData<Boolean>(false)
     //val stayLoggedIn: LiveData<Boolean> get() = _stayLoggedIn
@@ -79,20 +85,35 @@ class AccountinfoViewModel() : ViewModel() {
         _user = user
     }
 
-    fun loginTest()
+    fun loginTest(url : String)
     {
         data class UserRequest(val name: String, val job: String)
+
         val requestModel = UserRequest(name = "John Doe", job = "Software Developer")
 
         viewModelScope.launch(Dispatchers.IO) {
 
             // Example URL
-            val result = API.callApi("https://reqres.in/api/users","","GET",requestModel)
+
+            val result = API.callApi(url,"","GET",requestModel)
 
             withContext(Dispatchers.Main) {
 
                 if (result.isSuccess) {
+
+                    data class receivedUser(val email: String)
                     val receivedData = result.getOrNull()
+
+                    val gson = Gson()
+
+                    try{
+                        val receivedUserObject = gson.fromJson(receivedData, receivedUser::class.java)
+                        setIsLoggedIn(true)
+                    }
+                    catch (e: Exception)
+                    {
+                        
+                    }
 
 
                 } else if (result.isFailure) {
