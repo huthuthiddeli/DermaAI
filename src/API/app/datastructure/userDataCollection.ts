@@ -26,7 +26,7 @@ export const userSchema = new Schema<IUserData>({
         password: {
             type: Schema.Types.String,
             required: true
-        }       
+        },
     },
     {
         collection: "userData"
