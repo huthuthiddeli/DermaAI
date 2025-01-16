@@ -4,6 +4,9 @@ import sys
 from multiprocessing import shared_memory
 import ast
 import pickle
+
+import numpy as np
+
 import picture as Picture
 
 
@@ -29,6 +32,34 @@ def define_ROI(image):
     roi_x2, roi_y2 = center_x + roi_size, center_y + roi_size
     center_region = image[roi_y1:roi_y2, roi_x1:roi_x2]
     return center_region
+
+
+def crop_image_from_bytearray(image: bytearray):
+    image = np.frombuffer(bytearray, dtype=np.uint8)
+    height, width = image.shape[:2]
+    center_x, center_y = width // 2, height // 2
+    roi_size = 100  # Adjust this value to set the size of the central region
+    roi_x1, roi_y1 = center_x - roi_size, center_y - roi_size
+    roi_x2, roi_y2 = center_x + roi_size, center_y + roi_size
+    center_region = image[roi_y1:roi_y2, roi_x1:roi_x2]
+
+    # center_region = define_ROI(image)
+    gray = cv2.cvtColor(center_region, cv2.COLOR_BGR2GRAY)
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+    _, thresholded = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY_INV)
+    contours, _ = cv2.findContours(thresholded, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    min_area = 500  # Adjust based on the size of small anomalies to ignore
+    output_image = image.copy()
+    for idx, contour in enumerate(contours):
+        if cv2.contourArea(contour) > min_area:  # Only consider large enough contours
+            # Offset contour coordinates to match the original image
+            contour += [roi_x1, roi_y1]
+            cv2.drawContours(output_image, [contour], -1, (0, 255, 0), 2)
+            x, y, w, h = cv2.boundingRect(contour)
+            detected_spot = cv2.cvtColor(image[y:y + h, x:x + w], cv2.COLOR_BGR2GRAY)
+            return detected_spot
+
+
 
 
 def crop_image(array_shape: tuple, mem_name: str):
