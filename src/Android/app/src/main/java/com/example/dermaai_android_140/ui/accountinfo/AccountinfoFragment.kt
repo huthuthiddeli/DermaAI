@@ -79,6 +79,7 @@ class AccountinfoFragment() : Fragment() {
 
 
 
+
         if (isLogin) {
 
             val switchToRegisterBtn = view.findViewById<Button>(R.id.switchToRegisterBtn)
@@ -99,7 +100,7 @@ class AccountinfoFragment() : Fragment() {
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
                 } else {
-                    Toast.makeText(context, "User is not registered", Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, "Credentials are incorrect!", Toast.LENGTH_LONG).show()
                 }
             })
 
@@ -142,7 +143,10 @@ class AccountinfoFragment() : Fragment() {
 
                 //Test-Call
 
-                viewModel.loginTest()
+                viewModel.loginTest(getString(R.string.main_login))
+
+                //getString(R.string.main)
+
 
                 //
 

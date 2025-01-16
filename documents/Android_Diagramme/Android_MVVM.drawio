@@ -1,0 +1,48 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:134.0) Gecko/20100101 Firefox/134.0" version="26.0.6">
+  <diagram name="Page-1" id="1J5W0aVs0tYiWVESGAj2">
+    <mxGraphModel dx="618" dy="328" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="0E5Sht0tgIVqmQUq6c2K-1" value="View" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0E5Sht0tgIVqmQUq6c2K-2" value="ViewModel" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="365" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0E5Sht0tgIVqmQUq6c2K-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=-0.023;exitY=0.18;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.985;entryY=0.18;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="0E5Sht0tgIVqmQUq6c2K-3" target="0E5Sht0tgIVqmQUq6c2K-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="490" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0E5Sht0tgIVqmQUq6c2K-10" value="Provides data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="0E5Sht0tgIVqmQUq6c2K-9">
+          <mxGeometry x="0.1326" y="-1" relative="1" as="geometry">
+            <mxPoint x="10" y="-20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0E5Sht0tgIVqmQUq6c2K-3" value="Model" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="570" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="0E5Sht0tgIVqmQUq6c2K-4" value="Data Binding" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1.012;exitY=0.818;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.009;entryY=0.818;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="0E5Sht0tgIVqmQUq6c2K-1" target="0E5Sht0tgIVqmQUq6c2K-2">
+          <mxGeometry x="0.0328" y="-21" relative="1" as="geometry">
+            <mxPoint x="360" y="249" as="targetPoint" />
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0E5Sht0tgIVqmQUq6c2K-5" value="Updates" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.013;entryY=0.818;entryDx=0;entryDy=0;entryPerimeter=0;exitX=1;exitY=0.818;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="0E5Sht0tgIVqmQUq6c2K-2" target="0E5Sht0tgIVqmQUq6c2K-3">
+          <mxGeometry x="0.0786" y="-21" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0E5Sht0tgIVqmQUq6c2K-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.167;entryDx=0;entryDy=0;entryPerimeter=0;exitX=0.014;exitY=0.161;exitDx=0;exitDy=0;exitPerimeter=0;" edge="1" parent="1" source="0E5Sht0tgIVqmQUq6c2K-2" target="0E5Sht0tgIVqmQUq6c2K-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="0E5Sht0tgIVqmQUq6c2K-8" value="Notifies" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="0E5Sht0tgIVqmQUq6c2K-7">
+          <mxGeometry x="0.1457" y="-3" relative="1" as="geometry">
+            <mxPoint x="8" y="-17" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

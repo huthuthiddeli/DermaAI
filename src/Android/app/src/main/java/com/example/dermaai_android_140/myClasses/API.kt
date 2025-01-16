@@ -1,5 +1,6 @@
 package com.example.dermaai_android_140.myClasses
 
+import androidx.core.app.PendingIntentCompat.send
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
@@ -46,16 +47,24 @@ class API {
         }
 
         private fun sendRequest(connection: HttpURLConnection, httpMethod: String, requestModel: Any?) {
+
+            // GET is handled automatically
+
+            // Code for POST
             if (httpMethod == "POST" || httpMethod == "PUT") {
-                connection.doOutput = true
-                requestModel?.let {
-                    val jsonInput = Gson().toJson(it)
+                sendPost(connection, requestModel)
+            }
+        }
 
-                    OutputStreamWriter(connection.outputStream).use { os ->
-                        os.write(jsonInput)
-                        os.flush()
-                    }
+        private fun sendPost(connection: HttpURLConnection, requestModel: Any?)
+        {
+            connection.doOutput = true
+            requestModel?.let {
+                val jsonInput = Gson().toJson(it)
 
+                OutputStreamWriter(connection.outputStream).use { os ->
+                    os.write(jsonInput)
+                    os.flush()
                 }
             }
         }
