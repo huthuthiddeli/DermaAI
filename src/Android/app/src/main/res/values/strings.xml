@@ -63,4 +63,13 @@
     <string name="mfa_disabled">Disabled</string>
     <string name="logout_header">Logout</string>
 
+
+
+    <!-- Photo -->
+    <string name="photo_tutorial">Zentriert, gute Beleutung</string>
+    <string name="photo_title">Tutorial</string>
+    <string name="title_activity_tutorial">TutorialActivity</string>
+
+
+
 </resources>

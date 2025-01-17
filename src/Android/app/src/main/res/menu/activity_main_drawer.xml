@@ -19,6 +19,13 @@
             android:icon="@drawable/ic_camera"
             android:title="@string/menu_photo"
             android:textColor="@android:color/white"/>
+
+        <item
+            android:id="@+id/nav_tutorial"
+            android:icon="@drawable/ic_tutorial"
+            android:title="@string/menu_photo"
+            android:textColor="@android:color/white"/>
+
     </group>
     
 </menu>
