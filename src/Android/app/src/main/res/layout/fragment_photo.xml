@@ -9,16 +9,15 @@
 
     <Button
         android:id="@+id/takePhotoBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="160dp"
+        android:layout_height="56dp"
         android:text="@string/take_photo"
         app:icon="@drawable/ic_menu_camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.963" />
+        app:layout_constraintVertical_bias="0.961" />
 
     <TextView
         android:id="@+id/photoHeaderView"
@@ -32,21 +31,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.085" />
+        app:layout_constraintVertical_bias="0.072" />
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="361dp"
-        android:layout_height="63dp"
+        android:layout_width="332dp"
+        android:layout_height="70dp"
         android:layout_marginTop="28dp"
         android:layout_marginBottom="457dp"
         android:text="@string/photo_desc"
-        android:textSize="16sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/takePhotoBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.202"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/photoHeaderView" />
+        app:layout_constraintTop_toBottomOf="@+id/photoHeaderView"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView5"
@@ -59,16 +59,15 @@
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/takePhotoBtn"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.388"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="277dp"
-        android:layout_height="128dp"
-        android:layout_marginBottom="92dp"
+        android:layout_width="288dp"
+        android:layout_height="135dp"
+        android:layout_marginBottom="76dp"
         android:lineSpacingExtra="7dp"
         android:text="@string/photo_tips_short_2"
         android:textSize="18sp"
@@ -91,10 +90,54 @@
         android:id="@+id/imageView4"
         android:layout_width="145dp"
         android:layout_height="220dp"
-        android:layout_marginStart="276dp"
-        android:layout_marginBottom="244dp"
+        android:layout_marginStart="300dp"
+        android:layout_marginBottom="236dp"
         android:src="@drawable/background_fragment_half_circle_2"
         app:layout_constraintBottom_toTopOf="@+id/takePhotoBtn"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="149dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="92dp"
+        android:src="@drawable/background_fragment_line_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.343"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="88dp"
+        android:layout_height="14dp"
+        android:layout_marginBottom="284dp"
+        android:src="@drawable/background_fragment_line_2"
+        app:layout_constraintBottom_toTopOf="@+id/takePhotoBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.609"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="88dp"
+        android:layout_height="14dp"
+        android:layout_marginBottom="448dp"
+        android:src="@drawable/background_fragment_line_2"
+        app:layout_constraintBottom_toTopOf="@+id/takePhotoBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="88dp"
+        android:layout_height="14dp"
+        android:layout_marginBottom="76dp"
+        android:src="@drawable/background_fragment_line_2"
+        app:layout_constraintBottom_toTopOf="@+id/takePhotoBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.278"
         app:layout_constraintStart_toStartOf="parent" />
 
 

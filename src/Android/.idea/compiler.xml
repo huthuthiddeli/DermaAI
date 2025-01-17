@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="17">
-      <module name="DermaAI_Android_14.0.app" target="21" />
+      <module name="DermaAI_Android_14.0.app" target="23" />
       <module name="DermaAI_Android_14.0.baselineprofile" target="23" />
     </bytecodeTargetLevel>
   </component>

@@ -76,7 +76,7 @@
     </string>
 
     <string name="photo_tips_short_2">
-    • Mehrere Aufnahmen machen\n
+    • Saubere Kameralinse verwenden\n
     • Vermeidung von Blendungen\n
     • Neutrale Umgebung wählen\n
     • Bilder überprüfen
@@ -86,6 +86,24 @@
 
     <string name="tutorial_header">Tutorial für das beste Ergebnis!</string>
 
+    <string name="photo_tip_title_1">Gute Beleuchtung verwenden</string>
+    <string name="photo_tip_title_2">Kamera richtig positionieren</string>
+    <string name="photo_tip_title_3">Fokus auf Hautläsion setzen</string>
+    <string name="photo_tip_title_4">Ablenkungen minimieren</string>
+    <string name="photo_tip_title_5">Saubere Linse verwenden</string>
+    <string name="photo_tip_title_6">Blendungen vermeiden</string>
+    <string name="photo_tip_title_7">Neutrale Umgebung wählen</string>
+    <string name="photo_tip_title_8">Bilder überprüfen</string>
+
+
+    <string name="photo_tip_desc_1">Sorgen Sie für eine gleichmäßige und ausreichende Beleuchtung, um Details sichtbar zu machen.</string>
+    <string name="photo_tip_desc_2">Positionieren Sie die Kamera so, dass die Hautläsion gut zentriert und scharf erkennbar ist. Halten Sie dazu die Kamera ruhig und direkt über der Hautläsion </string>
+    <string name="photo_tip_desc_3">Stellen Sie sicher, dass die Kamera auf die Hautläsion fokussiert ist, um scharfe Bilder zu erhalten.</string>
+    <string name="photo_tip_desc_4">Vermeiden Sie störende Objekte im Hintergrund, die die KI-Analyse beeinflussen könnten.</string>
+    <string name="photo_tip_desc_5">Reinigen Sie die Kameralinse vor der Aufnahme für klare und detailreiche Bilder.</string>
+    <string name="photo_tip_desc_6">Vermeiden Sie direkte Blendungen oder Lichteinwirkung auf die Kamera.</string>
+    <string name="photo_tip_desc_7">Wählen Sie eine Umgebung mit hohem Kontrast, um die Hautläsion klar hervorzuheben.</string>
+    <string name="photo_tip_desc_8">Überprüfen Sie die Bilder nach der Aufnahme, um sicherzustellen, dass die Hautläsion deutlich sichtbar ist, und alle beschrieben Kriterien erfüllen.</string>
 
 
 </resources>
