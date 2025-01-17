@@ -69,18 +69,22 @@
     <string name="photo_desc">Zusammenfassung der wichtigsten Tipps für das Aufnehmen eines hochwertigen Fotos Ihrer Hautläsion:</string>
 
     <string name="photo_tips_short_1">
-        Gute Beleuchtung verwenden\n
-        Korrekte Kamera-Positionierung\n
-        Fokussierung auf die Hautläsion\n
-        Ablenkungen minimieren\n
+    • Gute Beleuchtung verwenden\n
+    • Korrekte Kamera-Positionierung\n
+    • Fokussierung auf die Hautläsion\n
+    • Ablenkungen minimieren\n
     </string>
 
     <string name="photo_tips_short_2">
-        Mehrere Aufnahmen machen\n
-        Vermeidung von Blendungen\n
-        Neutrale Umgebung wählen\n
-        Bilder überprüfen
+    • Mehrere Aufnahmen machen\n
+    • Vermeidung von Blendungen\n
+    • Neutrale Umgebung wählen\n
+    • Bilder überprüfen
     </string>
+
+
+
+    <string name="tutorial_header">Tutorial für das beste Ergebnis!</string>
 
 
 
