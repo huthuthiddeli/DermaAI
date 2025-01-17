@@ -14,6 +14,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Results</string>
     <string name="menu_photo">Photo</string>
+    <string name="menu_tutorial">Tutorial</string>
 
     <string name="home_whatIsDermaAI">Was ist DermaAI?</string>
     <string name="home_purposeDesc">DermaAI ist eine Android-App, die KI nutzt, um pigmentierte Hautläsionen zu analysieren und zu klassifizieren.Du kannst Bilder deiner Hautläsionen hochladen, und die App liefert in Echtzeit Hinweise, indem es den Hautlässion einen Wert zuteilt, der aussagt wie sicher es ist, dass es sich um einen bösartigen oder gutartigen Befund handelt.</string>
@@ -62,14 +63,5 @@
     <string name="verify_key">Verify!</string>
     <string name="mfa_disabled">Disabled</string>
     <string name="logout_header">Logout</string>
-
-
-
-    <!-- Photo -->
-    <string name="photo_tutorial">Zentriert, gute Beleutung</string>
-    <string name="photo_title">Tutorial</string>
-    <string name="title_activity_tutorial">TutorialActivity</string>
-
-
 
 </resources>

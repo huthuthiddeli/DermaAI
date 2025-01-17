@@ -20,18 +20,5 @@
         app:layout_constraintVertical_bias="0.963"
         app:icon="@drawable/ic_menu_camera"/>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="401dp"
-        android:layout_height="41dp"
-        android:text="@string/photo_title"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/takePhotoBtn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.061" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
