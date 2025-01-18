@@ -6,10 +6,8 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
@@ -17,11 +15,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.databinding.FragmentPhotoBinding
-import com.example.dermaai_android_140.myClasses.Storage
+import com.example.dermaai_android_140.ui.camera.CameraActivity
 import java.io.File
 
 class PhotoFragment : Fragment() {
@@ -59,13 +56,17 @@ class PhotoFragment : Fragment() {
         takePhotoBtn.setOnClickListener {
             
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                openCamera(photoViewModel)
+                //openCamera(photoViewModel)
+
+                val intent = Intent(requireContext(), CameraActivity::class.java)
+                startActivity(intent)
+
+
             }else{
                 ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
                 photoViewModel.requestCameraPermission()
             }
         }
-
         photoViewModel.requestCameraPermission.observe(viewLifecycleOwner) { requestCount ->
             if (requestCount == 5) {
                 showPermissionSettingsDialog()
@@ -75,6 +76,7 @@ class PhotoFragment : Fragment() {
 
         return root
     }
+
 
 
     private fun showPermissionSettingsDialog() {
@@ -97,7 +99,7 @@ class PhotoFragment : Fragment() {
     }
 
 
-
+    /*
     private fun openCamera(photoViewModel : PhotoViewModel) {
         val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
@@ -144,8 +146,7 @@ class PhotoFragment : Fragment() {
 
 
     }
-
-    //
+    */
 
 
 

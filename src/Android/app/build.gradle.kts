@@ -1,4 +1,4 @@
-import org.gradle.api.JavaVersion.VERSION_1_8
+import org.gradle.api.JavaVersion.VERSION_11
 
 plugins {
     alias(libs.plugins.android.application)
@@ -45,11 +45,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = VERSION_1_8
-        targetCompatibility = VERSION_1_8
+        sourceCompatibility = VERSION_11
+        targetCompatibility = VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
     buildFeatures {
         viewBinding = true
@@ -57,6 +57,7 @@ android {
 }
 dependencies {
     implementation(libs.firebase.perf)
+    implementation(libs.androidx.legacy.support.v4)
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.dexmaker.mockito)
     androidTestImplementation(libs.androidx.espresso.contrib)

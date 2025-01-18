@@ -3,10 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature android:name="android.hardware.camera.any" />
-    
+
     <uses-permission android:name="android.permission.INTERNET" />
-
-
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -20,31 +18,32 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.Dark"
-        android:networkSecurityConfig="@xml/network_security_config"
-
         tools:targetApi="31">
+        <activity
+            android:name=".ui.camera.CameraActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.Dark" />
         <activity
             android:name=".ui.settings.SettingsActivity"
             android:exported="false"
-            android:label="@string/title_activity_settings"/>
-
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:theme="@style/Theme.DermaAI_Android_140.NoActionBar"/>
-
+            android:theme="@style/Theme.DermaAI_Android_140.NoActionBar" />
         <activity android:name=".ui.result.ResultActivity" />
         <activity
             android:name=".ui.login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -55,6 +54,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
+
 </manifest>
