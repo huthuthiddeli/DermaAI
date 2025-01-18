@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_grey">
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="367dp"
-        android:layout_height="54dp"
+        android:layout_width="348dp"
+        android:layout_height="45dp"
         android:text="@string/tutorial_header"
-        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:textSize="32sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.066" />
+        app:layout_constraintVertical_bias="0.054" />
 
     <ScrollView
         android:id="@+id/scrollView"
-        android:layout_width="330sp"
-        android:layout_height="597dp"
+        android:layout_width="407dp"
+        android:layout_height="636dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:elevation="2dp"
@@ -31,8 +34,8 @@
         app:layout_constraintTop_toBottomOf="@id/textView2">
 
         <LinearLayout
-            android:layout_width="330sp"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:padding="16dp">
 
@@ -42,10 +45,12 @@
                 android:layout_marginBottom="8dp"
                 android:paddingBottom="2dp"
                 android:text="@string/photo_tip_title_1"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:textSize="19sp" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="173dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="TODO"
@@ -56,37 +61,53 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="@string/photo_tip_desc_1" />
+                android:paddingBottom="8dp"
+                android:text="@string/photo_tip_desc_1"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="390dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:gravity="end"
+                android:paddingEnd="40dp"
                 android:text="@string/photo_tip_title_2"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                tools:ignore="RtlSymmetry"
+                android:textSize="19sp" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="570dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
             <TextView
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_width="390dp"
+                android:layout_height="67dp"
                 android:layout_marginBottom="16dp"
-                android:text="@string/photo_tip_desc_2" />
+                android:gravity="end"
+                android:paddingEnd="40dp"
+                android:paddingBottom="8dp"
+                android:text="@string/photo_tip_desc_2"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                tools:ignore="RtlSymmetry" />
 
             <TextView
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="@string/photo_tip_title_3"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textSize="19sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="173dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="TODO"
@@ -95,39 +116,53 @@
 
             <TextView
                 android:layout_width="300dp"
-                android:layout_height="wrap_content"
+                android:layout_height="47dp"
                 android:layout_marginBottom="16dp"
-                android:text="@string/photo_tip_desc_3" />
+                android:paddingBottom="8dp"
+                android:text="@string/photo_tip_desc_3"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="390dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:gravity="end"
+                android:paddingEnd="40dp"
                 android:text="@string/photo_tip_title_4"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textSize="19sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="570dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="390dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="@string/photo_tip_desc_4" />
+                android:gravity="end"
+                android:paddingEnd="40dp"
+                android:paddingBottom="8dp"
+                android:text="@string/photo_tip_desc_4"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="390dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="@string/photo_tip_title_5"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textSize="19sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="173dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="TODO"
@@ -137,17 +172,24 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="@string/photo_tip_desc_5" />
+                android:paddingBottom="8dp"
+                android:text="@string/photo_tip_desc_5"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="390dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:gravity="end"
+                android:paddingEnd="40dp"
                 android:text="@string/photo_tip_title_6"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textSize="19sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="570dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="TODO"
@@ -157,17 +199,24 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="@string/photo_tip_desc_6" />
+                android:gravity="end"
+                android:paddingEnd="40dp"
+                android:paddingBottom="8dp"
+                android:text="@string/photo_tip_desc_6"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="@string/photo_tip_title_7"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textSize="19sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="173dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="TODO"
@@ -177,27 +226,39 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="@string/photo_tip_desc_7" />
+                android:paddingBottom="8dp"
+                android:text="@string/photo_tip_desc_7"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="390dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:text="@string/photo_tip_title_8"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:textSize="19sp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/white"
+                android:gravity="end"
+                android:paddingEnd="40dp" />
 
             <ImageView
-                android:layout_width="match_parent"
+                android:layout_width="570dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="390dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="@string/photo_tip_desc_8" />
+                android:gravity="end"
+                android:paddingEnd="40dp"
+                android:paddingBottom="8dp"
+                android:text="@string/photo_tip_desc_8"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
 
         </LinearLayout>
 

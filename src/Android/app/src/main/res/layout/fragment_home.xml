@@ -35,16 +35,17 @@
 
     <TextView
         android:id="@+id/homeDesc2"
-        android:layout_width="232dp"
-        android:layout_height="83dp"
+        android:layout_width="279dp"
+        android:layout_height="119dp"
         android:text="@string/home_desktopApp"
         android:textColor="@android:color/white"
+        android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.681"
+        app:layout_constraintHorizontal_bias="0.878"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeDesc"
-        app:layout_constraintVertical_bias="0.156" />
+        app:layout_constraintVertical_bias="0.223" />
 
     <TextView
         android:id="@+id/textView3"
@@ -52,6 +53,7 @@
         android:layout_height="36dp"
         android:text="@string/home_desktopAppLink"
         android:textColor="@android:color/white"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.57"
