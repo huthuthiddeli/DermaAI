@@ -23,6 +23,5 @@ class ResultActivity : AppCompatActivity() {
         binding.fullscreenImage.setImageBitmap(bitmap)
 
 
-
     }
 }

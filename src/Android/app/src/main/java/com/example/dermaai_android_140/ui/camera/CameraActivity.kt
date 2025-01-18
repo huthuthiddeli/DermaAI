@@ -1,26 +1,14 @@
 package com.example.dermaai_android_140.ui.camera
 
 
-import android.content.ContentValues
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
-import androidx.camera.core.Preview
-import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.LifecycleCameraController
 import androidx.camera.view.PreviewView
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.LifecycleOwner
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.ActivityCameraBinding
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 
 class CameraActivity : AppCompatActivity() {
@@ -46,6 +34,7 @@ class CameraActivity : AppCompatActivity() {
 
 
 
+        /*
 
         val preview = Preview.Builder().build()
         val viewFinder: PreviewView = findViewById(R.id.previewView)
@@ -69,10 +58,11 @@ class CameraActivity : AppCompatActivity() {
             // preview.surfaceProvider = previewView.surfaceProvider
 
         }, ContextCompat.getMainExecutor(this))
+        */
 
     }
 
-
+/*
     private fun bindPreviewAndLifecycle(cameraProvider : ProcessCameraProvider, viewFinder : PreviewView)
     {
         // Set up the preview use case to display camera preview.
@@ -165,7 +155,7 @@ class CameraActivity : AppCompatActivity() {
     }
 
 
-
+*/
 
 
 

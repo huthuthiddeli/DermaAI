@@ -1,7 +1,6 @@
 package com.example.dermaai_android_140.ui.gallery
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.os.Environment
@@ -11,12 +10,12 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.databinding.FragmentGalleryBinding
 import com.example.dermaai_android_140.ui.result.ResultActivity
 import java.io.File
-import androidx.core.graphics.scale
 
 class GalleryFragment : Fragment() {
 
@@ -35,8 +34,9 @@ class GalleryFragment : Fragment() {
         val root: View = binding.root
         val textView: TextView = binding.textGallery
 
-
         val filesDir : File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+
         galleryViewModel.loadImages(filesDir)
 
         galleryViewModel.images.observe(viewLifecycleOwner) { images ->
@@ -50,6 +50,7 @@ class GalleryFragment : Fragment() {
 
 
     // TODO: coroutine
+
     private fun fillView(images: List<File>) {
 
         val imageContainer = binding.imageContainer

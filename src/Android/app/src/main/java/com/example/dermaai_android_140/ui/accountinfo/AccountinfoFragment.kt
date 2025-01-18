@@ -55,8 +55,6 @@ class AccountinfoFragment() : Fragment() {
         }
 
 
-
-
         if (isLogin) {
 
             val switchToRegisterBtn = view.findViewById<Button>(R.id.switchToRegisterBtn)
