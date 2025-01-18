@@ -3,6 +3,9 @@ import org.gradle.api.JavaVersion.VERSION_1_8
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.google.firebase.firebase.perf)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -23,7 +26,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-
+    android {
+        buildFeatures {
+            compose = true
+        }
+    }
     // Performance / Shrinking
     buildTypes {
         release {
@@ -31,7 +38,7 @@ android {
             isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-project.pro"
             )
             signingConfig = signingConfigs.getByName("debug")
         }
@@ -48,10 +55,20 @@ android {
         viewBinding = true
     }
 }
-
 dependencies {
-    implementation("androidx.navigation:navigation-compose:2")
-    implementation("com.google.code.gson:gson:2.11.0")
+    implementation(libs.firebase.perf)
+    androidTestImplementation(libs.mockito.core)
+    androidTestImplementation(libs.dexmaker.mockito)
+    androidTestImplementation(libs.androidx.espresso.contrib)
+
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.material3)
+
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.gson)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -75,6 +92,7 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.coil)
+    implementation(libs.androidx.exifinterface)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

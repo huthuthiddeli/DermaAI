@@ -1,8 +1,5 @@
 package com.example.dermaai_android_140.myClasses
 
-import kotlinx.serialization.Serializable
-import kotlinx.serialization.SerializationStrategy
-
 class User(var email : String, var password : String, var mfa : Boolean,var key : String)
 {
     var id : String? = ""

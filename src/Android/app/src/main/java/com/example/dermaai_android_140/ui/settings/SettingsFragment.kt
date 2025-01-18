@@ -14,6 +14,7 @@ import android.widget.Toast
 import androidx.preference.EditTextPreference
 import android.content.Intent
 import com.example.dermaai_android_140.ui.login.LoginActivity
+import androidx.core.content.edit
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -53,7 +54,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun logout() {
         val sharedPreferences = requireActivity().getSharedPreferences("Key", Context.MODE_PRIVATE)
-        sharedPreferences.edit().clear().apply()
+        sharedPreferences.edit() { clear() }
 
         val intent = Intent(context, LoginActivity::class.java)
         startActivity(intent)

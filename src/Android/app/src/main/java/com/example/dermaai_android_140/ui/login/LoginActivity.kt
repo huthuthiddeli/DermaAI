@@ -1,8 +1,6 @@
 package com.example.dermaai_android_140.ui.login
 
-import android.content.Context
 import android.os.Bundle
-import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.ActivityMainBinding

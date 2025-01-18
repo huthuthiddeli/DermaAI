@@ -1,10 +1,9 @@
 package com.example.dermaai_android_140.ui.settings
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import com.example.dermaai_android_140.R
-import androidx.fragment.app.FragmentTransaction
 
 class SettingsActivity : AppCompatActivity() {
 

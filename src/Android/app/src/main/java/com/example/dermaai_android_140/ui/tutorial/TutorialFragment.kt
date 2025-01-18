@@ -7,11 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.OverScroller
 import android.widget.ScrollView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
-import com.example.dermaai_android_140.R
-import com.example.dermaai_android_140.databinding.FragmentTutorialBinding // Import your generated binding class
+import com.example.dermaai_android_140.databinding.FragmentTutorialBinding
 
 
 class TutorialFragment : Fragment() {

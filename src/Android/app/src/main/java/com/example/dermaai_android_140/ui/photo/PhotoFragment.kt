@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.example.dermaai_android_140.ui.photo
 
 import android.Manifest
@@ -18,9 +20,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.databinding.FragmentPhotoBinding
-import com.example.dermaai_android_140.repo.ImageRepo
+import com.example.dermaai_android_140.myClasses.Storage
 import java.io.File
 
 class PhotoFragment : Fragment() {
@@ -43,7 +44,7 @@ class PhotoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val photoViewModel =
-            ViewModelProvider(this).get(PhotoViewModel::class.java)
+            ViewModelProvider(this)[PhotoViewModel::class.java]
 
 
         _binding = FragmentPhotoBinding.inflate(inflater, container, false)
@@ -65,14 +66,13 @@ class PhotoFragment : Fragment() {
             }
         }
 
-        photoViewModel.requestCameraPermission.observe(viewLifecycleOwner, {requestCount ->
-            if(requestCount == 5)
-            {
+        photoViewModel.requestCameraPermission.observe(viewLifecycleOwner) { requestCount ->
+            if (requestCount == 5) {
                 showPermissionSettingsDialog()
                 photoViewModel.resetCameraPermissionRequest()
             }
-        })
-        
+        }
+
         return root
     }
 
@@ -121,18 +121,19 @@ class PhotoFragment : Fragment() {
 
 
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
 
         val photoViewModel =
-            ViewModelProvider(this).get(PhotoViewModel::class.java)
+            ViewModelProvider(this)[PhotoViewModel::class.java]
 
 
 
-        photoViewModel.currentImage.observe(viewLifecycleOwner, {currentImage ->
+        photoViewModel.currentImage.observe(viewLifecycleOwner) { currentImage ->
             photoViewModel.sendImage(currentImage)
-        })
+        }
 
         photoViewModel.setCurrentImage(photoFile)
 

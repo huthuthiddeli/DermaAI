@@ -1,16 +1,12 @@
 package com.example.dermaai_android_140.ui.accountinfo
 
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.myClasses.API
-import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.User
-import com.example.dermaai_android_140.repo.ImageRepo
-import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers

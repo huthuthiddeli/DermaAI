@@ -9,7 +9,7 @@ class LoginRepoImpl : LoginRepo {
 
     override fun login(email : String, password : String, mfa : Boolean, key : String) : User?
     {
-        val user : User = User(email,password, mfa,key)
+        val user = User(email,password, mfa,key)
 
         
         //TODO

@@ -1,18 +1,11 @@
 package com.example.dermaai_android_140.ui.photo
 
-import android.media.ExifInterface
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.net.Uri
-import com.example.dermaai_android_140.myClasses.Storage
-import com.example.dermaai_android_140.repo.ImageRepo
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
-import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import org.koin.java.KoinJavaComponent
 import java.io.File
-import java.io.IOException
-import kotlin.getValue
 
 //import org.koin.core.Koin
 

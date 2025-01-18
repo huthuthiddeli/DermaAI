@@ -3,7 +3,6 @@ package com.example.dermaai_android_140.myClasses
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.os.Environment
 import android.widget.Toast
@@ -91,12 +90,10 @@ class Storage {
 
     private fun getSubDir(takenByUser : Boolean) : String
     {
-        if(takenByUser)
-        {
-            return "Photo_User"
-        }
-        else {
-            return "Photo_ServerResponse"
+        return if(takenByUser) {
+            "Photo_User"
+        } else {
+            "Photo_ServerResponse"
         }
     }
 

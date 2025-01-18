@@ -1,13 +1,11 @@
 package com.example.dermaai_android_140.myClasses
 
-import androidx.core.app.PendingIntentCompat.send
+import com.google.gson.Gson
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
-import com.google.gson.Gson
-import java.io.OutputStreamWriter
-import kotlin.Result
 
 class API {
 

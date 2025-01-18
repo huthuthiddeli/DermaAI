@@ -1,35 +1,30 @@
 package com.example.dermaai_android_140.myClasses
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.SharedPreferences
-import android.widget.Toast
+import android.security.keystore.KeyGenParameterSpec
+import android.security.keystore.KeyProperties
+import android.util.Base64
 import dev.samstevens.totp.code.CodeGenerator
 import dev.samstevens.totp.code.DefaultCodeGenerator
 import dev.samstevens.totp.code.DefaultCodeVerifier
 import dev.samstevens.totp.secret.DefaultSecretGenerator
 import dev.samstevens.totp.secret.SecretGenerator
 import dev.samstevens.totp.time.SystemTimeProvider
-import android.security.keystore.KeyGenParameterSpec
-import android.security.keystore.KeyProperties
-import java.security.KeyPairGenerator
-import javax.crypto.Cipher
-import android.util.Base64
-import java.security.KeyPair
 import java.security.KeyStore
-import java.security.KeyStore.SecretKeyEntry
+import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
+import androidx.core.content.edit
 
 
 class Authentication {
 
     fun generateSecret(context: Context) : String
     {
-        val secretGenerator : SecretGenerator = DefaultSecretGenerator();
-        val secret = secretGenerator.generate();
+        val secretGenerator : SecretGenerator = DefaultSecretGenerator()
+        val secret = secretGenerator.generate()
 
         saveHash(secret, context)
 
@@ -114,16 +109,16 @@ class Authentication {
 
         // 3. Save the IV and encrypted hash in SharedPreferences
         val sharedPreferences: SharedPreferences = context.getSharedPreferences("secure_prefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
+        sharedPreferences.edit() {
 
-        // Convert IV and encrypted hash to Base64 strings
-        val ivBase64 = Base64.encodeToString(iv, Base64.DEFAULT)
-        val encryptedHashBase64 = Base64.encodeToString(encryptedHash, Base64.DEFAULT)
+            // Convert IV and encrypted hash to Base64 strings
+            val ivBase64 = Base64.encodeToString(iv, Base64.DEFAULT)
+            val encryptedHashBase64 = Base64.encodeToString(encryptedHash, Base64.DEFAULT)
 
-        // Save to SharedPreferences
-        editor.putString("${keyAlias}_iv", ivBase64)
-        editor.putString("${keyAlias}_hash", encryptedHashBase64)
-        editor.apply()
+            // Save to SharedPreferences
+            putString("${keyAlias}_iv", ivBase64)
+            putString("${keyAlias}_hash", encryptedHashBase64)
+        }
 
         //val oriKey = retrieveEncryptedHashFromKeystore(context, "2FA_Key")
 

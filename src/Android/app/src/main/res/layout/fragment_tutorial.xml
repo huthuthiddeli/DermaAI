@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
+    android:layout_height="match_parent"
+    android:background="@color/light_grey">
 
     <TextView
         android:id="@+id/textView2"
@@ -21,12 +20,12 @@
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="330sp"
-        android:scrollbarThumbVertical="@drawable/scrollbar_left"
-        android:scrollbarStyle="outsideOverlay"
         android:layout_height="597dp"
         android:layout_marginTop="16dp"
         android:background="@android:color/transparent"
         android:elevation="2dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbarThumbVertical="@drawable/scrollbar_left"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView2">
@@ -49,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
 
@@ -69,6 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
             <TextView
@@ -88,6 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
 
@@ -108,6 +110,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
             <TextView
@@ -127,6 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
             <TextView
@@ -146,6 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
             <TextView
@@ -165,6 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
             <TextView
@@ -184,6 +190,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
+                android:contentDescription="TODO"
                 app:srcCompat="@drawable/background_fragment_line_2" />
 
             <TextView

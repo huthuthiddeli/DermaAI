@@ -104,6 +104,10 @@
     <string name="photo_tip_desc_6">Vermeiden Sie direkte Blendungen oder Lichteinwirkung auf die Kamera.</string>
     <string name="photo_tip_desc_7">Wählen Sie eine Umgebung mit hohem Kontrast, um die Hautläsion klar hervorzuheben.</string>
     <string name="photo_tip_desc_8">Überprüfen Sie die Bilder nach der Aufnahme, um sicherzustellen, dass die Hautläsion deutlich sichtbar ist, und alle beschrieben Kriterien erfüllen.</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="todo">TODO</string>
+    <string name="positive_negative">Positive/Negative</string>
 
 
 </resources>
