@@ -1,114 +1,84 @@
-import os
 import cv2
-import sys
-from multiprocessing import shared_memory
-import ast
-import pickle
-
 import numpy as np
 
-import picture as Picture
 
+def crop_image_microservice(image: bytes):
+    # Decode image from byte array
+    bimage = np.frombuffer(image, dtype=np.uint8)
+    image = cv2.imdecode(bimage, cv2.IMREAD_COLOR)
 
-def find_path(obj: Picture.Picture) -> str:
-    count = len(os.listdir("./cut_spots"))
-    '''REMOVES ANY WHITESPACES FOR FILENAME AND : '''
-    no_whitespaces = obj.get_diagnosis().replace(" ", "_").replace(":", "__")
-    added_count = no_whitespaces + '___ITEM___' + str(count)
-    filepath = os.getcwd() + "/cut_spots/" + added_count + ".jpg"
-    return filepath
-
-# byte array
-
-
-
-# Region of Interest
-def define_ROI(image):
-    ROI_area = [100, 200, 300, 400]
+    # Get image dimensions
     height, width = image.shape[:2]
     center_x, center_y = width // 2, height // 2
-    roi_size = 100  # Adjust this value to set the size of the central region
-    roi_x1, roi_y1 = center_x - roi_size, center_y - roi_size
-    roi_x2, roi_y2 = center_x + roi_size, center_y + roi_size
-    center_region = image[roi_y1:roi_y2, roi_x1:roi_x2]
-    return center_region
+
+    # Initialize previous detected spot and pixel counts
+    prev_detected_spot = np.zeros((0, 0, 0), dtype=np.uint8)
+    latest_big = np.zeros((0, 0, 0), dtype=np.uint8)
+    iterations = 0
+    max_iterations = 300
+    min_area = 10  # Minimum contour area to consider
+
+    # Loop for iterative processing of the image
+    while iterations < max_iterations:
+        try:
+            roi_size = 25 + (iterations * 100)  # Increment ROI size each iteration
+            roi_x1, roi_y1 = center_x - roi_size, center_y - roi_size
+            roi_x2, roi_y2 = center_x + roi_size, center_y + roi_size
+            roi = image[roi_y1:roi_y2, roi_x1:roi_x2]
+
+            if roi.shape[0] == 0 or roi.shape[1] == 0:
+                print("ROI size exceeds image dimensions, breaking loop.")
+                break
+
+            # Process region of interest (ROI)
+            center_region = process_roi(roi)
+
+            # Find contours in the thresholded image
+            contours, _ = cv2.findContours(center_region, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+            print(f"CONTOURS AMMOUNT={len(contours)}")
+
+            # Initialize output image for visualization
+            output_image = image.copy()
+
+            for idx, contour in enumerate(contours):
+                if cv2.contourArea(contour) > min_area:  # Filter small contours
+
+                    x, y, w, h = cv2.boundingRect(contour)
+                    x += roi_x1
+                    y += roi_y1
+                    detected_spot = cv2.cvtColor(image[y:y + h, x:x + w], cv2.COLOR_BGR2GRAY)
+
+                    # Check for the largest spot and exit when size stabilizes
+                    if prev_detected_spot.size < detected_spot.size:
+                        prev_detected_spot = detected_spot
+
+            if latest_big.size == prev_detected_spot.size and prev_detected_spot.size != 0:
+                print(f"Returning last detected spot after {iterations} iterations.")
+                return latest_big
+            elif latest_big.size < prev_detected_spot.size:
+                latest_big = prev_detected_spot
+
+            iterations += 1
+        except Exception as e:
+            print(f"Error={e}")
+            return None
+    print(f"Returning last detected spot after {iterations} iterations.")
+    return latest_big
 
 
-def crop_image_from_bytearray(image: bytearray):
-    image = np.frombuffer(bytearray, dtype=np.uint8)
-    height, width = image.shape[:2]
-    center_x, center_y = width // 2, height // 2
-    roi_size = 100  # Adjust this value to set the size of the central region
-    roi_x1, roi_y1 = center_x - roi_size, center_y - roi_size
-    roi_x2, roi_y2 = center_x + roi_size, center_y + roi_size
-    center_region = image[roi_y1:roi_y2, roi_x1:roi_x2]
+def process_roi(roi):
+    """
+    Process the ROI (Region of Interest) by converting to grayscale,
+    applying Gaussian Blur, and thresholding.
+    """
+    try:
+        # TODO: INCREASE / DECREASE CONTRAST IF BAD
+        gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
+        # qualized = cv2.equalizeHist(gray)
+        blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+        _, thresholded = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY_INV)
+        return thresholded
+    except:
+        print("error")
 
-    # center_region = define_ROI(image)
-    gray = cv2.cvtColor(center_region, cv2.COLOR_BGR2GRAY)
-    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-    _, thresholded = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY_INV)
-    contours, _ = cv2.findContours(thresholded, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    min_area = 500  # Adjust based on the size of small anomalies to ignore
-    output_image = image.copy()
-    for idx, contour in enumerate(contours):
-        if cv2.contourArea(contour) > min_area:  # Only consider large enough contours
-            # Offset contour coordinates to match the original image
-            contour += [roi_x1, roi_y1]
-            cv2.drawContours(output_image, [contour], -1, (0, 255, 0), 2)
-            x, y, w, h = cv2.boundingRect(contour)
-            detected_spot = cv2.cvtColor(image[y:y + h, x:x + w], cv2.COLOR_BGR2GRAY)
-            return detected_spot
-
-
-
-
-def crop_image(array_shape: tuple, mem_name: str):
-    array_shape = ast.literal_eval(array_shape)
-    shm = shared_memory.SharedMemory(name=mem_name)
-    serialized_data = bytes(shm.buf[:])  # Copy the data into a bytes object
-    my_object = pickle.loads(serialized_data)
-    image = my_object.get_picture()
-
-    # REPLACE THIS STUFF
-
-    height, width = image.shape[:2]
-    center_x, center_y = width // 2, height // 2
-    roi_size = 100  # Adjust this value to set the size of the central region
-    roi_x1, roi_y1 = center_x - roi_size, center_y - roi_size
-    roi_x2, roi_y2 = center_x + roi_size, center_y + roi_size
-    center_region = image[roi_y1:roi_y2, roi_x1:roi_x2]
-
-    # center_region = define_ROI(image)
-    gray = cv2.cvtColor(center_region, cv2.COLOR_BGR2GRAY)
-    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-    _, thresholded = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY_INV)
-    contours, _ = cv2.findContours(thresholded, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    min_area = 500  # Adjust based on the size of small anomalies to ignore
-    output_image = image.copy()
-    for idx, contour in enumerate(contours):
-        if cv2.contourArea(contour) > min_area:  # Only consider large enough contours
-            # Offset contour coordinates to match the original image
-            contour += [roi_x1, roi_y1]
-            cv2.drawContours(output_image, [contour], -1, (0, 255, 0), 2)
-            x, y, w, h = cv2.boundingRect(contour)
-            detected_spot = cv2.cvtColor(image[y:y + h, x:x + w], cv2.COLOR_BGR2GRAY)
-            # Save the cropped spot as a separate file
-            filepath = find_path(my_object)
-            print(f'FILEPATH: {filepath}')
-            cv2.imwrite(filepath, detected_spot)
-
-    # Optional: Draw the ROI rectangle for reference
-    cv2.rectangle(output_image, (roi_x1, roi_y1), (roi_x2, roi_y2), (255, 0, 0), 2)
-
-    # Clean up shared memory when done
-    shm.close()
-    shm.unlink()
-
-
-if __name__ == '__main__':
-    assert len(sys.argv) > 2, "Not enough arguments given!"
-    print(sys.argv)
-    array_shape = sys.argv[1]
-    mem_name = sys.argv[2]
-
-    crop_image(array_shape, mem_name)

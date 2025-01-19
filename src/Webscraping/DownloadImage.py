@@ -1,16 +1,13 @@
-import os
 import sys
 import requests
-import cv2
-import subprocess
 import numpy as np
 import json
-import pickle
-from multiprocessing import shared_memory
-import picture as Picture
+from io import BytesIO
 
 # check if link has been provided
 assert len(sys.argv) > 1, "Not enough arguments given!"
+
+url = "http://localhost:3333/picture"
 
 try:
     data = str(sys.argv[1])
@@ -20,18 +17,46 @@ try:
     response = requests.get(item['picture'])
 
     if response.status_code == 200:
-        np_array = np.frombuffer(response.content, np.uint8)
-        image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
-        picture = Picture.Picture(image, item['diagnosis'])
-        serialized_obj = pickle.dumps(picture)
-        # Create shared memory
-        shm = shared_memory.SharedMemory(create=TrueS, size=len(serialized_obj))
-        # Write the serialized data to shared memory
-        shm.buf[:len(serialized_obj)] = serialized_obj
-        print(f"Shared memory name: {shm.name}")
-        array_shape = str(image.shape)
 
-        subprocess.run([sys.executable, 'find_spot.py', array_shape, shm.name], cwd=os.getcwd())
+        with open("picture.png", "wb") as file:
+            file.write(response.content)
+
+        file = {'file': open("picture.png", "rb")}
+        new_response = requests.get("http://localhost:6969/", files=file)
+        img = new_response.json()["file"]
+        arr = np.array(img, dtype=np.uint8)
+
+        if arr.size == 0:
+            print("Error")
+            exit(-1)
+
+        # cv2.imshow("image", arr)
+        # cv2.waitKey(0)
+        # cv2.destroyAllWindows()
+
+        llist = new_response.json()['file']
+        llist = new_response.json()['file']
+        np_arr = np.array(llist, dtype=np.uint8)
+
+        data = {
+            "picture": np_arr.tolist(),
+            "diagnosis": item['diagnosis']
+        }
+
+        # print(f"DATA={data}\n")
+
+        serialized_data = json.dumps(data).encode("utf-8")
+        # print(serialized_data)
+
+        file_like_obj = BytesIO(serialized_data)
+
+        filename = "data.json"
+
+        file = {"file": (filename, file_like_obj, "application/json")}
+
+        response = requests.post(url, files=file)
+
+
     else:
         print("ERROR", file=sys.stderr)
 
