@@ -74,7 +74,13 @@ def fetch_from_isic_archive(link):
 
 
 def download_images(obj: Picture.Picture):
-    subprocess.Popen([sys.executable, 'DownloadImage.py', str(obj.to_dict())], cwd=os.getcwd())
+    result = subprocess.run([sys.executable, 'DownloadImage.py', str(obj.to_dict())], cwd=os.getcwd(), capture_output=True)
+
+    if len(result.stdout) > 5:
+        print(result.stdout)
+
+    if len(result.stderr) > 5:
+        print(result.stderr)
 
 
 if __name__ == '__main__':
