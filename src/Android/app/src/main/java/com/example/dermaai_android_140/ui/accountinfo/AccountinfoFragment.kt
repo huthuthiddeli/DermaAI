@@ -2,6 +2,7 @@ package com.example.dermaai_android_140.ui.accountinfo
 
 //import com.warrenstrange.googleauth.GoogleAuthenticator
 //import com.warrenstrange.googleauth.GoogleAuthenticatorKey
+import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -72,7 +73,9 @@ class AccountinfoFragment() : Fragment() {
                     }
 
                     val intent = Intent(requireContext(), MainActivity::class.java)
-                    startActivity(intent)
+
+                    startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+
                 } else {
                     Toast.makeText(context, "Credentials are incorrect!", Toast.LENGTH_LONG).show()
                 }

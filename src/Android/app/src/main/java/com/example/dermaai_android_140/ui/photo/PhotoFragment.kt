@@ -59,6 +59,7 @@ class PhotoFragment : Fragment() {
                 //openCamera(photoViewModel)
 
                 val intent = Intent(requireContext(), CameraActivity::class.java)
+
                 startActivity(intent)
 
 

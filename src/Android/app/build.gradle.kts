@@ -15,7 +15,9 @@ android {
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
     }
-
+    buildFeatures {
+        prefab = true
+    }
     defaultConfig {
         applicationId = "com.example.dermaai_android_140"
         targetSdk = 35
