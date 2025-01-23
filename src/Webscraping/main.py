@@ -74,13 +74,16 @@ def fetch_from_isic_archive(link):
 
 
 def download_images(obj: Picture.Picture):
-    result = subprocess.run([sys.executable, 'DownloadImage.py', str(obj.to_dict())], cwd=os.getcwd(), capture_output=True)
+    # RUN IS NOT ASYNC BUT RATHER WAITS FOR THE RESPONSE
+    # CODING IT ASYNC WITHOUT PROPER LIMITATION OF THREAD-USAGE WOULD DESTROY LAPTOP
+    result = subprocess.run([sys.executable, 'DownloadImage.py', str(obj.to_dict())],
+                            cwd=os.getcwd(), capture_output=True)
 
     if len(result.stdout) > 5:
-        print(result.stdout)
+        print(f"STANDARD OUTPUT={result.stdout}")
 
     if len(result.stderr) > 5:
-        print(result.stderr)
+        print(f"STANDARD ERROR={result.stderr}")
 
 
 if __name__ == '__main__':
@@ -88,4 +91,4 @@ if __name__ == '__main__':
     fetch_from_isic_archive(connection_string)
     end_time = time.perf_counter()
     elapsed_time = end_time - start_time
-    print(f"Elapsed time: {elapsed_time:.1f} seconds\n")
+    print(f"Elapsed time: {elapsed_time: .1f} seconds\n")

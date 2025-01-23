@@ -38,9 +38,6 @@ def crop_image_microservice(image: bytes):
 
             print(f"CONTOURS AMMOUNT={len(contours)}")
 
-            # Initialize output image for visualization
-            output_image = image.copy()
-
             for idx, contour in enumerate(contours):
                 if cv2.contourArea(contour) > min_area:  # Filter small contours
 
@@ -49,7 +46,7 @@ def crop_image_microservice(image: bytes):
                     y += roi_y1
                     detected_spot = cv2.cvtColor(image[y:y + h, x:x + w], cv2.COLOR_BGR2GRAY)
 
-                    # Check for the largest spot and exit when size stabilizes
+                    # Find the biggest spot
                     if prev_detected_spot.size < detected_spot.size:
                         prev_detected_spot = detected_spot
 
@@ -81,4 +78,3 @@ def process_roi(roi):
         return thresholded
     except:
         print("error")
-

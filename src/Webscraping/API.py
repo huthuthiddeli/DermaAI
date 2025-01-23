@@ -6,10 +6,11 @@ from find_spot import crop_image_microservice
 # FastAPI instance
 app = FastAPI()
 
+
 @app.get("/")
 async def getPic(file: UploadFile):
-    bytesArr = await file.read()
-    img = crop_image_microservice(bytesArr)
+    bytes_arr = await file.read()
+    img = crop_image_microservice(bytes_arr)
     if img is None:
         return JSONResponse(content={"file": "error!"})
     return JSONResponse(content={"file": img.tolist()})
