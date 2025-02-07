@@ -3,7 +3,7 @@ import { prettyPrintError } from '@adonisjs/core'
 import app from '@adonisjs/core/services/app'
 import logger from '@adonisjs/core/services/logger'
 import mongoose from 'mongoose'
-import { userDataModel } from '../datastructure/userDataCollection.js'
+import { userDataModel } from '../Models/userDataCollection.js'
 import { HttpContext } from '@adonisjs/core/http'
 import { hashPassword } from '../utils/hash.js'
 import { ObjectId } from 'mongodb'
@@ -14,8 +14,6 @@ app.ready(() => {
 })
 
 interface IUserData {
-    firstname: string,
-    secondname: string,
     email: string,
     password: string
 }
@@ -36,29 +34,22 @@ const checkState = async (): Promise<void> => {
 }
 
 function isCreateUserRequest(body: any): body is IUserData {
-    return !(
-      typeof body.firstname === 'string' &&
+    logger.info(typeof body.email === 'string' &&
+      typeof body.password === 'string')
+
+    return (
       typeof body.email === 'string' &&
-      typeof body.secondname === 'string' &&
       typeof body.password === 'string'
     );
 }
 
 function getRequestProperties(body: Record<string, any>) {
   let password: string = "";
-  let firstname: string = "";
-  let lastname: string = "";
   let email: string = "";
   let id: any = undefined;
 
   Object.keys(body).forEach(key => {
     switch (key){
-      case "firstname": 
-        firstname = body[key];
-        break;
-      case "lastname":
-        lastname = body[key];
-        break;
       case "email": 
         email = body[key];
         break;
@@ -71,7 +62,7 @@ function getRequestProperties(body: Record<string, any>) {
     }
   });
 
-  return id === undefined ? {firstname, lastname, email, password}: {firstname, lastname, email, password, id};
+  return id === undefined ? {email, password}: {email, password, id};
 }
 
 const connectToDatabase = async (): Promise<boolean> => {
@@ -95,6 +86,16 @@ const connectToDatabase = async (): Promise<boolean> => {
     return true
 }
 
+// *************************************************
+// FORMAT OF REQUEST AS FOLLOWS:
+// {
+//    "email": "test@gmail.com",
+//    "password": "testpassword"
+// }
+//
+// PASSWORD IS HASHED ONCE IN AS THE PARAMETER
+// *************************************************
+
 export const saveUser = async (ctx:HttpContext) => {
     await checkState()
     let body = ctx.request.body();
@@ -111,6 +112,16 @@ export const saveUser = async (ctx:HttpContext) => {
     return ctx.response.ok(savedUser);
 }
 
+// *************************************************
+// FORMAT OF REQUEST AS FOLLOWS:
+// {
+//   "email": "test@gmail.com",
+//   "password": "9f735e0df9a1ddc702bf0a1a7b83033f9f7153a00c29de82cedadc9957289b05",
+//   "id": "6797324c15addfc1bc992240"
+// }
+//
+// PASSWORD IS HASHED ONCE IN AS THE PARAMETER
+// *************************************************
 
 export const validateUser = async (ctx: HttpContext) => {
   let body = ctx.request.body();
@@ -120,10 +131,9 @@ export const validateUser = async (ctx: HttpContext) => {
   }
 
   let data = getRequestProperties(body);
+  logger.info("DATA: " + data.id)
   data["password"] = await hashPassword(data["password"]);
   const newOBj = new ObjectId(data.id);
-
-  
   const existingUser = await userDataModel.findOne({_id: newOBj})
 
   if (!existingUser) {
@@ -139,9 +149,7 @@ export const validateUser = async (ctx: HttpContext) => {
 export const clearCollection = async (ctx: HttpContext) => {
   await userDataModel.deleteMany({});
 
-  let data = await getAllUsers();
-
-  if(data.length === 0){
+  if((await getAllUsers()).length === 0){
     return ctx.response.status(200);
   }else{
     return ctx.response.status(500);
@@ -150,7 +158,5 @@ export const clearCollection = async (ctx: HttpContext) => {
 
 
 export const getAllUsers = async () =>{
-  let data = await userDataModel.find({});
-
-  return data;
+  return await userDataModel.find({});
 }

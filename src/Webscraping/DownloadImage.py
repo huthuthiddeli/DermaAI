@@ -1,3 +1,4 @@
+import os
 import sys
 import requests
 import numpy as np
@@ -31,10 +32,6 @@ try:
         if arr.size == 0:
             print("Error")
             exit(-1)
-
-        # cv2.imshow("image", arr)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
 
         llist = new_response.json()['file']
         np_arr = np.array(llist, dtype=np.uint8)

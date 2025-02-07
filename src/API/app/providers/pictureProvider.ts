@@ -3,7 +3,7 @@ import logger from "@adonisjs/core/services/logger";
 import mongoose from 'mongoose'
 import { prettyPrintError } from "@adonisjs/core";
 import env from '#start/env'
-import { pictureModel } from "../datastructure/pictureCollection.js";
+import { pictureModel } from "../Models/pictureCollection.js";
 import { HttpContext } from "@adonisjs/core/http";
 
 app.ready(() => {
@@ -11,6 +11,10 @@ app.ready(() => {
     connectToDatabase()
 })
 
+type Response = {
+    status: boolean,
+    data: any
+}
 
 const checkState = async (): Promise<void> => {
     let state = mongoose.connection.readyState
@@ -54,7 +58,7 @@ const connectToDatabase = async (): Promise<boolean> => {
 /*
 * Acutal function used to save to the databse
 */
-export const savePicture = async (record: Record<string, string>): Promise<{status: boolean, data: any}>  => {
+export const savePicture = async (record: Record<string, string>): Promise<Response>  => {
 
     await checkState()
 
@@ -87,14 +91,17 @@ export const findPictures = async (ctx: HttpContext) => {
     let page = 1;
     let limit = 1;
 
-    Object.keys(queryParams).forEach(e => {
-        if(e == "page"){
-            page = queryParams[e];
-        }else if(e == "limit"){
-            limit = queryParams[e];
-        }
+    page = Number(Object.keys(queryParams).find(x => x == "page"))
+    limit = Number(Object.keys(queryParams).find(x => x == "limit"))
 
-    });
+    // Object.keys(queryParams).forEach(e => {
+    //     if(e == "page"){
+    //         page = queryParams[e];
+    //     }else if(e == "limit"){
+    //         limit = queryParams[e];
+    //     }
+
+    // });
 
     const options = {
         page: page,

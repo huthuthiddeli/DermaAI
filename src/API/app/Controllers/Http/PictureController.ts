@@ -1,11 +1,31 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import logger from '@adonisjs/core/services/logger'
 import {promises as fs} from 'fs'
-import { savePicture } from '../providers/pictureProvider.js';
+import { findPictures, savePicture } from '../../providers/pictureProvider.js';
 
-export default class PostsController {
-  
-  async picture({request, response}: HttpContext) {
+export default class PictureController {
+  /**
+   * @swagger
+   * /picture:
+   *   post:
+   *     tags:
+   *       - Picture
+   *     summary: Upload a picture
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         multipart/form-data:
+   *           schema:
+   *             type: object
+   *             properties:
+   *               file:
+   *                 type: string
+   *                 format: binary
+   *     responses:
+   *       200:
+   *         description: Picture uploaded successfully
+   */
+  async postPicture({request, response}: HttpContext) {
     const file = request.file('file', {
       extnames: ['json'],
       size: '5mb'
@@ -41,5 +61,9 @@ export default class PostsController {
       console.error('Error reading the file:', error);
       return response.internalServerError('Failed to read file content');
     }
+  }
+
+  async getPicture(ctx: HttpContext){
+    return await findPictures(ctx);    
   }
 }

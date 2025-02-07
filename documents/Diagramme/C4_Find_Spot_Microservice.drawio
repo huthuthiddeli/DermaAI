@@ -1,0 +1,66 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.4 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.4">
+  <diagram name="Page-1" id="8ECJvJoxcYJm-RsdCnFo">
+    <mxGraphModel dx="956" dy="563" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="470" y="200" width="200" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="495" y="130" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-6" value="KI-Backend" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="530" y="130" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-7" value="&lt;font style=&quot;font-size: 9px;&quot;&gt;[Container: Python]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="530" y="150" width="80" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-8" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="jS8n_gaBKW0oPNZiw0fe-1" target="jS8n_gaBKW0oPNZiw0fe-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="170" as="sourcePoint" />
+            <mxPoint x="500" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-9" value="Will Bild zuschneiden lassen" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="jS8n_gaBKW0oPNZiw0fe-8" vertex="1" connectable="0">
+          <mxGeometry x="0.0976" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="495" y="220" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-57" value="Controller" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="518.75" y="220" width="102.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-58" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;[Component: Python Controller]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="495" y="240" width="150" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-59" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="jS8n_gaBKW0oPNZiw0fe-57" target="jS8n_gaBKW0oPNZiw0fe-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="590" y="270" as="sourcePoint" />
+            <mxPoint x="640" y="220" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-60" value="&lt;br&gt;&lt;br&gt;Findet eine Hautläsion und schneidet diese aus." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="493.13" y="280" width="153.75" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-61" value="Find Spot" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="540" y="290" width="60" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-62" value="&lt;font style=&quot;font-size: 9px;&quot;&gt;[Component: Python Skript]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="510" y="300" width="120" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-63" value="DermaAI Find-Spot" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="560" y="340" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="jS8n_gaBKW0oPNZiw0fe-64" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" target="jS8n_gaBKW0oPNZiw0fe-56" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="280" as="sourcePoint" />
+            <mxPoint x="630" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

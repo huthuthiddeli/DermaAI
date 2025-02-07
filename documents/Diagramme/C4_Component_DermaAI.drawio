@@ -1,0 +1,235 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/26.0.4 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="26.0.4">
+  <diagram name="Page-1" id="r2_2YA5K_IkCOgmWWGXc">
+    <mxGraphModel dx="1434" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-1" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="110" y="170" width="920" height="420" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-2" value="&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;font-size: 9px;&quot;&gt;Speichert Benutzer bezogene Daten persistent in der Datenbank. Trainingsdaten inklusive Label werden auch gespeichert.&lt;/font&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;align=center;" parent="1" vertex="1">
+          <mxGeometry x="490" y="600" width="160" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-3" value="&lt;font style=&quot;font-size: 15px;&quot;&gt;Datenbank&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="540" y="600" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-4" value="&lt;font style=&quot;font-size: 9px;&quot;&gt;[Container: MongoDB]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="520" y="620" width="100" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="1" vertex="1">
+          <mxGeometry x="508.75" y="90" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-6" value="KI-Backend" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="528.75" y="90" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-7" value="&lt;font style=&quot;font-size: 9px;&quot;&gt;[Container: Python]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="528.75" y="110" width="80" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-8" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="QSA1xeKCVDy9QSCWdvXV-1" target="QSA1xeKCVDy9QSCWdvXV-5" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="170" as="sourcePoint" />
+            <mxPoint x="500" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-9" value="Datenbankanfrage für Daten&amp;nbsp;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="QSA1xeKCVDy9QSCWdvXV-8" vertex="1" connectable="0">
+          <mxGeometry x="0.0976" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-14" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;Serialisiert &amp;amp; Verifiziert Inhalt von Anfragen" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="500" y="179" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-15" value="Middleware" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="530" y="179" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-16" value="&lt;font style=&quot;font-size: 9px;&quot;&gt;[Component: Adonisjs Controller]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="497.5" y="199" width="145" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="500" y="259" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-19" value="Controller" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="520" y="259" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="QSA1xeKCVDy9QSCWdvXV-20" value="&lt;font style=&quot;font-size: 9px;&quot;&gt;[Component: Adonisjs Controller]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="500" y="279" width="140" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="k5eHFmfA9t0wE6gonlB4-1" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="QSA1xeKCVDy9QSCWdvXV-15" target="QSA1xeKCVDy9QSCWdvXV-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="640" y="380" as="sourcePoint" />
+            <mxPoint x="690" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="k5eHFmfA9t0wE6gonlB4-2" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="QSA1xeKCVDy9QSCWdvXV-19" target="QSA1xeKCVDy9QSCWdvXV-14" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="640" y="379" as="sourcePoint" />
+            <mxPoint x="690" y="329" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-1" value="&lt;div&gt;&lt;br&gt;&lt;/div&gt;Verarbeitet Anfragen im Bezug auf Accounts" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="288.75" y="319" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-2" value="User Controller" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="346.25" y="319" width="85" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-3" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;[Component: Adonisjs Controller]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="308.75" y="339" width="150" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-6" value="&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Verarbeitet Anfragen im Bezug auf Bilder, wie Trainingsdaten&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="648.75" y="319" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-7" value="Picture Controller" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="697.5" y="319" width="102.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-8" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;[Component: Adonisjs Controller]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="668.75" y="339" width="150" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-9" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="Sj3StyJWSgLQKbSiBl0F-7" target="QSA1xeKCVDy9QSCWdvXV-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="610" y="389" as="sourcePoint" />
+            <mxPoint x="660" y="339" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="749" y="279" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-53" value="Benutzt" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Sj3StyJWSgLQKbSiBl0F-9">
+          <mxGeometry x="0.4256" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-12" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" edge="1" parent="1" source="QSA1xeKCVDy9QSCWdvXV-20" target="Sj3StyJWSgLQKbSiBl0F-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="470" y="199" as="sourcePoint" />
+            <mxPoint x="520" y="149" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="389" y="282" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-52" value="Benutzt" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="Sj3StyJWSgLQKbSiBl0F-12">
+          <mxGeometry x="-0.0329" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-13" value="&lt;br&gt;Dokumentation der Verfügbaren Endpunkte." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="497.5" y="319" width="142.5" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-14" value="Swagger-Doku" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="525" y="317" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-15" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;[Component: Adonisjs Doku]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="500" y="337" width="140" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-16" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="Sj3StyJWSgLQKbSiBl0F-14" target="QSA1xeKCVDy9QSCWdvXV-18">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="510" y="399" as="sourcePoint" />
+            <mxPoint x="560" y="349" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-20" value="&lt;br&gt;Stellt ein Schema &amp;amp; Funktionalitäten der Datenbank zur Verfügung.&lt;div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="288.75" y="409" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-21" value="User Provider" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="346.25" y="409" width="85" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-22" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;[Component: Adonisjs Provider]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="308.75" y="429" width="150" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-23" value="&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Verarbeitet Anfragen im Bezug auf Bilder, wie Trainingsdaten&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="648.75" y="409" width="200" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-24" value="Picture Provider" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="697.5" y="409" width="102.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-25" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;[Component: Adonisjs Provider]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="668.75" y="429" width="150" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-26" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="Sj3StyJWSgLQKbSiBl0F-21" target="Sj3StyJWSgLQKbSiBl0F-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="550" y="409" as="sourcePoint" />
+            <mxPoint x="600" y="359" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-27" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="Sj3StyJWSgLQKbSiBl0F-24" target="Sj3StyJWSgLQKbSiBl0F-6">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="399" as="sourcePoint" />
+            <mxPoint x="500" y="349" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-31" value="&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Datenmodell der Bilder&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="858.75" y="409" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-32" value="Picture Collection" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="887.5" y="409" width="102.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-33" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;[Component: Adonisjs Collection]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="863.75" y="429" width="150" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-34" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Sj3StyJWSgLQKbSiBl0F-31" target="Sj3StyJWSgLQKbSiBl0F-23">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="800" y="500" as="sourcePoint" />
+            <mxPoint x="850" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-37" value="&lt;div&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Datenmodell der Benutzer&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="120" y="409" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-38" value="User Collection" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="148.75" y="409" width="102.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-39" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;[Component: Adonisjs Collection]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="125" y="429" width="150" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-40" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Sj3StyJWSgLQKbSiBl0F-37" target="Sj3StyJWSgLQKbSiBl0F-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="500" as="sourcePoint" />
+            <mxPoint x="350" y="450" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-41" value="&lt;br&gt;&lt;br&gt;Verschiedenste Utilities&lt;br&gt;(Hashing-Algorithmen usw.)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="120" y="500" width="160" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-42" value="Utils" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="170" y="500" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-43" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;[Component: Adonisjs Utils]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="125" y="520" width="140" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-44" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="Sj3StyJWSgLQKbSiBl0F-42" target="Sj3StyJWSgLQKbSiBl0F-37">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="140" y="530" as="sourcePoint" />
+            <mxPoint x="190" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-46" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="QSA1xeKCVDy9QSCWdvXV-1" target="Sj3StyJWSgLQKbSiBl0F-23">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="540" y="640" as="sourcePoint" />
+            <mxPoint x="590" y="590" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-48" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="QSA1xeKCVDy9QSCWdvXV-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="540" y="640" as="sourcePoint" />
+            <mxPoint x="570" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-49" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="QSA1xeKCVDy9QSCWdvXV-1" target="Sj3StyJWSgLQKbSiBl0F-20">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="540" y="560" as="sourcePoint" />
+            <mxPoint x="590" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-56" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="QSA1xeKCVDy9QSCWdvXV-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="570" y="590" as="sourcePoint" />
+            <mxPoint x="730" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Sj3StyJWSgLQKbSiBl0F-57" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;DermaAI-API&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="913.75" y="560" width="116.25" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
