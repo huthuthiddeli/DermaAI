@@ -10,8 +10,13 @@
 import router from '@adonisjs/core/services/router'
 import AutoSwagger from "adonis-autoswagger";
 import swaggerConfig from "#config/swagger";
-import UserController from '#controllers/Http/UserController';
-import PictureController from '#controllers/Http/PictureController';
+
+// import UserController from '#controllers/Http/UserController';
+// import PictureController from '#controllers/Http/PictureController';
+
+//----------FOR SWAGGER DOCUMENTATION -----------------
+const UserController = () => import("#controllers/Http/UserController");
+const PictureController = () => import("#controllers/Http/PictureController");
 
 
 router.get('/', async () => {
