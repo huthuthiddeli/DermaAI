@@ -1,20 +1,20 @@
 package com.example.dermaai_android_140.ui.settings
 
-import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.SwitchPreferenceCompat
-import com.example.dermaai_android_140.R
-import androidx.preference.Preference
-import androidx.preference.PreferenceManager
-import com.example.dermaai_android_140.myClasses.Authentication
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
-import android.widget.Toast
-import androidx.preference.EditTextPreference
 import android.content.Intent
-import com.example.dermaai_android_140.ui.login.LoginActivity
+import android.os.Bundle
+import android.widget.Toast
 import androidx.core.content.edit
+import androidx.preference.EditTextPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceManager
+import androidx.preference.SwitchPreferenceCompat
+import com.example.dermaai_android_140.R
+import com.example.dermaai_android_140.myClasses.Authentication
+import com.example.dermaai_android_140.ui.login.LoginActivity
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -72,7 +72,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         saveToClipboard(key)
 
         FaKeyInput?.isEnabled = true
-
+        
         FaKeyInput?.setOnPreferenceChangeListener { preference, enteredCode ->
 
             val correctCode = authentication.validateTOTP(key,enteredCode.toString())

@@ -1,141 +1,64 @@
 package com.example.dermaai_android_140.ui.camera
 
-
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
-import androidx.camera.view.LifecycleCameraController
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
-import com.example.dermaai_android_140.R
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import com.example.dermaai_android_140.MainActivity
 import com.example.dermaai_android_140.databinding.ActivityCameraBinding
-
+import com.example.dermaai_android_140.myClasses.Storage
 
 class CameraActivity : AppCompatActivity() {
 
-
-
     private lateinit var binding: ActivityCameraBinding
-
     private lateinit var imageCapture: ImageCapture
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityCameraBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_camera)
+        setContentView(binding.root)
 
         val previewView: PreviewView = binding.previewView
-        var cameraController = LifecycleCameraController(baseContext)
-        cameraController.bindToLifecycle(this)
-        cameraController.cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
-        previewView.controller = cameraController
 
-
-
-        /*
-
-        val preview = Preview.Builder().build()
-        val viewFinder: PreviewView = findViewById(R.id.previewView)
-
-
-        // PreviewView creates a surface provider and is the recommended provider
-        preview.surfaceProvider = viewFinder.surfaceProvider
-
-        // The use case is bound to an Android Lifecycle with the following code
+        // Initialize the camera provider
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
 
-
         cameraProviderFuture.addListener(Runnable {
-
             // Camera provider is now guaranteed to be available
             val cameraProvider = cameraProviderFuture.get()
 
-            bindPreviewAndLifecycle(cameraProvider, viewFinder)
-
-            // Connect the preview use case to the previewView
-            // preview.surfaceProvider = previewView.surfaceProvider
+            // Bind the preview and image capture use cases
+            bindPreviewAndLifecycle(cameraProvider, previewView)
 
         }, ContextCompat.getMainExecutor(this))
-        */
 
-    }
-
-/*
-    private fun bindPreviewAndLifecycle(cameraProvider : ProcessCameraProvider, viewFinder : PreviewView)
-    {
-        // Set up the preview use case to display camera preview.
-        val preview = Preview.Builder().build().also {
-            it.surfaceProvider = viewFinder.surfaceProvider
-        }
-
-        // Set up the capture use case to allow users to take photos.
-        imageCapture = ImageCapture.Builder()
-            .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
-            .build()
-
-        // Choose the camera by requiring a lens facing
-        val cameraSelector = CameraSelector.Builder()
-            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
-            .build()
-
-
-        try {
-            // Unbind use cases before rebinding
-            cameraProvider.unbindAll()
-
-            // Attach use cases to the camera with the same lifecycle owner
-            val camera = cameraProvider.bindToLifecycle(
-                this as LifecycleOwner, cameraSelector, preview)
-
-
-            // Bind use cases to camera
-            cameraProvider.bindToLifecycle(
-                this, cameraSelector, preview)
-
-        } catch(exc: Exception) {
-            Log.e("TAG", "Use case binding failed", exc)
-        }
-
-
-        createFile()
-
-        receiveImage()
-
-
-
-    }
-
-
-    private fun createFile()
-    {
-        // Create time stamped name and MediaStore entry.
-        val name = SimpleDateFormat(FILENAME_FORMAT, Locale.US)
-            .format(System.currentTimeMillis())
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-            if(Build.VERSION.SDK_INT > Build.VERSION_CODES.P) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/CameraX-Image")
-            }
+        // Set up the shoot photo button click listener
+        binding.shootPhotoBtn.setOnClickListener {
+            takePhoto()
         }
     }
-    
 
-    private fun receiveImage()
-    {
+    private fun takePhoto() {
+        // Ensure imageCapture is initialized
+        if (!::imageCapture.isInitialized) {
+            Log.e("TAG", "ImageCapture not initialized")
+            return
+        }
 
-        // Create output options object which contains file + metadata
-        val outputOptions = ImageCapture.OutputFileOptions
-            .Builder(contentResolver,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                contentValues)
-            .build()
+        val storage = Storage()
+        val file = storage.createUniqueImagePath(this, true)
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
 
-
-        // Set up image capture listener, which is triggered after photo has
-        // been taken
         imageCapture.takePicture(
             outputOptions,
             ContextCompat.getMainExecutor(this),
@@ -144,19 +67,48 @@ class CameraActivity : AppCompatActivity() {
                     Log.e("TAG", "Photo capture failed: ${exc.message}", exc)
                 }
 
-                override fun
-                        onImageSaved(output: ImageCapture.OutputFileResults){
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-                    Log.d(TAG, msg)
+                    Log.d("TAG", msg)
+
+
+                    val intent = Intent(baseContext, MainActivity::class.java)
+                    //intent.putExtra("image_uri", output.savedUri.toString())
+                    startActivity(intent)
+
                 }
             }
         )
     }
 
+    private fun bindPreviewAndLifecycle(cameraProvider: ProcessCameraProvider, previewView: PreviewView) {
+        // Set up the preview use case
+        val preview = Preview.Builder().build().also {
+            it.surfaceProvider = previewView.surfaceProvider
+        }
 
-*/
+        // Set up the image capture use case
+        imageCapture = ImageCapture.Builder()
+            .setCaptureMode(ImageCapture.CAPTURE_MODE_MAXIMIZE_QUALITY)
+            .build()
 
+        // Select the back camera as the default
+        val cameraSelector = CameraSelector.Builder()
+            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+            .build()
+        
+        try {
+            // Unbind all use cases before rebinding
+            cameraProvider.unbindAll()
 
+            // Bind the camera to the lifecycle
+            cameraProvider.bindToLifecycle(
+                this as LifecycleOwner, cameraSelector, preview, imageCapture
+            )
 
+        } catch (exc: Exception) {
+            Log.e("TAG", "Use case binding failed", exc)
+        }
+    }
 }

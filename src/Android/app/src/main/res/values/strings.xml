@@ -33,6 +33,7 @@
     <string name="take_photo">Take Photo</string>
     <string name="view_results">View Results</string>
     <string name="app_title">DermaAI</string>
+    <string name="camera_shoot">Shoot!</string>
 
     <string name="base">baseurl.com/</string>
     <string name="loginController">loginController/</string>
