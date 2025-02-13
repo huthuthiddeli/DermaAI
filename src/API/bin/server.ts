@@ -12,7 +12,6 @@
 import 'reflect-metadata'
 import { Ignitor, prettyPrintError } from '@adonisjs/core'
 
-
 /**
  * URL to the application root. AdonisJS need it to resolve
  * paths to file and directories for scaffolding commands
@@ -40,10 +39,10 @@ new Ignitor(APP_ROOT, { importer: IMPORTER })
     app.listen('SIGTERM', () => app.terminate())
     app.listenIf(app.managedByPm2, 'SIGINT', () => app.terminate())
   })
-
   .httpServer()
   .start()
   .catch((error) => {
     process.exitCode = 1
     prettyPrintError(error)
-  })
+  }
+)

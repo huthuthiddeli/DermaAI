@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: DermaAI API
+  version: 1.0.0
+  description: API documentation for DermaAI. Sehr schmerzhaft es halbwegs zum Laufen zu bringen. Aber es funktioniert jetzt.
+
+ignore:
+  - /swagger
+  - /docs
+
+paths:
+  /:
+    get:
+      summary: Hello World
+      responses:
+        '200':
+          description: Returns a hello world message
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  hello:
+                    type: string
+                    example: world
+
+  /user/saveUser:
+    post:
+      summary: Save a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User saved successfully
+        '400':
+          description: Bad request
+
+  /user/validateUser:
+    post:
+      summary: Validate a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User validated successfully
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+
+  /picture/picture:
+    post:
+      summary: Post a picture
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                picture:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Picture posted successfully
+        '400':
+          description: Bad request
+
+    get:
+      summary: Get a picture
+      responses:
+        '200':
+          description: Picture retrieved successfully
+        '404':
+          description: Picture not found

@@ -1,21 +1,20 @@
 import type { HttpContext } from "@adonisjs/core/http";
-import {saveUser, validateUser} from '../../providers/userProvider.js'
+import { UserProvider } from "../../providers/user-provider.js";
 
 export default class UserController{
-
-    public async saveUser(ctx: HttpContext){
-        return await saveUser(ctx);
+    public saveUser = async(ctx: HttpContext) =>{
+        return await (await UserProvider.getInstance()).saveUser(ctx);
     }
     
-    public async validateUser(ctx: HttpContext){
-        return await validateUser(ctx);
+    public validateUser = async(ctx: HttpContext) => {
+        return await (await (await UserProvider.getInstance()).validateUser(ctx));
     }
 
-    public async clearCollection(ctx: HttpContext){
-        await this.clearCollection(ctx);
+    public clearCollection = async(ctx: HttpContext) => {
+        await await (await UserProvider.getInstance()).clearCollection(ctx);
     }
 
-    public async getAllUsers(): Promise<any>{
-        return await this.getAllUsers();
+    public getAllUsers = async() => {
+        return await (await UserProvider.getInstance()).getAllUsers();  
     }
 }

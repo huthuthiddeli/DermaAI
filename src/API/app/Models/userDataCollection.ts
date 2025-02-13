@@ -24,5 +24,4 @@ export const userSchema = new Schema<IUserData>({
 
 userSchema.plugin(paginate);
 
-
 export const userDataModel = mongoose.model<IUserData, mongoose.PaginateModel<IUserData>>('userData', userSchema)

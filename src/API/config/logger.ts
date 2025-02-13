@@ -1,3 +1,4 @@
+// filepath: /c:/Users/Jonas/Documents/Programming/DermaAI/src/API/config/logger.ts
 import env from '#start/env'
 import { defineConfig } from '@adonisjs/core/logger'
 
@@ -22,20 +23,20 @@ const loggerConfig = defineConfig({
             options: {}
           },
           {
-            target: 'pino-roll',
+            target: 'pino-rotate',
             level: 'info',
             options: {
               file: 'logs/log',
-              frequency: 'daily',
-              mkdir: true
+              period: '1d', // Rotate daily
+              count: 7, // Keep 7 days of logs
+              rotate: true, // Enable rotation
+              compress: true // Compress rotated files
             }
           }
         ]
       }
     },
   },
-
-  
 })
 
 export default loggerConfig
