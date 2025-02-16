@@ -81,20 +81,16 @@ class AccountinfoViewModel() : ViewModel() {
         _user = user
     }
 
-    fun loginTest(url : String)
+    fun loginTest(url : String, email : String, password : String)
     {
-        data class UserRequest(val name: String, val job: String)
 
-        val requestModel = UserRequest(name = "John Doe", job = "Software Developer")
+        val requestModel = User(email,password,false)
+
 
         viewModelScope.launch(Dispatchers.IO) {
 
-            // Example URL
-            
 
-
-
-            val result = API.callApi(url,"","GET",requestModel)
+            val result = API.callApi(url,"","POST",requestModel)
 
             withContext(Dispatchers.Main) {
 

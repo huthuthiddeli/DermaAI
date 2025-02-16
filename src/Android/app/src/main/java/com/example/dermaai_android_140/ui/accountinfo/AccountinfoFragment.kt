@@ -120,7 +120,11 @@ class AccountinfoFragment() : Fragment() {
 
                 //Test-Call
 
-                viewModel.loginTest(getString(R.string.main_login))
+                val saveUserRoute = R.string.main + R.string.user_controller + R.string.saveUser
+
+
+                viewModel.loginTest(saveUserRoute.toString(),email,password)
+
 
                 //getString(R.string.main)
 

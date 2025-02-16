@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="main_login">http://10.10.1.193:3333/</string>
-    <string name="login_controller">loginController/</string>
-    <string name="login">login/</string>
+    <string name="main">http://93.111.12.119:3333/</string>
+    <string name="user_controller">user/</string>
+    <string name="saveUser">saveUser/</string>
 
 
-
-    <string name="main_photo">http://10.10.1.193:3333/</string>
-
-
+    <string name="picture_controller">picture/</string>
+    <string name="picture_postPicture">picture/</string>
 
 
     <string name="testUrl">https://reqres.in/api/users/</string>

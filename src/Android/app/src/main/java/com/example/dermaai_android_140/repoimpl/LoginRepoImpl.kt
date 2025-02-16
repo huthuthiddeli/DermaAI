@@ -1,7 +1,7 @@
 package com.example.dermaai_android_140.repoimpl
 
-import com.example.dermaai_android_140.repo.LoginRepo
 import com.example.dermaai_android_140.myClasses.User
+import com.example.dermaai_android_140.repo.LoginRepo
 
 
 class LoginRepoImpl : LoginRepo {
@@ -9,9 +9,11 @@ class LoginRepoImpl : LoginRepo {
 
     override fun login(email : String, password : String, mfa : Boolean, key : String) : User?
     {
-        val user = User(email,password, mfa,key)
+        val user = User(email,password, mfa)
 
-        
+
+        //API.callApi("http://93.111.12.119:3333/","","Post",user)
+
         //TODO
         // send if 2FA is enabled/disabled
         // store 2FA key on Server
@@ -57,10 +59,10 @@ class LoginRepoImpl : LoginRepo {
 
     override fun register() : User?
     {
-        return User("a","a", false, "")
+        return User("a","a", false)
     }
 
     override fun getUser(): User? {
-        return User("a","a", false, "")
+        return User("a","a", false)
     }
 }
