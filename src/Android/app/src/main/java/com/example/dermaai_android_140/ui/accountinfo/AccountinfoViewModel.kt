@@ -1,12 +1,14 @@
 package com.example.dermaai_android_140.ui.accountinfo
 
 
+import android.R
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.myClasses.API
 import com.example.dermaai_android_140.myClasses.User
+import com.example.dermaai_android_140.repo.LoginRepo
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +42,9 @@ class AccountinfoViewModel() : ViewModel() {
 
     private val _verifiedUser = MutableLiveData<Boolean>(false)
     val verifiedUser : LiveData<Boolean> get() = _verifiedUser
+
+    private val _registerCount = MutableLiveData<Int>(0)
+    val registerCount: LiveData<Int> get() = _registerCount
 
 
     //private val _stayLoggedIn = MutableLiveData<Boolean>(false)
@@ -81,44 +86,30 @@ class AccountinfoViewModel() : ViewModel() {
         _user = user
     }
 
-    fun loginTest(url : String, email : String, password : String)
+
+
+    fun register(email : String, password : String, url : String)
     {
-
-        val requestModel = User(email,password,false)
-
-
         viewModelScope.launch(Dispatchers.IO) {
 
+            val registerDeferred = async(Dispatchers.IO) {
+                LoginRepoImpl.register(email, password, false, url)
+            }
 
-            val result = API.callApi(url,"","POST",requestModel)
+            val receivedUser = registerDeferred.await()
 
-            withContext(Dispatchers.Main) {
-
-                if (result.isSuccess) {
-
-                    data class receivedUser(val email: String)
-                    val receivedData = result.getOrNull()
-
-                    val gson = Gson()
-
-                    try{
-                        val receivedUserObject = gson.fromJson(receivedData, receivedUser::class.java)
-                        setIsLoggedIn(true)
-                    }
-                    catch (e: Exception)
-                    {
-                        
-                    }
-
-
-                } else if (result.isFailure) {
-
-                }
+            if (receivedUser != null) {
+                _user = receivedUser
+                _registerCount.postValue(_registerCount.value!! + 1)
+            } else {
+                println("failed")
             }
         }
+
+
     }
 
-    fun login(email : String, password : String)
+    fun login(email : String, password : String, mfa: Boolean, url : String)
     {
         /*
         if(stayLoggedIn.value == true)
@@ -126,47 +117,49 @@ class AccountinfoViewModel() : ViewModel() {
 
         }*/
 
+        var receivedUser: User? = null
+
         viewModelScope.launch(Dispatchers.IO) {
 
             val loginDeferred = async(Dispatchers.IO) {
-                loginRepo.login(email, password, false, "")
+                LoginRepoImpl.login(email,password, false,url)
             }
 
-            val receivedUser = loginDeferred.await()
-
-            // succesfull
-            if (receivedUser != null) {
-
-                //_user.postValue(receivedUser)
-
-
-                if(receivedUser.mfa)
-                {
-                    _mfaEnabled.value = receivedUser.mfa
-                    _key = receivedUser.key
-
-                    /*
-                    val auth = Authentication()
-                    val enteredCode = 0
-
-                    if(auth.validateTOTP(receivedUser.key,enteredCode.toString()))
-                    {
-                        _isLoggedIn.postValue(true)
-                    }*/
-                }
-                // failed
-                else{
-                    _isLoggedIn.postValue(true)
-                }
-
-            } else {
-                println("failed")
-            }
-
+            receivedUser = loginDeferred.await()
         }
 
-        println()
+        // succesfull
+        if (receivedUser != null) {
+
+            _user = receivedUser
+
+
+            if(receivedUser!!.mfa)
+            {
+                _mfaEnabled.value = receivedUser!!.mfa
+                //_key = receivedUser.key
+
+                /*
+                val auth = Authentication()
+                val enteredCode = 0
+
+                if(auth.validateTOTP(receivedUser.key,enteredCode.toString()))
+                {
+                    _isLoggedIn.postValue(true)
+                }*/
+            }
+            // failed
+            else{
+                _isLoggedIn.postValue(true)
+            }
+
+        } else {
+            println("failed")
+        }
+        
     }
+
+
 
 
     fun getUser(): User? {
@@ -174,7 +167,7 @@ class AccountinfoViewModel() : ViewModel() {
         var user : User? = null
 
         viewModelScope.launch(Dispatchers.IO) {
-            user = loginRepo.getUser()
+            user = LoginRepo.getUser()
         }
 
         return user

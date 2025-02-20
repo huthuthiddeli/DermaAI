@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //setContentView(R.layout.activity_main)
-
+        
         setSupportActionBar(binding.appBarMain.toolbar)
         
 

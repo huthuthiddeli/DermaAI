@@ -1,68 +1,96 @@
 package com.example.dermaai_android_140.repoimpl
 
+import android.annotation.SuppressLint
+import android.widget.Toast
+import com.example.dermaai_android_140.myClasses.API
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.LoginRepo
+import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlin.Result
 
 
 class LoginRepoImpl : LoginRepo {
 
+    companion object{
 
-    override fun login(email : String, password : String, mfa : Boolean, key : String) : User?
-    {
-        val user = User(email,password, mfa)
+        fun login(email : String, password : String, mfa : Boolean, url : String) : User?
+        {
+            val user = User(email,password, mfa)
 
+            var receivedUserObject : User? = null
 
-        //API.callApi("http://93.111.12.119:3333/","","Post",user)
+            val result = API.callApi(url,"", "POST", user)
 
-        //TODO
-        // send if 2FA is enabled/disabled
-        // store 2FA key on Server
+            if (result.isSuccess) {
 
-        /*
-        val url : String = ""
-        val connection = URL(url).openConnection() as HttpURLConnection
-        connection.requestMethod = "POST"
-        connection.setRequestProperty("Content-Type", "application/json")
+                val receivedData = result.getOrNull()
 
-        return try {
+                val gson = Gson()
 
-            val json = Gson().toJson(user)
+                try{
+                    receivedUserObject = gson.fromJson(receivedData, User::class.java)
 
-
-            OutputStreamWriter(connection.outputStream, UTF_8).use { os ->
-                os.write(json)
-                os.flush()
-            }
-
-            if (connection.responseCode == HttpURLConnection.HTTP_OK) {
-
-                connection.inputStream.bufferedReader().use { reader ->
-                    val response = reader.readText()
-                    println("Response from server: $response")
-
-                    // return:
-                    user
                 }
-            } else {
-                //Toast.makeText(context, connection.responseCode, Toast.LENGTH_LONG).show()
-                null
+                catch (e: Exception)
+                {
+
+                }
+
+
+            } else if (result.isFailure) {
+
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        } finally {
-            connection.disconnect()
+
+
+            //TODO
+            // send if 2FA is enabled/disabled
+            // store 2FA key on Server
+
+
+            return receivedUserObject
         }
-*/
-        return user
+
+
+        @SuppressLint("SuspiciousIndentation")
+        fun register(email : String, password : String, mfa : Boolean, url : String) : User?
+        {
+            val user = User(email,password, false)
+
+            var receivedUserObject : User? = null
+
+
+            val result = API.callApi(url,"", "POST", user)
+
+                if (result.isSuccess) {
+
+
+                    val receivedData = result.getOrNull()
+
+                    val gson = Gson()
+
+                    try{
+                        receivedUserObject = gson.fromJson(receivedData, User::class.java)
+
+                    }
+                    catch (e: Exception)
+                    {
+
+                    }
+
+
+                } else if (result.isFailure) {
+
+                }
+
+            return receivedUserObject
+        }
+
+
+
+        fun getUser(): User? {
+            return User("a","a", false)
+        }
     }
 
-    override fun register() : User?
-    {
-        return User("a","a", false)
-    }
-
-    override fun getUser(): User? {
-        return User("a","a", false)
-    }
 }

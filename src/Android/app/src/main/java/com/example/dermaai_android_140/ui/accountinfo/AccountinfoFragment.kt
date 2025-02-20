@@ -22,6 +22,7 @@ import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.ui.login.LoginViewModel
 import java.util.UUID
+import kotlin.jvm.java
 
 class AccountinfoFragment() : Fragment() {
 
@@ -64,6 +65,7 @@ class AccountinfoFragment() : Fragment() {
 
             viewModel.isLoggedIn.observe(viewLifecycleOwner) { isLoggedIn ->
                 if (isLoggedIn) {
+                    Toast.makeText(context, "Credentials are correct!", Toast.LENGTH_LONG).show()
 
                     if (loginViewModel.getStayLoggedIn() == true) {
                         val token = generateToken()
@@ -80,6 +82,7 @@ class AccountinfoFragment() : Fragment() {
                     Toast.makeText(context, "Credentials are incorrect!", Toast.LENGTH_LONG).show()
                 }
             }
+
 
 
             if(isTokenValid())
@@ -116,24 +119,11 @@ class AccountinfoFragment() : Fragment() {
                 val email = editTextEmail.text.toString()
                 val password = editTextPassword.text.toString()
 
+                val url = getString(R.string.main) + getString(R.string.user_controller) + getString(R.string.validateUser)
 
+                viewModel.login(email,password,false,url)
 
-                //Test-Call
-
-                val saveUserRoute = R.string.main + R.string.user_controller + R.string.saveUser
-
-
-                viewModel.loginTest(saveUserRoute.toString(),email,password)
-
-
-                //getString(R.string.main)
-
-
-                //
-
-
-                viewModel.login(email, password)
-
+                
             }
 
 
@@ -149,10 +139,30 @@ class AccountinfoFragment() : Fragment() {
 
             val switchToLoginBtn = view.findViewById<Button>(R.id.switchToLoginBtn)
 
+            viewModel.registerCount.observe(viewLifecycleOwner) { registerCount ->
+                if(registerCount > 0)
+                {
+                    Toast.makeText(context, "Successfully registered!", Toast.LENGTH_LONG).show()
+                }
+            }
+
             switchToLoginBtn.setOnClickListener {
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_placeholder_accountinfo, newInstance(true))
                     .commit()
+            }
+
+            val registerBtn = view.findViewById<Button>(R.id.registerBtn)
+            registerBtn.setOnClickListener {
+
+                val email = view.findViewById<EditText>(R.id.editTextEmail).text.toString()
+                val password = view.findViewById<EditText>(R.id.editTextPassword).text.toString()
+
+                val url = getString(R.string.main) + getString(R.string.user_controller) + getString(R.string.saveUser)
+
+                viewModel.register(email, password, url)
+
+
             }
         }
 
