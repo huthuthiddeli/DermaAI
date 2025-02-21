@@ -1,7 +1,7 @@
 from fastapi import FastAPI, UploadFile
 from fastapi.responses import JSONResponse
 import uvicorn
-from find_spot import crop_image_microservice
+from find_spot import crop_image_microservice, test_find_picture
 
 # FastAPI instance
 app = FastAPI()
@@ -11,6 +11,7 @@ app = FastAPI()
 async def getPic(file: UploadFile):
     bytes_arr = await file.read()
     img = crop_image_microservice(bytes_arr)
+    # img = test_find_picture(bytes_arr)
     if img is None:
         return JSONResponse(content={"file": "error!"})
     return JSONResponse(content={"file": img.tolist()})

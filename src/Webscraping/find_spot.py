@@ -146,6 +146,10 @@ def crop_image_microservice(image: bytes):
 
             if latest_big.size == prev_detected_spot.size and prev_detected_spot.size != 0:
                 print(f"Returning last detected spot after {iterations} iterations.")
+                cv2.imshow("window", latest_big)
+                cv2.waitKey(0)
+                cv2.destroyAllWindows()
+
                 return latest_big
             elif latest_big.size < prev_detected_spot.size:
                 latest_big = prev_detected_spot
@@ -168,7 +172,38 @@ def process_roi(roi):
         gray = cv2.cvtColor(roi, cv2.COLOR_BGR2GRAY)
         # qualized = cv2.equalizeHist(gray)
         blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-        _, thresholded = cv2.threshold(blurred, 127, 255, cv2.THRESH_BINARY_INV)
+        edges = cv2.Canny(blurred, 50, 150)
+        _, thresholded = cv2.threshold(edges, 127, 255, cv2.THRESH_BINARY_INV)
         return thresholded
     except:
         print("error")
+
+
+def test_find_picture(image: bytes):
+    bimage = np.frombuffer(image, dtype=np.uint8)
+    image = cv2.imdecode(bimage, cv2.IMREAD_COLOR)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+    # Apply Gaussian Blur
+    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
+
+    # Edge detection using Canny
+    edges = cv2.Canny(blurred, 50, 150)
+
+    # Find contours
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    if not contours:
+        return None  # No contours found
+
+        # Find the largest contour by area
+    largest_contour = max(contours, key=cv2.contourArea)
+    # Draw contours on the original image
+    cv2.drawContours(image, contours, -1, (0, 255, 0), 2)
+
+    # Show result
+    cv2.imshow("big", largest_contour)
+    cv2.imshow('Contours', image)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
+
+    return largest_contour

@@ -4,6 +4,11 @@ import { userDataModel } from '../Models/userDataCollection.js'
 import { checkState } from '../utils/db-funcs.js'
 import { hashPassword } from '../utils/hash.js'
 
+roles: enum {
+
+}
+
+
 interface IUserData {
     email: string,
     password: string
