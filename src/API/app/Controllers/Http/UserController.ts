@@ -25,4 +25,12 @@ export default class UserController{
     public activateMfa = async(ctx: HttpContext) => {
         return await (await UserProvider.getInstance()).switchMfa(ctx);
     }
+
+    public checkIfAdmin = async(ctx: HttpContext) => {
+        return await (await UserProvider.getInstance()).setIsAdmin(ctx);
+    }
+
+    public checkIfUser = async(ctx: HttpContext) => {
+        return await (await UserProvider.getInstance()).setIsNotAdmin(ctx);
+    }
 }

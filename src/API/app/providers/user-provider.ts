@@ -4,15 +4,11 @@ import { userDataModel } from '../Models/userDataCollection.js'
 import { checkState } from '../utils/db-funcs.js'
 import { hashPassword } from '../utils/hash.js'
 
-roles: enum {
-
-}
-
-
 interface IUserData {
     email: string,
     password: string
     mfa: boolean | null
+    isAdmin: boolean | null
 }
 
 export class UserProvider{
@@ -31,8 +27,8 @@ export class UserProvider{
     }
 
     private getRequestProperties(body: Record<string, any>) {
-        const { email = "", password = "", mfa = false, id = "" } = body;
-        return id ? { email, password, mfa, id } : { email, password, mfa };
+        const { email = "", password = "", mfa = false, isAdmin = false, id = "" } = body;
+        return id ? { email, password, mfa, isAdmin, id } : { email, password, mfa, isAdmin };
     }
     
     // *************************************************
@@ -40,7 +36,8 @@ export class UserProvider{
     // {
     //    "email": "test@gmail.com",
     //    "password": "testpassword",
-    //    "mfa": true
+    //    "mfa": true,
+    //    "isAdmin": true
     // }
     //
     // PASSWORD IS HASHED ONCE IN AS THE PARAMETER
@@ -48,8 +45,7 @@ export class UserProvider{
     
     public async saveUser(ctx:HttpContext) {
         await checkState()
-        let body = ctx.request.body();    
-        // if(!this.isCreateUserRequest(body)){ return ctx.response.status(400).send("Request was not right!");}
+        let body = ctx.request.body();
         let data = await this.getBodyWithHashedPassword(body)
         let obj = await this.getOneFromDB(data.password, data.email);
         if(obj){ return ctx.response.badRequest("Duplicate Credentials"); }
@@ -58,15 +54,6 @@ export class UserProvider{
     
         return ctx.response.ok(savedUser);
     }
-
-    // private isCreateUserRequest(body: any): body is IUserData {
-    //     return (
-    //       typeof body.email === 'string' &&
-    //       typeof body.password === 'string'
-    //     );
-    // }
-
-
     // *************************************************
     // FORMAT OF REQUEST AS FOLLOWS:
     // {
@@ -81,19 +68,11 @@ export class UserProvider{
     public async validateUser(ctx: HttpContext){
         await checkState();
         let body = ctx.request.body();
-
-        // !this.isCreateUserRequest(body) ? ctx.response.status(401).send("Request was not right!") : null;
         let data = await this.getBodyWithHashedPassword(body);
-        logger.info(data);
-        const existingUser = await userDataModel.find({email: data.email, password: data.password});
-
-        if (existingUser.length === 0) {
-            return ctx.response.status(404).send("User not found");
-        }
-    
+        const existingUser = await this.getOneFromDB(data.password, data.email)
+        if (!existingUser) { return ctx.response.status(404).send("User not found"); }
         // Removes password so that is does not get sent to client
-        const {password, ...safeData} = existingUser[0].toObject();
-    
+        const {password, ...safeData} = existingUser;
         return ctx.response.status(200).json(safeData);
     }
 
@@ -107,20 +86,46 @@ export class UserProvider{
         return await userDataModel.find({});
     }
 
-   public async getUserMfa(ctx: HttpContext) {
+    public async getUserMfa(ctx: HttpContext) {
         await checkState();
 
         let obj = await this.getBodyWithHashedPassword(ctx.request.body());
-        const foundObj = await userDataModel.find({email: obj.email, password: obj.password})
+        const foundObj = await this.getOneFromDB(obj.password, obj.email);
 
         if(foundObj === null){ return ctx.response.notFound("Body has not been found!"); }
-        if(foundObj.length === 0 || foundObj.length > 1){
-            logger.error("Error when looking for MFA")
-            return ctx.response.internalServerError("Unexpected Server error");
-        }
 
-        const {password, ...safeData} = foundObj[0].toObject()
+        const {password, ...safeData} = foundObj;
         return ctx.response.status(200).json(safeData);
+    }
+
+    public async setIsAdmin(ctx: HttpContext){
+        await checkState();
+
+        let obj = await this.getBodyWithHashedPassword(ctx.request.body());
+        const foundObj = await this.getOneFromDB(obj.password, obj.email);
+        if(foundObj === null){ return ctx.response.notFound("Body has not been found!"); }
+        foundObj.isAdmin = true;
+        await userDataModel.updateOne({password: foundObj.password, email: foundObj.email}, foundObj);
+        let item = await this.getOneFromDB(foundObj.password, foundObj.email)
+        if(!item) {return ctx.response.badGateway();}
+        const {password, ...params} = item;
+
+        return ctx.response.status(200).json(params);
+    }
+
+    public async setIsNotAdmin(ctx: HttpContext){
+        await checkState();
+
+        let obj = await this.getBodyWithHashedPassword(ctx.request.body());
+        const foundObj = await this.getOneFromDB(obj.password, obj.email);
+        if(foundObj === null){ return ctx.response.notFound("Body has not been found!"); }
+        foundObj.isAdmin = false;
+        await userDataModel.updateOne({password: foundObj.password, email: foundObj.email}, foundObj);
+        let item = await this.getOneFromDB(foundObj.password, foundObj.email)
+        if(!item) {return ctx.response.badGateway();}
+        const {password, ...params} = item;
+
+        return ctx.response.status(200).json(params);
     }
 
     public async switchMfa(ctx: HttpContext){

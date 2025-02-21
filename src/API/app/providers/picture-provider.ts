@@ -28,7 +28,6 @@ export class PictureProvider {
 
   public savePicture = async (record: Record<string, string>): Promise<Response> => {
     await checkState();
-
     if (Object.keys(record).length !== 2) {
       logger.info("Parameters didn't work!");
       return { status: false, data: undefined };

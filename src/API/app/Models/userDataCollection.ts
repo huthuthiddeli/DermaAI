@@ -5,7 +5,8 @@ import paginate from "mongoose-paginate-v2";
 interface IUserData extends Document{
     email: string,
     password: string,
-    mfa: boolean
+    mfa: boolean,
+    isAdmin: boolean
 }
 
 export const userSchema = new Schema<IUserData>({
@@ -19,7 +20,11 @@ export const userSchema = new Schema<IUserData>({
         },
         mfa: {
             type:Schema.Types.Boolean,
-            required: true
+            required: false
+        },
+        isAdmin: {
+            type: Schema.Types.Boolean,
+            required: false
         }
     },
     {

@@ -83,8 +83,51 @@ paths:
                       type: string
                     mfa:
                       type: boolean
+                    isAdmin:
+                      type: boolean
+        
         '500':
           description: Internal server error
+
+  /user/setAdmin:
+    post:
+      summary: Sets the User to Admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password: 
+                  type: string
+      responses:
+        '200':
+          description: User Admin-status updated successfully
+        '404':
+          description: User Admin-status change was not succesfull.
+          
+  /user/setUser:
+      post:
+        summary: Sets the User to role User
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  password:
+                    type: string
+        responses:
+          '200':
+            description: User User-status updated successfully
+          '404':
+            description: User User-status change was not succesfull.
 
   /user/mfa:
     post:

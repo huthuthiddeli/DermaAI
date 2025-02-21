@@ -52,6 +52,8 @@ router.group(() => {
   router.post('/validateUser', [UserController, 'validateUser']);
   router.post('/mfa', [UserController, 'getMfaFromUser'])
   router.post('/switchMfa', [UserController, 'activateMfa'])
+  router.post('/setAdmin', [UserController, 'checkIfAdmin'])
+  router.post('/setUser', [UserController, 'checkIfUser'])
   router.delete('/collectionClear', [UserController, 'clearCollection'])
 }).prefix('/user');
 
