@@ -9,8 +9,10 @@ import com.example.dermaai_android_140.myClasses.API
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.LoginRepo
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
+import com.example.dermaai_android_140.repoimpl.UserRepoImpl
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -24,6 +26,9 @@ class AccountinfoViewModel() : ViewModel() {
 
 
     private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
+
+    private val userRepo: UserRepoImpl by KoinJavaComponent.inject(UserRepoImpl::class.java)
+
 
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> get() = _email
@@ -86,7 +91,7 @@ class AccountinfoViewModel() : ViewModel() {
     {
         _user = user
     }
-    
+
 
     fun register(email : String, password : String, url : String)
     {
@@ -118,6 +123,7 @@ class AccountinfoViewModel() : ViewModel() {
 
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun login(email : String, password : String, mfa: Boolean, url : String)
     {
         /*
@@ -134,9 +140,23 @@ class AccountinfoViewModel() : ViewModel() {
                 LoginRepoImpl.login(email,password, false,url)
             }
 
+            // Await asyn: Fix
+            /*
+            loginDeferred.invokeOnCompletion {
+                receivedUser = loginDeferred.getCompleted()
+                val a = 12
+            }*/
             receivedUser = loginDeferred.await()
 
+            if(receivedUser != null)
+            {
+                userRepo.saveCurrentUser(receivedUser!!)
+            }
+
         }
+
+
+
 
         // succesfull
         if (receivedUser != null) {
@@ -160,7 +180,6 @@ class AccountinfoViewModel() : ViewModel() {
                     _isLoggedIn.postValue(true)
                 }*/
             }
-            // failed
             else{
                 _isLoggedIn.postValue(true)
             }

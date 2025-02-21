@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="main">http://10.10.1.193/:3333/</string>
+    <string name="main">http://10.10.1.193:3333/</string>
     <string name="user_controller">user/</string>
     <string name="saveUser">saveUser/</string>
     <string name="validateUser">validateUser/</string>
+    <string name="setMfa">switchMfa/</string>
+
 
     <string name="picture_controller">picture/</string>
     <string name="picture_postPicture">picture/</string>
