@@ -45,4 +45,13 @@ export default class PictureController {
   public async getPicture(ctx: HttpContext) {
     return await (await PictureProvider.getInstance()).findPictures(ctx);
   }
+
+
+  public async getCount(ctx: HttpContext){
+    return await (await PictureProvider.getInstance()).getCount(ctx);
+  }
+
+  public async getLabels(ctx: HttpContext){
+    return await (await PictureProvider.getInstance()).getLabels(ctx);
+  }
 }
