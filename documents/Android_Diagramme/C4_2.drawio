@@ -1,0 +1,113 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.0.15">
+  <diagram name="Page-1" id="uY-ux5SM715pgpHfwJ75">
+    <mxGraphModel dx="840" dy="456" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="80" y="320" width="400" height="320" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-2" value="Stellt das Frontend bereit." style="whiteSpace=wrap;html=1;aspect=fixed;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="230" y="170" width="110" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="295" y="270" as="targetPoint" />
+            <mxPoint x="295" y="270" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-5" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.544;entryY=0.009;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="HiHLQ8zvASw_HJKXryYm-2" target="HiHLQ8zvASw_HJKXryYm-35">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="675.0000000000001" y="250" as="sourcePoint" />
+            <mxPoint x="390" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-8" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Mobile App&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="240.86" y="170" width="85" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-9" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;[Container: Android-Studio]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="227.37" y="190" width="115.25" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-10" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Erlaubt den User sich beim System anzumelden und zu registrieren.&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="100" y="360" width="170" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-11" value="&lt;font size=&quot;1&quot;&gt;Login Repository&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="100" y="360" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-12" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;[Container: Kotlin}&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="116.19" y="380" width="107.62" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-13" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="HiHLQ8zvASw_HJKXryYm-11" target="HiHLQ8zvASw_HJKXryYm-2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="410" as="sourcePoint" />
+            <mxPoint x="370" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-15" value="&lt;div&gt;Sendet POST und GET Anfragen an das Backend.&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="223.81" y="510" width="136.19" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-21" value="Stellt KI-Funktionalität bereit indem es die Bilder bewertet und an die API zurückschickt&lt;div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=10;align=center;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="223.81" y="650" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-22" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;KI-Backend&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="233.81" y="650" width="112.24" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-23" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;[Container: Python]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="250" y="660" width="79.87" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-24" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="HiHLQ8zvASw_HJKXryYm-15" target="HiHLQ8zvASw_HJKXryYm-10">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="500" as="sourcePoint" />
+            <mxPoint x="330" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-25" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Macht API Aufruf mithilfe&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="HiHLQ8zvASw_HJKXryYm-24">
+          <mxGeometry x="0.3038" y="-2" relative="1" as="geometry">
+            <mxPoint x="69" y="8" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-30" value="Mobile App" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="380" y="620" width="110" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-31" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="HiHLQ8zvASw_HJKXryYm-22" target="HiHLQ8zvASw_HJKXryYm-15">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="170" y="540" as="sourcePoint" />
+            <mxPoint x="220" y="490" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-32" value="&lt;font style=&quot;font-size: 10px;&quot;&gt;Tätigt API Aufrufe&amp;nbsp;&lt;br&gt;[JSON]&lt;/font&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="HiHLQ8zvASw_HJKXryYm-31">
+          <mxGeometry x="-0.3909" relative="1" as="geometry">
+            <mxPoint x="49" y="-15" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-36" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Erlaubt den User geschossene Bilder an das Backend zu senden und bewerten zu lassen.&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="304.48" y="360" width="165.52" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-35" value="&lt;font size=&quot;1&quot;&gt;Image Repository&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="309.48" y="360" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-37" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;[Container: Kotlin}&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="320.68" y="380" width="107.62" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-38" value="" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="HiHLQ8zvASw_HJKXryYm-15" target="HiHLQ8zvASw_HJKXryYm-36">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="520" as="sourcePoint" />
+            <mxPoint x="195" y="480" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-40" value="&lt;font size=&quot;1&quot;&gt;API&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=9;" vertex="1" parent="1">
+          <mxGeometry x="219.93" y="510" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-41" value="&lt;font style=&quot;font-size: 8px;&quot;&gt;[Container: Kotlin}&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="235" y="530" width="107.62" height="10" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-42" value="&lt;font style=&quot;font-size: 11px;&quot;&gt;Schießt Foto von Hautlässion&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="309.48" y="290" width="170" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="HiHLQ8zvASw_HJKXryYm-43" value="Logt sich ein oder registriert sich" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="50" y="288" width="200" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

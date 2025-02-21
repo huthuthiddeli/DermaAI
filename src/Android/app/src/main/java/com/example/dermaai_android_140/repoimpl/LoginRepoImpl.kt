@@ -58,7 +58,7 @@ class LoginRepoImpl : LoginRepo {
             val user = User(email,password, false)
 
             var receivedUserObject : User? = null
-
+            
 
             val result = API.callApi(url,"", "POST", user)
 

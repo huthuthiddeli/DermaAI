@@ -1,7 +1,6 @@
 package com.example.dermaai_android_140.ui.accountinfo
 
 
-import android.R
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +11,7 @@ import com.example.dermaai_android_140.repo.LoginRepo
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -46,6 +46,7 @@ class AccountinfoViewModel() : ViewModel() {
     private val _registerCount = MutableLiveData<Int>(0)
     val registerCount: LiveData<Int> get() = _registerCount
 
+    private var myJob: Job? = null
 
     //private val _stayLoggedIn = MutableLiveData<Boolean>(false)
     //val stayLoggedIn: LiveData<Boolean> get() = _stayLoggedIn
@@ -85,12 +86,11 @@ class AccountinfoViewModel() : ViewModel() {
     {
         _user = user
     }
-
-
+    
 
     fun register(email : String, password : String, url : String)
     {
-        viewModelScope.launch(Dispatchers.IO) {
+        myJob = viewModelScope.launch(Dispatchers.IO) {
 
             val registerDeferred = async(Dispatchers.IO) {
                 LoginRepoImpl.register(email, password, false, url)
@@ -100,12 +100,21 @@ class AccountinfoViewModel() : ViewModel() {
 
             if (receivedUser != null) {
                 _user = receivedUser
-                _registerCount.postValue(_registerCount.value!! + 1)
+
             } else {
                 println("failed")
             }
         }
 
+        myJob?.invokeOnCompletion {throwable ->
+            // Task completed
+            if (throwable == null) {
+                _registerCount.postValue(_registerCount.value!! + 1)
+
+                val test = _user
+                val a = 12
+            }
+        }
 
     }
 
@@ -126,12 +135,15 @@ class AccountinfoViewModel() : ViewModel() {
             }
 
             receivedUser = loginDeferred.await()
+
         }
 
         // succesfull
         if (receivedUser != null) {
 
             _user = receivedUser
+
+            _mfaEnabled.postValue(_user!!.mfa)
 
 
             if(receivedUser!!.mfa)

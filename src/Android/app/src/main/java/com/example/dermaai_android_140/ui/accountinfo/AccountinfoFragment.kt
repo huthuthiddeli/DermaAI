@@ -55,8 +55,7 @@ class AccountinfoFragment() : Fragment() {
         } else {
             inflater.inflate(R.layout.fragment_accountinfo_register, container, false)
         }
-
-
+        
         if (isLogin) {
 
             val switchToRegisterBtn = view.findViewById<Button>(R.id.switchToRegisterBtn)
@@ -75,8 +74,8 @@ class AccountinfoFragment() : Fragment() {
                     }
 
                     val intent = Intent(requireContext(), MainActivity::class.java)
-
                     startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+
 
                 } else {
                     Toast.makeText(context, "Credentials are incorrect!", Toast.LENGTH_LONG).show()
@@ -133,6 +132,7 @@ class AccountinfoFragment() : Fragment() {
                     showTwoFAInputDialog(requireContext(), viewModel)
                 }
             }
+
 
 
         } else {

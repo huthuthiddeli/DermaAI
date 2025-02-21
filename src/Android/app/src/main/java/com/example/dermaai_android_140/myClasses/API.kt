@@ -20,7 +20,7 @@ class API {
                 val connection = url.openConnection() as HttpURLConnection
 
                 connection.requestMethod = httpMethod
-
+                
                 //setRequestHeaders(connection, token)
                 sendRequest(connection, httpMethod, requestModel)
 
@@ -50,6 +50,7 @@ class API {
         private fun sendRequest(connection: HttpURLConnection, httpMethod: String, requestModel: Any?) {
 
             // GET is handled automatically
+
 
             // Code for POST
             if (httpMethod == "POST" || httpMethod == "PUT") {
