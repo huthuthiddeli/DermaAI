@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.content.edit
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
@@ -14,14 +15,25 @@ import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.Authentication
+import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
+import com.example.dermaai_android_140.repoimpl.UserRepoImpl
+import com.example.dermaai_android_140.ui.accountinfo.AccountinfoViewModel
 import com.example.dermaai_android_140.ui.login.LoginActivity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import org.koin.java.KoinJavaComponent
+import kotlin.getValue
 
 class SettingsFragment : PreferenceFragmentCompat() {
+
+    private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+
+
 
         val enable2faSwitch: SwitchPreferenceCompat? = findPreference("enable_2fa")
         val logoutBtn: Preference? = findPreference("logout")
@@ -80,6 +92,22 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if(correctCode)
             {
                 Toast.makeText(context, "Correct Code: 2FA Activated", Toast.LENGTH_SHORT).show()
+                //
+
+                val url = getString(R.string.main) + getString(R.string.user_controller) + getString(R.string.setMfa)
+
+                val viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
+
+                val receivedUser = viewModel.setMfa(url)
+
+                if(receivedUser != null)
+                {
+                    Toast.makeText(context, "Mfa set!", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(context, "Failure!", Toast.LENGTH_SHORT).show()
+                }
+
                 true
             }
             else
@@ -99,10 +127,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
         clipboard.setPrimaryClip(clip)
     }
 
+
     fun disable2FA() {
 
         val twoFAKeyInput = findPreference<EditTextPreference>("two_fa_key")
         twoFAKeyInput?.isEnabled = false
+
+
+
         //FaKeyInput?.setText("")
     }
 

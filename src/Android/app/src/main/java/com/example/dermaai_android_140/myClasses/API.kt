@@ -13,14 +13,14 @@ import java.net.URL
 class API {
 
     companion object {
-
+        
         fun callApi(apiUrl: String, token: String, httpMethod: String, requestModel: Any? = null): Result<String> {
             return try {
                 val url = URL(apiUrl)
                 val connection = url.openConnection() as HttpURLConnection
 
                 connection.requestMethod = httpMethod
-                
+
                 //setRequestHeaders(connection, token)
                 sendRequest(connection, httpMethod, requestModel)
 

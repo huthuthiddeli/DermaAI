@@ -90,7 +90,7 @@ class Authentication {
             )
                 .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
                 .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                .setUserAuthenticationRequired(false) // Set to true if you want biometric or PIN protection
+                .setUserAuthenticationRequired(false) // true: biometric or PIN protection
                 .build()
 
             keyGenerator.init(keyGenParameterSpec)
@@ -98,6 +98,7 @@ class Authentication {
         } else {
             getSecretKeyFromKeystore(keyAlias) as SecretKey
         }
+
         
         // 2. Create a Cipher instance for encryption
         val cipher = Cipher.getInstance("AES/GCM/NoPadding")

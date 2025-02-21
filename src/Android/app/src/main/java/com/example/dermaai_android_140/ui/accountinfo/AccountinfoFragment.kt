@@ -132,6 +132,7 @@ class AccountinfoFragment() : Fragment() {
                     showTwoFAInputDialog(requireContext(), viewModel)
                 }
             }
+            
 
 
 
@@ -185,14 +186,22 @@ class AccountinfoFragment() : Fragment() {
                 val code = input.text.toString()
                 if (code.isNotEmpty()) {
                     if (authentication.validateTOTP(viewModel.getKey(), code)) {
-                        Toast.makeText(context, "Verified Successfully", Toast.LENGTH_SHORT).show()
+
+                        Toast.makeText(context, "Verified Successfully!", Toast.LENGTH_SHORT).show()
+
+                        val intent = Intent(requireContext(), MainActivity::class.java)
+                        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+
+
                     } else {
-                        Toast.makeText(context, "Invalid Code", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Invalid Code!", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .show()
+
+
     }
 
 
