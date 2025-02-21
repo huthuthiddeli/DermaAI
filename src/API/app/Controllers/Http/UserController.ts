@@ -17,4 +17,12 @@ export default class UserController{
     public getAllUsers = async() => {
         return await (await UserProvider.getInstance()).getAllUsers();  
     }
+
+    public getMfaFromUser = async(ctx: HttpContext) => {
+        return await (await UserProvider.getInstance()).getUserMfa(ctx)
+    }
+
+    public activateMfa = async(ctx: HttpContext) => {
+        return await (await UserProvider.getInstance()).switchMfa(ctx);
+    }
 }

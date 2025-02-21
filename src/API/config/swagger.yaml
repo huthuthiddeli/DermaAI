@@ -14,7 +14,7 @@ paths:
       summary: Hello World
       responses:
         '200':
-          description: Returns a hello world message
+          description: Returns a hello world message for testing purposes
           content:
             application/json:
               schema:
@@ -46,7 +46,7 @@ paths:
 
   /user/validateUser:
     post:
-      summary: Validate a user
+      summary: Validates a user with email and password.
       requestBody:
         required: true
         content:
@@ -66,9 +66,102 @@ paths:
         '404':
           description: User not found
 
+  /user/getAllUsers:
+    get:
+      summary: Get all users
+      responses:
+        '200':
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    mfa:
+                      type: boolean
+        '500':
+          description: Internal server error
+
+  /user/mfa:
+    post:
+      summary: Get user MFA status
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User MFA status retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  mfa:
+                    type: boolean
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+  /user/switchMfa:
+    post:
+      summary: Switch MFA status for a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: MFA status switched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  mfa:
+                    type: boolean
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /user/clearCollection:
+    delete:
+      summary: Clear the user collection
+      responses:
+        '200':
+          description: Collection cleared successfully
+        '500':
+          description: Failed to clear collection
+
   /picture/picture:
     post:
-      summary: Post a picture
+      summary: Post a picture. Datatype file
       requestBody:
         required: true
         content:
@@ -86,9 +179,35 @@ paths:
           description: Bad request
 
     get:
-      summary: Get a picture
+      summary: Get a picture with pagination
       responses:
         '200':
           description: Picture retrieved successfully
         '404':
           description: Picture not found
+  
+  /picture/count:
+    get:
+      summary: Get the length of the collection.
+      responses: 
+        '200':
+          description: Length retrieved successfully.
+        '500': A critical error occurred.
+
+  /picture/labels:
+    get:
+      summary: Get all unique diagnoses
+      responses:
+        '200':
+          description: Unique diagnoses retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  diagnoses:
+                    type: array
+                    items:
+                      type: string
+        '500':
+          description: A critical error occurred

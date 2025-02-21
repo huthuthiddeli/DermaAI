@@ -47,12 +47,18 @@ router.get("/docs", async () => {
 
 // Add prefix to UserController routes
 router.group(() => {
+  router.get('/getAllUsers', [UserController, 'getAllUsers']);
   router.post('/saveUser', [UserController, 'saveUser']);
   router.post('/validateUser', [UserController, 'validateUser']);
+  router.post('/mfa', [UserController, 'getMfaFromUser'])
+  router.post('/switchMfa', [UserController, 'activateMfa'])
+  router.delete('/collectionClear', [UserController, 'clearCollection'])
 }).prefix('/user');
 
 // Add prefix to PictureController routes
 router.group(() => {
   router.post('/picture', [PictureController, 'postPicture']);
   router.get('/picture', [PictureController, 'getPicture']);
+  router.get('/count', [PictureController, 'getCount']);
+  router.get('/labels', [PictureController, 'getLabels'])
 }).prefix('/picture');

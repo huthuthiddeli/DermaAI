@@ -7,7 +7,7 @@ from find_spot import crop_image_microservice
 app = FastAPI()
 
 
-@app.get("/")
+@app.post("/")
 async def getPic(file: UploadFile):
     bytes_arr = await file.read()
     img = crop_image_microservice(bytes_arr)
