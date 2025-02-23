@@ -85,25 +85,7 @@ export class PictureProvider {
       return ctx.response.status(500).json({ message: 'An error occurred' });
     }
   }
-
-  /**
-   * Find all pictures
-   * @param ctx - The HTTP context
-   * @returns The response object containing all pictures
-   */
-  public findAllPictures = async (ctx: HttpContext) => {
-    await checkState();
-
-    try {
-      const pictures = await pictureModel.find({});
-      return ctx.response.status(200).json(pictures);
-    } catch (error) {
-      logger.error("An error occurred: %s", error);
-      prettyPrintError(error);
-      return ctx.response.status(500).json({ message: 'An error occurred' });
-    }
-  }
-
+  
   /**
    * Get all unique diagnoses
    * @param ctx - The HTTP context
