@@ -42,9 +42,10 @@ class CameraActivity : AppCompatActivity() {
 
         cameraViewModel.prediction.observe(this) { prediction ->
             if (prediction != null) {
-                // exif
+                val storage = Storage()
+                storage.savePredictionToImageMetadata(cameraViewModel.getLastPath(), prediction.getPredictionMap())
             } else {
-
+                
             }
         }
 
@@ -95,35 +96,23 @@ class CameraActivity : AppCompatActivity() {
 
 
                     val storage = Storage()
+
                     if(output.savedUri != null)
                     {
-                        val resolver = contentResolver.openInputStream(output.savedUri!!)
-                        val base64Image = storage.convertImageToBase64(resolver, output.savedUri)
-
-                        if (base64Image != null) {
-                            Log.d("TAG", "Base64 image: $base64Image")
 
                             val url = getString(R.string.main) + getString(R.string.model_controller_gateway) + getString(R.string.model_predict_gateway)
 
                             val imageFile = File(output.savedUri!!.path)
                             val imageBytes = imageFile.readBytes()
 
-                            var base64_2 = Base64.encode(imageBytes)
+
+                            var base64 = Base64.encode(imageBytes)
 
 
-                            cameraViewModel.sendImage(url, base64_2)
+                            cameraViewModel.sendImage(url, base64,output.savedUri!!.path)
 
 
-                        } else {
-                            Log.e("TAG", "Failed to convert image to Base64")
-                        }
                     }
-
-
-
-
-
-
 
 
 

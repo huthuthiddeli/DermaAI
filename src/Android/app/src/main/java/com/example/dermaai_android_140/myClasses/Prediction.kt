@@ -6,5 +6,9 @@ class Prediction(
     val prediction: Map<String, Int>
 )
 {
-
+    fun getPredictionMap() : Map<String, Int>
+    {
+        return prediction
+    }
+    
 }

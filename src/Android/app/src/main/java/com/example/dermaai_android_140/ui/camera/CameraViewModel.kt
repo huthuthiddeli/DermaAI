@@ -33,7 +33,16 @@ class CameraViewModel : ViewModel() {
     val prediction: LiveData<Prediction?> get() = _prediction
 
 
-    fun sendImage(url: String, base64Image: String)
+    private lateinit var lastPath : String
+
+    fun getLastPath() : String
+    {
+        return lastPath
+    }
+
+
+
+    fun sendImage(url: String, base64Image: String, lastPathOfImg : String?)
     {
 
         var prediction : Prediction? = null
@@ -43,6 +52,8 @@ class CameraViewModel : ViewModel() {
             val receivedImage = withContext(Dispatchers.IO) {
 
                 val model = AiModel(0,"ModelTrainerPyTorch", base64Image)
+
+                lastPath = lastPathOfImg.toString()
 
                 prediction = imageRepo.sendImage(model,url)
             }

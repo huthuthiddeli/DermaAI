@@ -48,6 +48,38 @@ class Storage {
         Toast.makeText(context, "Image successfully stored!", Toast.LENGTH_SHORT).show()
     }
 
+    fun savePredictionToImageMetadata(imagePath: String, prediction: Map<String, Int>) {
+        try {
+            val exif = ExifInterface(imagePath)
+
+            // Convert the prediction map to a JSON string
+            val predictionJson = prediction.entries.joinToString(",") { "${it.key}:${it.value}" }
+
+            // Save the prediction in the metadata
+            exif.setAttribute("Prediction", predictionJson)
+            exif.saveAttributes() // Save changes
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+
+    fun getPredicitonFromImageMetadata(imagePath: String) : String?
+    {
+        var prediction : String? = null
+        try {
+            val exif = ExifInterface(imagePath)
+            prediction = exif.getAttribute("Prediction")
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        
+
+        return prediction
+    }
+
+
     fun createUniqueImagePath(activity: Activity, takenByUser: Boolean): File {
         //create File name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
@@ -97,32 +129,6 @@ class Storage {
         }
     }
 
-
-    fun convertImageToBase64(inputStream: InputStream?, imageUri: Uri?): String? {
-        try {
-            // Open an input stream from the URI
-            val inputStream: InputStream? = inputStream
-            inputStream?.use { stream ->
-                // Read the image into a ByteArrayOutputStream
-                val byteArrayOutputStream = ByteArrayOutputStream()
-                val buffer = ByteArray(1024)
-                var length: Int
-                while (stream.read(buffer).also { length = it } != -1) {
-                    byteArrayOutputStream.write(buffer, 0, length)
-                }
-                // Convert the byte array to a Base64 string
-                val imageBytes = byteArrayOutputStream.toByteArray()
-
-                val base64 = Base64.encodeToString(imageBytes, Base64.DEFAULT)
-                return base64
-            }
-        } catch (e: Exception) {
-            Log.e("Error", "converting image to Base64 failed", e)
-            return null
-        }
-
-        return null
-    }
 
 
 }

@@ -75,10 +75,15 @@ class GalleryFragment : Fragment() {
                 setPadding(12, 12, 12, 12)
 
                 setOnClickListener {
+
+
+
                     val intent = Intent(requireContext(), ResultActivity::class.java).apply {
                         putExtra("EXTRA_IMAGE_PATH", image.absolutePath)
                         putExtra("EXTRA_RESULT", image.absolutePath)
                     }
+
+
                     startActivity(intent)
                 }
             }
