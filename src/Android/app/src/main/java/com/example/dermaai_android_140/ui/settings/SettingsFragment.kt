@@ -83,6 +83,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         saveToClipboard(key)
 
+
         FaKeyInput?.isEnabled = true
         
         FaKeyInput?.setOnPreferenceChangeListener { preference, enteredCode ->
@@ -94,7 +95,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 Toast.makeText(context, "Correct Code: 2FA Activated", Toast.LENGTH_SHORT).show()
                 //
 
-                val url = getString(R.string.main) + getString(R.string.user_controller) + getString(R.string.setMfa)
+                val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.setMfa)
 
                 val viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 

@@ -14,7 +14,9 @@ android {
 
     packaging {
         resources.excludes.add("META-INF/DEPENDENCIES")
+        resources.excludes.add("mozilla/public-suffix-list.txt")
     }
+
     buildFeatures {
         prefab = true
     }
@@ -60,6 +62,7 @@ android {
 dependencies {
     implementation(libs.firebase.perf)
     implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.firebase.crashlytics.buildtools)
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.dexmaker.mockito)
     androidTestImplementation(libs.androidx.espresso.contrib)
