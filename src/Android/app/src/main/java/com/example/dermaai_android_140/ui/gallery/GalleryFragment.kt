@@ -43,8 +43,8 @@ class GalleryFragment : Fragment() {
             fillView(images)
         }
 
+        return binding.root
         
-        return root
     }
 
 
