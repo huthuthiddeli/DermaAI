@@ -4,6 +4,7 @@ import swaggerConfig from "#config/swagger";
 import app from '@adonisjs/core/services/app';
 import { PictureProvider } from '../app/providers/picture-provider.js';
 import { UserProvider } from '../app/providers/user-provider.js';
+import { PredictionProvider} from '../app/providers/prediction-provider.js'
 import { connectToDatabase } from '../app/utils/db-funcs.js';
 import fs from 'fs';
 import path from 'path';
@@ -12,12 +13,15 @@ import { fileURLToPath } from 'url';
 //----------FOR SWAGGER DOCUMENTATION -----------------
 const UserController = () => import('#controllers/Http/UserController');
 const PictureController = () => import("#controllers/Http/PictureController");
+const PredictionController = () => import("#controllers/Http/PredictionController")
+
 
 //----------COMPLETE BOOTUP-----------------
 app.ready(async () => {
   await connectToDatabase();
   await PictureProvider.getInstance();
   await UserProvider.getInstance();
+  await PredictionProvider.getInstance();
 })
 
 router.get('/', async () => {
@@ -56,6 +60,12 @@ router.group(() => {
   router.post('/setUser', [UserController, 'checkIfUser'])
   router.delete('/collectionClear', [UserController, 'clearCollection'])
 }).prefix('/user');
+
+// Add prefix to PredictionController routes
+router.group(() => {
+  router.post('/savePrediction', [PredictionController, 'savePrediction']);
+  router.post('/loadPrediction', [PredictionController, 'loadPrediction'])
+}).prefix('/prediction')
 
 // Add prefix to PictureController routes
 router.group(() => {
