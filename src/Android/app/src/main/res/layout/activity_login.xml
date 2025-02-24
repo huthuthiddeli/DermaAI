@@ -10,13 +10,14 @@
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragment_placeholder_accountinfo"
+        android:name="com.example.dermaai_android_140.ui.accountinfo.AccountinfoFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:name="com.example.dermaai_android_140.ui.accountinfo.AccountinfoFragment"
         tools:layout="@layout/fragment_accountinfo_login" />
 
 

@@ -12,6 +12,8 @@ import { fileURLToPath } from 'url';
 //----------FOR SWAGGER DOCUMENTATION -----------------
 const UserController = () => import('#controllers/Http/UserController');
 const PictureController = () => import("#controllers/Http/PictureController");
+const PredictionController = () => import("#controllers/Http/PredictionController")
+
 
 //----------COMPLETE BOOTUP-----------------
 app.ready(async () => {
@@ -47,12 +49,26 @@ router.get("/docs", async () => {
 
 // Add prefix to UserController routes
 router.group(() => {
+  router.get('/getAllUsers', [UserController, 'getAllUsers']);
   router.post('/saveUser', [UserController, 'saveUser']);
   router.post('/validateUser', [UserController, 'validateUser']);
+  router.post('/mfa', [UserController, 'getMfaFromUser'])
+  router.post('/switchMfa', [UserController, 'activateMfa'])
+  router.post('/setAdmin', [UserController, 'checkIfAdmin'])
+  router.post('/setUser', [UserController, 'checkIfUser'])
+  router.delete('/collectionClear', [UserController, 'clearCollection'])
 }).prefix('/user');
+
+// Add prefix to PredictionController routes
+router.group(() => {
+  router.post('/savePrediction', [PredictionController, 'savePrediction']);
+  router.post('/loadPrediction', [PredictionController, 'loadPrediction'])
+}).prefix('/prediction')
 
 // Add prefix to PictureController routes
 router.group(() => {
   router.post('/picture', [PictureController, 'postPicture']);
   router.get('/picture', [PictureController, 'getPicture']);
+  router.get('/count', [PictureController, 'getCount']);
+  router.get('/labels', [PictureController, 'getLabels'])
 }).prefix('/picture');

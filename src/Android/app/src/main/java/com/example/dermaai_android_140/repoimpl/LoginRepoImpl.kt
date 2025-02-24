@@ -18,9 +18,11 @@ class LoginRepoImpl : LoginRepo {
         {
             val user = User(email,password, mfa)
 
+
             var receivedUserObject : User? = null
 
-            val result = API.callApi(url,"", "POST", user)
+            val result = API.callApi(url, "POST", user)
+            
 
             if (result.isSuccess) {
 
@@ -58,9 +60,9 @@ class LoginRepoImpl : LoginRepo {
             val user = User(email,password, false)
 
             var receivedUserObject : User? = null
-            
 
-            val result = API.callApi(url,"", "POST", user)
+
+            val result = API.callApi(url, "POST", user)
 
                 if (result.isSuccess) {
 
@@ -87,6 +89,24 @@ class LoginRepoImpl : LoginRepo {
         }
 
 
+        fun setMFA(user : User?, url : String) : User?
+        {
+
+            val result = API.callApi(url, "POST", user)
+
+            if (result.isSuccess) {
+                val receivedData = result.getOrNull()
+
+                val gson = Gson()
+
+                val receivedUserObject = gson.fromJson(receivedData, User::class.java)
+                return receivedUserObject
+            }
+            else
+            {
+                return null;
+            }
+        }
 
         fun getUser(): User? {
             return User("a","a", false)

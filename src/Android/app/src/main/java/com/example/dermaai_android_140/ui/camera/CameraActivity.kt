@@ -13,20 +13,41 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.MainActivity
+import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.ActivityCameraBinding
 import com.example.dermaai_android_140.myClasses.Storage
+import java.io.File
+import kotlin.io.encoding.Base64
+import kotlin.io.encoding.ExperimentalEncodingApi
 
 class CameraActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCameraBinding
     private lateinit var imageCapture: ImageCapture
+    private lateinit var cameraViewModel: CameraViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //val cameraViewModel = ViewModelProvider(this)[CameraViewModel::class.java]
+
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        cameraViewModel = ViewModelProvider(this).get(CameraViewModel::class.java)
+
+
+        cameraViewModel.prediction.observe(this) { prediction ->
+            if (prediction != null) {
+                val storage = Storage()
+                storage.savePredictionToImageMetadata(cameraViewModel.getLastPath(), prediction.getPredictionMap())
+            } else {
+                
+            }
+        }
 
         val previewView: PreviewView = binding.previewView
 
@@ -48,6 +69,7 @@ class CameraActivity : AppCompatActivity() {
         }
     }
 
+    @OptIn(ExperimentalEncodingApi::class)
     private fun takePhoto() {
         // Ensure imageCapture is initialized
         if (!::imageCapture.isInitialized) {
@@ -71,6 +93,28 @@ class CameraActivity : AppCompatActivity() {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
                     Log.d("TAG", msg)
+
+
+                    val storage = Storage()
+
+                    if(output.savedUri != null)
+                    {
+
+                            val url = getString(R.string.main) + getString(R.string.model_controller_gateway) + getString(R.string.model_predict_gateway)
+
+                            val imageFile = File(output.savedUri!!.path)
+                            val imageBytes = imageFile.readBytes()
+
+
+                            var base64 = Base64.encode(imageBytes)
+
+
+                            cameraViewModel.sendImage(url, base64,output.savedUri!!.path)
+
+
+                    }
+
+
 
 
                     val intent = Intent(baseContext, MainActivity::class.java)

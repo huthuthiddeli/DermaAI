@@ -13,14 +13,14 @@ import java.net.URL
 class API {
 
     companion object {
-
-        fun callApi(apiUrl: String, token: String, httpMethod: String, requestModel: Any? = null): Result<String> {
+        
+        fun callApi(apiUrl: String, httpMethod: String, requestModel: Any? = null): Result<String> {
             return try {
                 val url = URL(apiUrl)
                 val connection = url.openConnection() as HttpURLConnection
 
                 connection.requestMethod = httpMethod
-                
+
                 //setRequestHeaders(connection, token)
                 sendRequest(connection, httpMethod, requestModel)
 
@@ -41,11 +41,7 @@ class API {
             }
         }
 
-        private fun setRequestHeaders(connection: HttpURLConnection, token: String) {
-            connection.setRequestProperty("Content-Type", "application/json")
-            connection.setRequestProperty("Accept", "application/json")
-            connection.setRequestProperty("Authorization", "Bearer $token")
-        }
+
 
         private fun sendRequest(connection: HttpURLConnection, httpMethod: String, requestModel: Any?) {
 
@@ -66,7 +62,7 @@ class API {
             requestModel?.let {
                 val jsonInput = Gson().toJson(it)
 
-
+                
                 OutputStreamWriter(connection.outputStream, Charsets.UTF_8).use { os ->
                     os.write(jsonInput)
                     os.flush()

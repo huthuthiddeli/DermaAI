@@ -9,8 +9,10 @@ import com.example.dermaai_android_140.myClasses.API
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.LoginRepo
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
+import com.example.dermaai_android_140.repoimpl.UserRepoImpl
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -24,6 +26,9 @@ class AccountinfoViewModel() : ViewModel() {
 
 
     private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
+
+    private val userRepo: UserRepoImpl by KoinJavaComponent.inject(UserRepoImpl::class.java)
+
 
     private val _email = MutableLiveData<String>()
     val email: LiveData<String> get() = _email
@@ -86,17 +91,18 @@ class AccountinfoViewModel() : ViewModel() {
     {
         _user = user
     }
-    
+
 
     fun register(email : String, password : String, url : String)
     {
-        myJob = viewModelScope.launch(Dispatchers.IO) {
 
-            val registerDeferred = async(Dispatchers.IO) {
+        var receivedUser: User? = null
+
+        myJob = viewModelScope.launch{
+
+            receivedUser  = withContext(Dispatchers.IO) {
                 LoginRepoImpl.register(email, password, false, url)
             }
-
-            val receivedUser = registerDeferred.await()
 
             if (receivedUser != null) {
                 _user = receivedUser
@@ -107,17 +113,16 @@ class AccountinfoViewModel() : ViewModel() {
         }
 
         myJob?.invokeOnCompletion {throwable ->
-            // Task completed
+
             if (throwable == null) {
                 _registerCount.postValue(_registerCount.value!! + 1)
-
-                val test = _user
-                val a = 12
             }
+
         }
-
     }
+    
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun login(email : String, password : String, mfa: Boolean, url : String)
     {
         /*
@@ -128,47 +133,41 @@ class AccountinfoViewModel() : ViewModel() {
 
         var receivedUser: User? = null
 
-        viewModelScope.launch(Dispatchers.IO) {
+        fun login(email : String, password : String, mfa: Boolean, url : String) {
 
-            val loginDeferred = async(Dispatchers.IO) {
-                LoginRepoImpl.login(email,password, false,url)
+
+            var receivedUser: User? = null
+
+            viewModelScope.launch {
+                // Use withContext to switch to the IO dispatcher for network operations
+                val receivedUser = withContext(Dispatchers.IO) {
+                    LoginRepoImpl.login(email, password, mfa, url)
+                }
+
+
+                // succesfull
+                if (receivedUser != null) {
+
+                    _user = receivedUser
+                    userRepo.saveCurrentUser(receivedUser)
+                    _mfaEnabled.postValue(_user!!.mfa)
+
+
+                    if (receivedUser.mfa) {
+
+                        _mfaEnabled.postValue(receivedUser.mfa)
+
+                    } else {
+                        _isLoggedIn.postValue(true)
+                    }
+
+                } else {
+                    println("failed")
+                }
+
+
             }
-
-            receivedUser = loginDeferred.await()
-
         }
-
-        // succesfull
-        if (receivedUser != null) {
-
-            _user = receivedUser
-
-            _mfaEnabled.postValue(_user!!.mfa)
-
-
-            if(receivedUser!!.mfa)
-            {
-                _mfaEnabled.value = receivedUser!!.mfa
-                //_key = receivedUser.key
-
-                /*
-                val auth = Authentication()
-                val enteredCode = 0
-
-                if(auth.validateTOTP(receivedUser.key,enteredCode.toString()))
-                {
-                    _isLoggedIn.postValue(true)
-                }*/
-            }
-            // failed
-            else{
-                _isLoggedIn.postValue(true)
-            }
-
-        } else {
-            println("failed")
-        }
-        
     }
 
 

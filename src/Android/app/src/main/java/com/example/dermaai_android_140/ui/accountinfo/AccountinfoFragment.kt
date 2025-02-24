@@ -115,10 +115,15 @@ class AccountinfoFragment() : Fragment() {
 
             loginBtn.setOnClickListener {
 
+                
+                val intent = Intent(requireContext(), MainActivity::class.java)
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+
+
                 val email = editTextEmail.text.toString()
                 val password = editTextPassword.text.toString()
 
-                val url = getString(R.string.main) + getString(R.string.user_controller) + getString(R.string.validateUser)
+                val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.validateUser_gateway)
 
                 viewModel.login(email,password,false,url)
 
@@ -132,6 +137,7 @@ class AccountinfoFragment() : Fragment() {
                     showTwoFAInputDialog(requireContext(), viewModel)
                 }
             }
+            
 
 
 
@@ -158,7 +164,7 @@ class AccountinfoFragment() : Fragment() {
                 val email = view.findViewById<EditText>(R.id.editTextEmail).text.toString()
                 val password = view.findViewById<EditText>(R.id.editTextPassword).text.toString()
 
-                val url = getString(R.string.main) + getString(R.string.user_controller) + getString(R.string.saveUser)
+                val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.saveUser_gateway)
 
                 viewModel.register(email, password, url)
 
@@ -185,14 +191,21 @@ class AccountinfoFragment() : Fragment() {
                 val code = input.text.toString()
                 if (code.isNotEmpty()) {
                     if (authentication.validateTOTP(viewModel.getKey(), code)) {
-                        Toast.makeText(context, "Verified Successfully", Toast.LENGTH_SHORT).show()
+
+                        Toast.makeText(context, "Verified Successfully!", Toast.LENGTH_SHORT).show()
+
+                        val intent = Intent(requireContext(), MainActivity::class.java)
+                        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+
                     } else {
-                        Toast.makeText(context, "Invalid Code", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Invalid Code!", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .show()
+
+
     }
 
 
