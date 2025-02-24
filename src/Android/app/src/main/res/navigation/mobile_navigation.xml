@@ -10,6 +10,7 @@
         android:name="com.example.dermaai_android_140.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
+    
 
     <fragment
         android:id="@+id/nav_gallery"
@@ -22,7 +23,6 @@
         android:name="com.example.dermaai_android_140.ui.photo.PhotoFragment"
         android:label="@string/menu_photo"
         tools:layout="@layout/fragment_photo" />
-
 
     <fragment
         android:id="@+id/nav_tutorial"

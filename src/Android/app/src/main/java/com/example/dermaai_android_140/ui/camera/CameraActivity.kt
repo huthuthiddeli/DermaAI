@@ -111,7 +111,6 @@ class CameraActivity : AppCompatActivity() {
 
                             cameraViewModel.sendImage(url, base64,output.savedUri!!.path)
 
-
                     }
 
 

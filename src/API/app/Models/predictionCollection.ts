@@ -34,4 +34,4 @@ export const predictionSchema = new Schema<IPredictionData>({
 
 predictionSchema.plugin(paginate);
 
-export const userDataModel = mongoose.model<IPredictionData, mongoose.PaginateModel<IPredictionData>>('predictionData', predictionSchema)
+export const predictionModel = mongoose.model<IPredictionData, mongoose.PaginateModel<IPredictionData>>('predictionData', predictionSchema)

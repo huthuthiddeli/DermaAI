@@ -15,13 +15,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.myClasses.AiModel
 import com.example.dermaai_android_140.myClasses.Prediction
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
-import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent
-import kotlin.getValue
 
 class CameraViewModel : ViewModel() {
 

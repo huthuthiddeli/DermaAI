@@ -1,6 +1,6 @@
 import logger from "@adonisjs/core/services/logger";
 import { HttpContext } from "@adonisjs/core/http";
-import { IPredictionData, userDataModel, predictionSchema } from "#models/predictionCollection";
+import { IPredictionData, predictionModel, predictionSchema } from "../Models/predictionCollection.js";
 
 
 
@@ -22,18 +22,32 @@ export class PredictionProvider{
     }
 
     public async loadPrediction(ctx: HttpContext){
+        let data = await this.parsePredictionReqeust(ctx);
+        if(!data){
+            logger.error("Coudln't find Prediction")
+            return
+        }
 
+        let foundItems = await predictionModel.find({email: data.email, password: data.password})
+        return foundItems
     }
 
-    private async parsePredictionReqeust(ctx: HttpContext): Promise<IPredictionData>{
-        logger.info(ctx.request.headers())
-        logger.info(ctx.request.body())
+    private async parsePredictionReqeust(ctx: HttpContext){
+        const {email = "", password = "", image = "", prediction ="" } = ctx.request.body()
+        return {email, password, image, prediction}
     }
 
     public async savePrediction(ctx: HttpContext){
-        // logger.info(ctx.request.pa)
-        await this.parsePredictionReqeust(ctx);
-    }
+        let data = await this.parsePredictionReqeust(ctx);
+        if(!data){
+            logger.error("Couldn't parse PredictionReqeuest!");
+            return;
+        }
 
+        const schema = new predictionModel(data);
+        let savedSchema = await schema.save();
+
+        return ctx.response.status(200).ok(savedSchema);
+    }
 
 }

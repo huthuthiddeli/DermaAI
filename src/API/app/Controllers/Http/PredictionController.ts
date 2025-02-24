@@ -1,4 +1,4 @@
-import { PredictionProvider } from "#providers/prediction-provider.js";
+import { PredictionProvider } from "../../providers/prediction-provider.js";
 import { HttpContext } from "@adonisjs/core/http";
 
 export default class PredictionController{

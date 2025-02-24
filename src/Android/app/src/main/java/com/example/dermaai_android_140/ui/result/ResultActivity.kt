@@ -23,7 +23,7 @@ class ResultActivity : AppCompatActivity() {
         val imagePath = intent.getStringExtra("EXTRA_IMAGE_PATH")
         
         val storage = Storage()
-        val predictionString : String = storage.getPredicitonFromImageMetadata(imagePath.toString())
+        val predictionString : String = storage.getPredicitonFromImageMetadata(imagePath.toString()).toString()
 
         val resultView = findViewById<TextView>(R.id.result_text)
         resultView.text = predictionString
@@ -31,6 +31,7 @@ class ResultActivity : AppCompatActivity() {
 
         val bitmap = BitmapFactory.decodeFile(imagePath)
         binding.fullscreenImage.setImageBitmap(bitmap)
+
 
 
     }
