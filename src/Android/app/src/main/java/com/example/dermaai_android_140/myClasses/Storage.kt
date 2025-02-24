@@ -4,11 +4,16 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.media.ExifInterface
+import android.net.Uri
 import android.os.Environment
+import android.util.Base64
+import android.util.Log
 import android.widget.Toast
+import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.output.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.io.InputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -17,8 +22,8 @@ import java.util.Locale
 class Storage {
 
 
-    fun retrieveImagesFromStorage(filesDir : File?, takenByUser: Boolean): MutableList<File> {
-        
+    fun retrieveImagesFromStorage(filesDir: File?, takenByUser: Boolean): MutableList<File> {
+
         var subDir = getSubDir(takenByUser)
 
         val folder = File(filesDir, subDir)
@@ -34,24 +39,55 @@ class Storage {
         return images
     }
 
-    fun saveFileToStorage(bitmap : Bitmap, context : Context, filePath : String)
-    {
+    fun saveFileToStorage(bitmap: Bitmap, context: Context, filePath: String) {
         val outputStream: OutputStream = FileOutputStream(filePath)
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
         outputStream.flush()
         outputStream.close()
-        
+
         Toast.makeText(context, "Image successfully stored!", Toast.LENGTH_SHORT).show()
     }
 
-    fun createUniqueImagePath(activity : Activity, takenByUser : Boolean): File {
+    fun savePredictionToImageMetadata(imagePath: String, prediction: Map<String, Int>) {
+        try {
+            val exif = ExifInterface(imagePath)
+
+            // Convert the prediction map to a JSON string
+            val predictionJson = prediction.entries.joinToString(",") { "${it.key}:${it.value}" }
+
+            // Save the prediction in the metadata
+            exif.setAttribute("Prediction", predictionJson)
+            exif.saveAttributes() // Save changes
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
+
+    fun getPredicitonFromImageMetadata(imagePath: String) : String?
+    {
+        var prediction : String? = null
+        try {
+            val exif = ExifInterface(imagePath)
+            prediction = exif.getAttribute("Prediction")
+
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        
+
+        return prediction
+    }
+
+
+    fun createUniqueImagePath(activity: Activity, takenByUser: Boolean): File {
         //create File name
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
         val storageDir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
         var subDir = getSubDir(takenByUser)
 
-        val dir =  File(storageDir, subDir)
+        val dir = File(storageDir, subDir)
 
         if (!dir.exists()) {
             dir.mkdirs()
@@ -70,13 +106,11 @@ class Storage {
     }
 
 
-    private fun removeMetadata()
-    {
+    private fun removeMetadata() {
 
     }
 
-    fun addMetadata(image : File)
-    {
+    fun addMetadata(image: File) {
         try {
             val exif = ExifInterface(image)
             exif.setAttribute(ExifInterface.TAG_USER_COMMENT, "Text")
@@ -87,14 +121,14 @@ class Storage {
     }
 
 
-
-    private fun getSubDir(takenByUser : Boolean) : String
-    {
-        return if(takenByUser) {
+    private fun getSubDir(takenByUser: Boolean): String {
+        return if (takenByUser) {
             "Photo_User"
         } else {
             "Photo_ServerResponse"
         }
     }
+
+
 
 }

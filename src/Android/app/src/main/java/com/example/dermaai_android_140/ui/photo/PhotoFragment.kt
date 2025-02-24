@@ -62,7 +62,7 @@ class PhotoFragment : Fragment() {
 
                 startActivity(intent)
 
-
+                
             }else{
                 ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
                 photoViewModel.requestCameraPermission()
@@ -77,7 +77,6 @@ class PhotoFragment : Fragment() {
 
         return root
     }
-
 
 
     private fun showPermissionSettingsDialog() {

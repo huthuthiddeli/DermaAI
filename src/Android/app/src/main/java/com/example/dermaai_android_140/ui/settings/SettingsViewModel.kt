@@ -9,6 +9,7 @@ import com.example.dermaai_android_140.repoimpl.UserRepoImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent
 import kotlin.getValue
 
@@ -21,13 +22,11 @@ class SettingsViewModel : ViewModel() {
     {
         var receivedUser : User? = null
 
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
 
-            val mfaDeferred = async(Dispatchers.IO) {
+            receivedUser = withContext(Dispatchers.IO) {
                 LoginRepoImpl.setMFA(userRepo.getCurrentUser(), url)
             }
-
-            receivedUser = mfaDeferred.await()
 
         }
 

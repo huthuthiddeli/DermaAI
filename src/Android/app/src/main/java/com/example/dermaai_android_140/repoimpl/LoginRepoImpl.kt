@@ -16,14 +16,12 @@ class LoginRepoImpl : LoginRepo {
 
         fun login(email : String, password : String, mfa : Boolean, url : String) : User?
         {
-            //val user = User(email,password, mfa)
+            val user = User(email,password, mfa)
 
-            data class simoleUser(val email : String, val password : String)
-            val user = simoleUser(email,password)
 
             var receivedUserObject : User? = null
 
-            val result = API.callApi(url,"", "POST", user)
+            val result = API.callApi(url, "POST", user)
             
 
             if (result.isSuccess) {
@@ -64,7 +62,7 @@ class LoginRepoImpl : LoginRepo {
             var receivedUserObject : User? = null
 
 
-            val result = API.callApi(url,"", "POST", user)
+            val result = API.callApi(url, "POST", user)
 
                 if (result.isSuccess) {
 
@@ -94,7 +92,7 @@ class LoginRepoImpl : LoginRepo {
         fun setMFA(user : User?, url : String) : User?
         {
 
-            val result = API.callApi(url,"", "POST", user)
+            val result = API.callApi(url, "POST", user)
 
             if (result.isSuccess) {
                 val receivedData = result.getOrNull()
