@@ -85,7 +85,6 @@ paths:
                       type: boolean
                     isAdmin:
                       type: boolean
-        
         '500':
           description: Internal server error
 
@@ -107,27 +106,27 @@ paths:
         '200':
           description: User Admin-status updated successfully
         '404':
-          description: User Admin-status change was not succesfull.
-          
+          description: User Admin-status change was not successful.
+
   /user/setUser:
-      post:
-        summary: Sets the User to role User
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  email:
-                    type: string
-                  password:
-                    type: string
-        responses:
-          '200':
-            description: User User-status updated successfully
-          '404':
-            description: User User-status change was not succesfull.
+    post:
+      summary: Sets the User to role User
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User User-status updated successfully
+        '404':
+          description: User User-status change was not successful.
 
   /user/mfa:
     post:
@@ -228,14 +227,15 @@ paths:
           description: Picture retrieved successfully
         '404':
           description: Picture not found
-  
+
   /picture/count:
     get:
       summary: Get the length of the collection.
       responses: 
         '200':
           description: Length retrieved successfully.
-        '500': A critical error occurred.
+        '500':
+          description: A critical error occurred.
 
   /picture/labels:
     get:
@@ -254,3 +254,96 @@ paths:
                       type: string
         '500':
           description: A critical error occurred
+
+  /prediction/loadPrediction:
+    post:
+      summary: Load predictions
+      tags:
+        - Prediction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "test@example.com"
+                password:
+                  type: string
+                  example: "password123"
+      responses:
+        '200':
+          description: Predictions loaded successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    image:
+                      type: string
+                    prediction:
+                      type: string
+        '400':
+          description: Bad request
+        '404':
+          description: Predictions not found
+
+  /prediction/savePrediction:
+    post:
+      summary: Save a prediction
+      tags:
+        - Prediction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: "test@example.com"
+                password:
+                  type: string
+                  example: "password123"
+                image:
+                  type: string
+                  example: "base64encodedimage"
+                prediction:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                      example: "cat"
+                    confidence:
+                      type: number
+                      format: float
+                      example: 0.98          
+      responses:
+        '200':
+          description: Prediction saved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  password:
+                    type: string
+                  image:
+                    type: string
+                  prediction:
+                    type: string
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error

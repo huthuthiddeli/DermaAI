@@ -4,6 +4,7 @@ import swaggerConfig from "#config/swagger";
 import app from '@adonisjs/core/services/app';
 import { PictureProvider } from '../app/providers/picture-provider.js';
 import { UserProvider } from '../app/providers/user-provider.js';
+import { PredictionProvider} from '../app/providers/prediction-provider.js'
 import { connectToDatabase } from '../app/utils/db-funcs.js';
 import fs from 'fs';
 import path from 'path';
@@ -20,6 +21,7 @@ app.ready(async () => {
   await connectToDatabase();
   await PictureProvider.getInstance();
   await UserProvider.getInstance();
+  await PredictionProvider.getInstance();
 })
 
 router.get('/', async () => {
