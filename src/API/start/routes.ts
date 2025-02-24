@@ -12,6 +12,8 @@ import { fileURLToPath } from 'url';
 //----------FOR SWAGGER DOCUMENTATION -----------------
 const UserController = () => import('#controllers/Http/UserController');
 const PictureController = () => import("#controllers/Http/PictureController");
+const PredictionController = () => import("#controllers/Http/PredictionController")
+
 
 //----------COMPLETE BOOTUP-----------------
 app.ready(async () => {
@@ -56,6 +58,12 @@ router.group(() => {
   router.post('/setUser', [UserController, 'checkIfUser'])
   router.delete('/collectionClear', [UserController, 'clearCollection'])
 }).prefix('/user');
+
+// Add prefix to PredictionController routes
+router.group(() => {
+  router.post('/savePrediction', [PredictionController, 'savePrediction']);
+  router.post('/loadPrediction', [PredictionController, 'loadPrediction'])
+}).prefix('/prediction')
 
 // Add prefix to PictureController routes
 router.group(() => {
