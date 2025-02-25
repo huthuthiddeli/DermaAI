@@ -9,6 +9,7 @@ class LoginViewModel : ViewModel() {
     private val _stayLoggedIn = MutableLiveData<Boolean>(false)
     val stayLoggedIn: LiveData<Boolean> get() = _stayLoggedIn
 
+    
 
     fun setStayLoggedIn(stayLoggedIn: Boolean)
     {

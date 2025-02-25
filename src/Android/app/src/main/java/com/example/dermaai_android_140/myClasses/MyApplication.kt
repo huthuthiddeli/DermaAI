@@ -9,13 +9,11 @@ class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-
+        
         // Start Koin
         startKoin {
             androidContext(this@MyApplication)
             modules(appModule)
         }
-
     }
-
 }

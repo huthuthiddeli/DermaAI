@@ -34,6 +34,7 @@ class Storage {
         }
         return images
     }
+    
 
     fun saveFileToStorage(bitmap: Bitmap, context: Context, filePath: String) {
         val outputStream: OutputStream = FileOutputStream(filePath)

@@ -51,7 +51,6 @@ class GalleryFragment : Fragment() {
     }
 
 
-
     // TODO: coroutine
 
     private fun fillView(images: List<File>) {
@@ -59,9 +58,11 @@ class GalleryFragment : Fragment() {
         val imageContainer = binding.imageContainer
         imageContainer.removeAllViews()
 
-        for (image in images) {
-            val bitmap = BitmapFactory.decodeFile(image.absolutePath)
 
+        for (image in images) {
+
+            val bitmap = BitmapFactory.decodeFile(image.absolutePath)
+            
             val imageName = image.name
 
             // Thumbnail

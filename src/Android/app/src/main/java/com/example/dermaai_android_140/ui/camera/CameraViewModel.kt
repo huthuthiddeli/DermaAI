@@ -8,6 +8,7 @@
 
 package com.example.dermaai_android_140.ui.camera
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -24,6 +25,7 @@ import org.koin.java.KoinJavaComponent
 class CameraViewModel : ViewModel() {
 
     private val imageRepo: ImageRepoImpl by KoinJavaComponent.inject(ImageRepoImpl::class.java)
+    
     private var myJob: Job? = null
 
 
@@ -36,16 +38,21 @@ class CameraViewModel : ViewModel() {
     fun getLastPath(): String {
         return lastPath
     }
+    
 
 
     fun sendImage(url: String, base64Image: String, lastPathOfImg: String?) {
+
         viewModelScope.launch {
             try {
+
                 val prediction = withContext(Dispatchers.IO) {
                     val model = AiModel(0, "ModelTrainerPyTorch", base64Image)
                     lastPath = lastPathOfImg.toString()
                     imageRepo.sendImage(model, url)
                 }
+
+
                 _prediction.postValue(prediction)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -53,6 +60,8 @@ class CameraViewModel : ViewModel() {
             }
         }
     }
+
+
 }
 
 

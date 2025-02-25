@@ -12,11 +12,7 @@ val appModule = module {
     single { LoginRepoImpl() }
     single { ImageRepoImpl() }
     single { UserRepoImpl(context = get()) }
-    
-    /*
-    single<Repo>(named("login")) { LoginRepoImpl() }
-    single<Repo>(named("image")) { ImageRepoImpl() }
-    */
+
 
 }
 

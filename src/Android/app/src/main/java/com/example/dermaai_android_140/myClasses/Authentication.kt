@@ -32,31 +32,6 @@ class Authentication {
     }
 
 
-    fun qr(secret : String, email : String)
-    {
-        /*
-        val data = QrData.Builder()
-            .label(email)
-            .secret(secret)
-            .issuer("DermaAI")
-            .algorithm(HashingAlgorithm.SHA1)
-            .digits(6)
-            .period(30)
-            .build()
-
-
-        val generator: QrGenerator = ZxingPngQrGenerator()
-        val imageData: ByteArray = generator.generate(data)
-        */
-
-        /*
-        val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("TOTP Secret", secret)
-        clipboard.setPrimaryClip(clip)
-
-        Toast.makeText(context, "TOTP copied", Toast.LENGTH_SHORT).show()*/
-    }
-
     fun validateTOTP(secret : String, code : String) : Boolean
     {
         val timeProvider = SystemTimeProvider()

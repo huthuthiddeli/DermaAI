@@ -7,7 +7,6 @@ import com.example.dermaai_android_140.myClasses.User
 
 interface LoginRepo {
 
-        companion object {
                 fun login(email: String, password: String, mfa: Boolean, url : String): User? {
                         return User(email, password, mfa)
                 }
@@ -19,5 +18,7 @@ interface LoginRepo {
                 fun getUser(): User? {
                         return User("a", "a", false)
                 }
-        }
+
+                fun setMFA(user : User?, url : String) : User?
+
 }

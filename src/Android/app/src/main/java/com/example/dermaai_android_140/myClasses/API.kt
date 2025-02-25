@@ -27,7 +27,7 @@ class API {
                 val responseCode = connection.responseCode
 
                 if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
-                    //val test = readResponse(connection.inputStream)
+                    
                     return Result.success(readResponse(connection.inputStream))
                 } else {
                     val errorResponse = readResponse(connection.errorStream)
@@ -47,8 +47,6 @@ class API {
 
             // GET is handled automatically
 
-
-            // Code for POST
             if (httpMethod == "POST" || httpMethod == "PUT") {
                 sendPost(connection, requestModel)
             }
@@ -56,7 +54,9 @@ class API {
 
         private fun sendPost(connection: HttpURLConnection, requestModel: Any?)
         {
+            // senden
             connection.doOutput = true
+
             connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8")
 
             requestModel?.let {
@@ -69,7 +69,7 @@ class API {
                 }
             }
         }
-        
+
 
         private fun readResponse(inputStream: java.io.InputStream): String {
             val reader = BufferedReader(InputStreamReader(inputStream, "utf-8"))

@@ -123,8 +123,7 @@ class AccountinfoViewModel() : ViewModel() {
     
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun login(email : String, password : String, mfa: Boolean, url : String)
-    {
+    fun login(email : String, password : String, mfa: Boolean, url : String) {
         /*
         if(stayLoggedIn.value == true)
         {
@@ -133,13 +132,12 @@ class AccountinfoViewModel() : ViewModel() {
 
         var receivedUser: User? = null
 
-        fun login(email : String, password : String, mfa: Boolean, url : String) {
-
+        fun login(email: String, password: String, mfa: Boolean, url: String) {
 
             var receivedUser: User? = null
 
             viewModelScope.launch {
-                // Use withContext to switch to the IO dispatcher for network operations
+                
                 val receivedUser = withContext(Dispatchers.IO) {
                     LoginRepoImpl.login(email, password, mfa, url)
                 }
@@ -168,20 +166,19 @@ class AccountinfoViewModel() : ViewModel() {
 
             }
         }
-    }
 
 
+        fun getUser(): User? {
 
+            var user: User? = null
 
-    fun getUser(): User? {
+            viewModelScope.launch(Dispatchers.IO) {
+                user = LoginRepo.getUser()
+            }
 
-        var user : User? = null
-
-        viewModelScope.launch(Dispatchers.IO) {
-            user = LoginRepo.getUser()
+            return user
         }
 
-        return user
     }
 
 

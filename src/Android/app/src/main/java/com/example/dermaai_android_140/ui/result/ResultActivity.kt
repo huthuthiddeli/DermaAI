@@ -25,6 +25,7 @@ class ResultActivity : AppCompatActivity() {
         val storage = Storage()
         //val predictionString : String = storage.readPredictionFromImageMetadata(imagePath.toString()).toString()
 
+
         val predictionString : String = storage.readDiagnosisFromFile(imagePath.toString()).toString()
 
         val resultView = findViewById<TextView>(R.id.result_text)

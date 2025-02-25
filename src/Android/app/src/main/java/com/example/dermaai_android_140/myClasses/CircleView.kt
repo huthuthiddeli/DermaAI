@@ -25,8 +25,9 @@ class CircleView @JvmOverloads constructor(
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.TRANSPARENT
         style = Paint.Style.FILL
-        xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) // Clear the circle area
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
+    
 
     private val borderPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = Color.WHITE
@@ -38,7 +39,7 @@ class CircleView @JvmOverloads constructor(
         super.onDraw(canvas)
 
         // Draw a transparent circle
-        val radius = (width.coerceAtMost(height) / 2 * 0.8).toFloat() // 80% of the smaller dimension
+        val radius = (width.coerceAtMost(height) / 2 * 0.8).toFloat()
         val centerX = width / 2f
         val centerY = height / 2f
 

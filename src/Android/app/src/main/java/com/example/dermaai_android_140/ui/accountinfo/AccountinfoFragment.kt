@@ -114,11 +114,11 @@ class AccountinfoFragment() : Fragment() {
 
 
             loginBtn.setOnClickListener {
+                
+                //val intent = Intent(requireContext(), MainActivity::class.java)
+                //startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
 
                 
-                val intent = Intent(requireContext(), MainActivity::class.java)
-                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
-
 
                 val email = editTextEmail.text.toString()
                 val password = editTextPassword.text.toString()

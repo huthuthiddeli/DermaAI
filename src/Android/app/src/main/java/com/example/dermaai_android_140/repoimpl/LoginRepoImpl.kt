@@ -12,24 +12,19 @@ import kotlin.Result
 
 class LoginRepoImpl : LoginRepo {
 
-    companion object{
 
-        fun login(email : String, password : String, mfa : Boolean, url : String) : User?
+
+        override fun login(email : String, password : String, mfa : Boolean, url : String) : User?
         {
             val user = User(email,password, mfa)
-
 
             var receivedUserObject : User? = null
 
             val result = API.callApi(url, "POST", user)
-            
 
             if (result.isSuccess) {
-
                 val receivedData = result.getOrNull()
-
                 val gson = Gson()
-
                 try{
                     receivedUserObject = gson.fromJson(receivedData, User::class.java)
 
@@ -39,23 +34,15 @@ class LoginRepoImpl : LoginRepo {
 
                 }
 
-
             } else if (result.isFailure) {
 
             }
-
-
-            //TODO
-            // send if 2FA is enabled/disabled
-            // store 2FA key on Server
-
-
             return receivedUserObject
         }
 
 
         @SuppressLint("SuspiciousIndentation")
-        fun register(email : String, password : String, mfa : Boolean, url : String) : User?
+        override fun register(email : String, password : String, mfa : Boolean, url : String) : User?
         {
             val user = User(email,password, false)
 
@@ -111,6 +98,6 @@ class LoginRepoImpl : LoginRepo {
         fun getUser(): User? {
             return User("a","a", false)
         }
-    }
+
 
 }
