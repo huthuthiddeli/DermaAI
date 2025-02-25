@@ -31,40 +31,28 @@ class CameraViewModel : ViewModel() {
     val prediction: LiveData<Prediction?> get() = _prediction
 
 
-    private lateinit var lastPath : String
+    private lateinit var lastPath: String
 
-    fun getLastPath() : String
-    {
+    fun getLastPath(): String {
         return lastPath
     }
 
 
-
-    fun sendImage(url: String, base64Image: String, lastPathOfImg : String?)
-    {
-
-        var prediction : Prediction? = null
-
-        myJob =  viewModelScope.launch {
-            // Use withContext to switch to the IO dispatcher for network operations
-            val receivedImage = withContext(Dispatchers.IO) {
-
-                val model = AiModel(0,"ModelTrainerPyTorch", base64Image)
-
-                lastPath = lastPathOfImg.toString()
-
-                prediction = imageRepo.sendImage(model,url)
-            }
-        }
-
-        myJob?.invokeOnCompletion {throwable ->
-
-            if (throwable == null) {
+    fun sendImage(url: String, base64Image: String, lastPathOfImg: String?) {
+        viewModelScope.launch {
+            try {
+                val prediction = withContext(Dispatchers.IO) {
+                    val model = AiModel(0, "ModelTrainerPyTorch", base64Image)
+                    lastPath = lastPathOfImg.toString()
+                    imageRepo.sendImage(model, url)
+                }
                 _prediction.postValue(prediction)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _prediction.postValue(null)
             }
-
         }
     }
-
-
 }
+
+

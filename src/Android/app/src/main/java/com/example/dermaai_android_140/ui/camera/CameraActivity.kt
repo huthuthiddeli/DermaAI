@@ -43,7 +43,8 @@ class CameraActivity : AppCompatActivity() {
         cameraViewModel.prediction.observe(this) { prediction ->
             if (prediction != null) {
                 val storage = Storage()
-                storage.savePredictionToImageMetadata(cameraViewModel.getLastPath(), prediction.getPredictionMap())
+                //storage.savePredictionToImageMetadata(cameraViewModel.getLastPath(), prediction.getPredictionMap())
+                storage.saveDiagnosisToFile(cameraViewModel.getLastPath(), prediction.getPredictionMap())
             } else {
                 
             }

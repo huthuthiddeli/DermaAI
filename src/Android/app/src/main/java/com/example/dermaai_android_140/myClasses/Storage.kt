@@ -4,16 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.media.ExifInterface
-import android.net.Uri
 import android.os.Environment
-import android.util.Base64
-import android.util.Log
 import android.widget.Toast
-import com.google.firebase.crashlytics.buildtools.reloc.org.apache.commons.io.output.ByteArrayOutputStream
+import com.google.gson.Gson
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
 import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -48,6 +44,9 @@ class Storage {
         Toast.makeText(context, "Image successfully stored!", Toast.LENGTH_SHORT).show()
     }
 
+
+
+
     fun savePredictionToImageMetadata(imagePath: String, prediction: Map<String, Int>) {
         try {
             val exif = ExifInterface(imagePath)
@@ -64,19 +63,58 @@ class Storage {
     }
 
 
-    fun getPredicitonFromImageMetadata(imagePath: String) : String?
-    {
-        var prediction : String? = null
+    fun readPredictionFromImageMetadata(imagePath: String): String? {
+
+        var predictionStr : String? = null
+
         try {
             val exif = ExifInterface(imagePath)
-            prediction = exif.getAttribute("Prediction")
 
+            // Retrieve the prediction JSON string from the metadata
+            predictionStr = exif.getAttribute("Prediction")
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        
 
-        return prediction
+        return predictionStr
+    }
+
+
+    fun saveDiagnosisToFile(imagePath: String, diagnosis: Map<String, Int>) {
+        try {
+            // Get the directory of the image
+            val imageFile = File(imagePath)
+            val imageDir = imageFile.parentFile
+
+            // Create the diagnosis file in the same directory
+            val diagnosisFile = File(imageDir, "${imageFile.nameWithoutExtension}_diagnosis.json")
+            val diagnosisJson = Gson().toJson(diagnosis)
+            diagnosisFile.writeText(diagnosisJson)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+
+    // Read diagnosis from a separate file
+    fun readDiagnosisFromFile(imagePath: String): Map<String, Int>? {
+        return try {
+            // Get the directory of the image
+            val imageFile = File(imagePath)
+            val imageDir = imageFile.parentFile
+
+            // Locate the diagnosis file in the same directory
+            val diagnosisFile = File(imageDir, "${imageFile.nameWithoutExtension}_diagnosis.json")
+            if (diagnosisFile.exists()) {
+                val diagnosisJson = diagnosisFile.readText()
+                Gson().fromJson(diagnosisJson, Map::class.java) as Map<String, Int>
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
 

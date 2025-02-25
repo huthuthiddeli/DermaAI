@@ -31,7 +31,10 @@ class GalleryFragment : Fragment() {
         val galleryViewModel = ViewModelProvider(this)[GalleryViewModel::class.java]
 
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+
+
         val root: View = binding.root
+
         val textView: TextView = binding.textGallery
 
         val filesDir : File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -43,7 +46,7 @@ class GalleryFragment : Fragment() {
             fillView(images)
         }
 
-        return binding.root
+        return root
         
     }
 
