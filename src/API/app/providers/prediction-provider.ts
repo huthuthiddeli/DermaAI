@@ -1,9 +1,7 @@
 import logger from "@adonisjs/core/services/logger";
 import { HttpContext } from "@adonisjs/core/http";
-import { IPredictionData, predictionModel, predictionSchema } from "../Models/predictionCollection.js";
-
-
-
+import { predictionModel } from "../Models/predictionCollection.js";
+import { userDataModel } from "../Models/userDataCollection.js";
 
 export class PredictionProvider{
     private static instance: PredictionProvider;
@@ -39,6 +37,11 @@ export class PredictionProvider{
 
     public async savePrediction(ctx: HttpContext){
         let data = await this.parsePredictionReqeust(ctx);
+
+        if(await this.findOneDB(data.password, data.email)){
+            return ctx.response.notFound("Could not find specified user!");
+        }
+
         if(!data){
             logger.error("Couldn't parse PredictionReqeuest!");
             return;
@@ -48,6 +51,15 @@ export class PredictionProvider{
         let savedSchema = await schema.save();
 
         return ctx.response.status(200).ok(savedSchema);
+    }
+
+    private async findOneDB(password: string, email: string){
+        let data = await userDataModel.find({password: password, email: email})
+        if(!data){
+            return null
+        }
+
+        return data[0].toObject()
     }
 
 }
