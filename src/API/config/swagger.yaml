@@ -9,23 +9,10 @@ ignore:
   - /docs
 
 paths:
-  /:
-    get:
-      summary: Hello World
-      responses:
-        '200':
-          description: Returns a hello world message for testing purposes
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  hello:
-                    type: string
-                    example: world
-
   /user/saveUser:
     post:
+      tags:
+        - user
       summary: Save a new user
       requestBody:
         required: true
@@ -46,6 +33,8 @@ paths:
 
   /user/validateUser:
     post:
+      tags:
+        - user
       summary: Validates a user with email and password.
       requestBody:
         required: true
@@ -69,6 +58,8 @@ paths:
   /user/getAllUsers:
     get:
       summary: Get all users
+      tags: 
+        - user
       responses:
         '200':
           description: Users retrieved successfully
@@ -91,6 +82,8 @@ paths:
   /user/setAdmin:
     post:
       summary: Sets the User to Admin
+      tags:
+        - user
       requestBody:
         required: true
         content:
@@ -111,6 +104,8 @@ paths:
   /user/setUser:
     post:
       summary: Sets the User to role User
+      tags:
+        - user
       requestBody:
         required: true
         content:
@@ -131,6 +126,8 @@ paths:
   /user/mfa:
     post:
       summary: Get user MFA status
+      tags:
+        - user
       requestBody:
         required: true
         content:
@@ -164,6 +161,8 @@ paths:
   /user/switchMfa:
     post:
       summary: Switch MFA status for a user
+      tags: 
+        - user
       requestBody:
         required: true
         content:
@@ -195,6 +194,8 @@ paths:
   /user/clearCollection:
     delete:
       summary: Clear the user collection
+      tags: 
+        - user
       responses:
         '200':
           description: Collection cleared successfully
@@ -204,6 +205,8 @@ paths:
   /picture/picture:
     post:
       summary: Post a picture. Datatype file
+      tags: 
+        - picture
       requestBody:
         required: true
         content:
@@ -222,6 +225,8 @@ paths:
 
     get:
       summary: Get a picture with pagination
+      tags: 
+        - picture
       responses:
         '200':
           description: Picture retrieved successfully
@@ -231,6 +236,8 @@ paths:
   /picture/count:
     get:
       summary: Get the length of the collection.
+      tags: 
+        - picture
       responses: 
         '200':
           description: Length retrieved successfully.
@@ -240,6 +247,8 @@ paths:
   /picture/labels:
     get:
       summary: Get all unique diagnoses
+      tags: 
+        - picture
       responses:
         '200':
           description: Unique diagnoses retrieved successfully
