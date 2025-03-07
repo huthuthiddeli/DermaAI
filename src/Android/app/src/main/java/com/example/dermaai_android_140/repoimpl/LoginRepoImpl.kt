@@ -95,9 +95,7 @@ class LoginRepoImpl : LoginRepo {
             }
         }
 
-        fun getUser(): User? {
-            return User("a","a", false)
-        }
+
 
 
 }

@@ -7,13 +7,8 @@ import org.koin.dsl.module
 
 
 val appModule = module {
-
-
     single { LoginRepoImpl() }
     single { ImageRepoImpl() }
     single { UserRepoImpl(context = get()) }
-
-
 }
-
 

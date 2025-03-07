@@ -26,7 +26,6 @@ class AccountinfoViewModel() : ViewModel() {
 
 
     private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
-
     private val userRepo: UserRepoImpl by KoinJavaComponent.inject(UserRepoImpl::class.java)
 
 
@@ -101,7 +100,7 @@ class AccountinfoViewModel() : ViewModel() {
         myJob = viewModelScope.launch{
 
             receivedUser  = withContext(Dispatchers.IO) {
-                LoginRepoImpl.register(email, password, false, url)
+                loginRepo.register(email, password, false, url)
             }
 
             if (receivedUser != null) {
@@ -139,7 +138,7 @@ class AccountinfoViewModel() : ViewModel() {
             viewModelScope.launch {
                 
                 val receivedUser = withContext(Dispatchers.IO) {
-                    LoginRepoImpl.login(email, password, mfa, url)
+                    loginRepo.login(email, password, mfa, url)
                 }
 
 
@@ -166,18 +165,7 @@ class AccountinfoViewModel() : ViewModel() {
 
             }
         }
-
-
-        fun getUser(): User? {
-
-            var user: User? = null
-
-            viewModelScope.launch(Dispatchers.IO) {
-                user = LoginRepo.getUser()
-            }
-
-            return user
-        }
+        
 
     }
 

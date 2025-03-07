@@ -7,18 +7,11 @@ import com.example.dermaai_android_140.myClasses.User
 
 interface LoginRepo {
 
-                fun login(email: String, password: String, mfa: Boolean, url : String): User? {
-                        return User(email, password, mfa)
-                }
+                fun login(email: String, password: String, mfa: Boolean, url : String): User? 
 
-                fun register(email: String, password: String, mfa: Boolean, url : String): User? {
-                        return User("a", "a", false)
-                }
-
-                fun getUser(): User? {
-                        return User("a", "a", false)
-                }
+                fun register(email: String, password: String, mfa: Boolean, url : String): User?
 
                 fun setMFA(user : User?, url : String) : User?
 
+                
 }

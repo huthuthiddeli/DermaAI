@@ -1,14 +1,12 @@
 package com.example.dermaai_android_140.myClasses
 
-class Prediction(
-    val trainer_string: String,
-    val model_id: Int,
-    val prediction: Map<String, Int>
-)
-{
+data class Prediction(
+    val trainer_string: String,         // Identifiziert den Trainer
+    val model_id: Int,                  // Identifiziert das Modell
+    val prediction: Map<String, Int>    // Dynamische Map, die die Diagnose und die Wahrscheinlichkeit dieser enthält
+) {
     fun getPredictionMap() : Map<String, Int>
     {
         return prediction
     }
-    
 }
