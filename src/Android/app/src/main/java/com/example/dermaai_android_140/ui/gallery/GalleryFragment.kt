@@ -57,7 +57,7 @@ class GalleryFragment : Fragment() {
 
         val imageContainer = binding.imageContainer
         imageContainer.removeAllViews()
-        
+
         for (image in images) {
 
             val bitmap = BitmapFactory.decodeFile(image.absolutePath)
@@ -85,8 +85,7 @@ class GalleryFragment : Fragment() {
                         putExtra("EXTRA_IMAGE_PATH", image.absolutePath)
                         putExtra("EXTRA_RESULT", image.absolutePath)
                     }
-
-
+                    
                     startActivity(intent)
                 }
             }

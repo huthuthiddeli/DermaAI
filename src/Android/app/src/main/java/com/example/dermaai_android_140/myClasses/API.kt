@@ -13,9 +13,9 @@ import java.net.URL
 class API {
 
     companion object {
-        
+
         fun callApi(apiUrl: String, httpMethod: String, requestModel: Any? = null): Result<String> {
-            return try {
+            try {
                 val url = URL(apiUrl)
                 val connection = url.openConnection() as HttpURLConnection
 

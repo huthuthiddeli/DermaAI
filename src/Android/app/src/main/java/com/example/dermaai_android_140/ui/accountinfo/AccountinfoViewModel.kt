@@ -23,8 +23,7 @@ import org.koin.java.KoinJavaComponent
 
 
 class AccountinfoViewModel() : ViewModel() {
-
-
+    
     private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
     private val userRepo: UserRepoImpl by KoinJavaComponent.inject(UserRepoImpl::class.java)
 
@@ -165,7 +164,7 @@ class AccountinfoViewModel() : ViewModel() {
 
             }
         }
-        
+
 
     }
 

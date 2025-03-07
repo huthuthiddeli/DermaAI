@@ -18,6 +18,7 @@ import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import com.example.dermaai_android_140.repoimpl.UserRepoImpl
 import com.example.dermaai_android_140.ui.accountinfo.AccountinfoViewModel
+import com.example.dermaai_android_140.ui.gallery.GalleryViewModel
 import com.example.dermaai_android_140.ui.login.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -33,6 +34,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onCreate(savedInstanceState)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
+        val settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
 
         val enable2faSwitch: SwitchPreferenceCompat? = findPreference("enable_2fa")
@@ -41,7 +43,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         enable2faSwitch?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             val is2faEnabled = newValue as Boolean
             if (is2faEnabled) {
-                enable2FA()
+                enable2FA(settingsViewModel)
             } else {
                 disable2FA()
             }
@@ -74,10 +76,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
 
-    fun enable2FA() {
+    fun enable2FA(settingsViewModel : SettingsViewModel) {
 
-        val authentication = Authentication()
-        val key = authentication.generateSecret(requireContext())
+        val key = settingsViewModel.generate2faKey(requireContext())
+
         val FaKeySwitch: SwitchPreferenceCompat? = findPreference("enable_2fa")
         val FaKeyInput: EditTextPreference? = findPreference("two_fa_key")
 
@@ -88,8 +90,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         
         FaKeyInput?.setOnPreferenceChangeListener { preference, enteredCode ->
 
-            val correctCode = authentication.validateTOTP(key,enteredCode.toString())
-
+            val correctCode = settingsViewModel.validate2faCode(key,enteredCode.toString())
+            
             if(correctCode)
             {
                 Toast.makeText(context, "Correct Code: 2FA Activated", Toast.LENGTH_SHORT).show()
@@ -100,6 +102,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
                 val receivedUser = viewModel.setMfa(url)
+
 
                 if(receivedUser != null)
                 {

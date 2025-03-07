@@ -21,12 +21,10 @@ class ResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val imagePath = intent.getStringExtra("EXTRA_IMAGE_PATH")
-        
-        val storage = Storage()
+
         //val predictionString : String = storage.readPredictionFromImageMetadata(imagePath.toString()).toString()
 
-
-        val predictionString : String = storage.readDiagnosisFromFile(imagePath.toString()).toString()
+        val predictionString : String = Storage.readDiagnosisFromFile(imagePath.toString()).toString()
 
         val resultView = findViewById<TextView>(R.id.result_text)
         resultView.text = predictionString

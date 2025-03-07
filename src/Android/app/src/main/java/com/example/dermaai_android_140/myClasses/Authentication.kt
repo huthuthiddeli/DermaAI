@@ -21,129 +21,128 @@ import androidx.core.content.edit
 
 class Authentication {
 
-    fun generateSecret(context: Context) : String
-    {
-        val secretGenerator : SecretGenerator = DefaultSecretGenerator()
-        val secret = secretGenerator.generate()
+    companion object {
 
-        saveHash(secret, context)
+        fun generateSecret(context: Context) : String
+        {
+            val secretGenerator : SecretGenerator = DefaultSecretGenerator()
+            val secret = secretGenerator.generate()
 
-        return secret
-    }
+            saveHash(secret, context)
 
-
-    fun validateTOTP(secret : String, code : String) : Boolean
-    {
-        val timeProvider = SystemTimeProvider()
-        val codeGenerator: CodeGenerator = DefaultCodeGenerator()
-        val verifier = DefaultCodeVerifier(codeGenerator, timeProvider)
-
-        return verifier.isValidCode(secret, code)
-    }
-
-
-    fun saveHash(hash : String, context : Context){
-
-        saveEncryptedHashInKeystore(context, "2FA_Key",hash)
-
-    }
-
-
-
-
-    fun saveEncryptedHashInKeystore(context: Context, keyAlias: String, hash: String) {
-
-        val keyStore = KeyStore.getInstance("AndroidKeyStore")
-        keyStore.load(null)
-
-        // 1. Generate or retrieve a secret key (AES)
-        val secretKey: SecretKey = if (!keyStore.containsAlias(keyAlias)) {
-            val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
-            val keyGenParameterSpec = KeyGenParameterSpec.Builder(
-                keyAlias,
-                KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-            )
-                .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-                .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                .setUserAuthenticationRequired(false) // true: biometric or PIN protection
-                .build()
-
-            keyGenerator.init(keyGenParameterSpec)
-            keyGenerator.generateKey()
-        } else {
-            getSecretKeyFromKeystore(keyAlias) as SecretKey
+            return secret
         }
 
-        
-        // 2. Create a Cipher instance for encryption
-        val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey)
-        val iv = cipher.iv
 
-        // Encrypt the hash
-        val encryptedHash = cipher.doFinal(hash.toByteArray())
+        fun validateTOTP(secret : String, code : String) : Boolean
+        {
+            val timeProvider = SystemTimeProvider()
+            val codeGenerator: CodeGenerator = DefaultCodeGenerator()
+            val verifier = DefaultCodeVerifier(codeGenerator, timeProvider)
 
-        // 3. Save the IV and encrypted hash in SharedPreferences
-        val sharedPreferences: SharedPreferences = context.getSharedPreferences("secure_prefs", Context.MODE_PRIVATE)
-        sharedPreferences.edit() {
-
-            // Convert IV and encrypted hash to Base64 strings
-            val ivBase64 = Base64.encodeToString(iv, Base64.DEFAULT)
-            val encryptedHashBase64 = Base64.encodeToString(encryptedHash, Base64.DEFAULT)
-
-            // Save to SharedPreferences
-            putString("${keyAlias}_iv", ivBase64)
-            putString("${keyAlias}_hash", encryptedHashBase64)
+            return verifier.isValidCode(secret, code)
         }
 
-        //val oriKey = retrieveEncryptedHashFromKeystore(context, "2FA_Key")
 
-    }
+        fun saveHash(hash : String, context : Context){
 
+            saveEncryptedHashInKeystore(context, "2FA_Key",hash)
 
-    private fun getSecretKeyFromKeystore(keyAlias: String): SecretKey? {
-        return try {
-            val keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
-            return keyStore.getKey(keyAlias, null) as SecretKey
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return null
         }
-    }
 
+        fun saveEncryptedHashInKeystore(context: Context, keyAlias: String, hash: String) {
 
-    fun retrieveEncryptedHashFromKeystore(context: Context, keyAlias: String): String? {
-        try {
             val keyStore = KeyStore.getInstance("AndroidKeyStore")
             keyStore.load(null)
 
-            // Retrieve the secret key
-            val secretKey = getSecretKeyFromKeystore(keyAlias)
+            // 1. Generate or retrieve a secret key (AES)
+            val secretKey: SecretKey = if (!keyStore.containsAlias(keyAlias)) {
+                val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
+                val keyGenParameterSpec = KeyGenParameterSpec.Builder(
+                    keyAlias,
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+                )
+                    .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
+                    .setUserAuthenticationRequired(false) // true: biometric or PIN protection
+                    .build()
 
-            // Retrieve the IV and encrypted hash from SharedPreferences
-            val sharedPreferences: SharedPreferences = context.getSharedPreferences("secure_prefs", Context.MODE_PRIVATE)
-            val ivBase64 = sharedPreferences.getString("${keyAlias}_iv", null) ?: return null
-            val encryptedHashBase64 = sharedPreferences.getString("${keyAlias}_hash", null) ?: return null
+                keyGenerator.init(keyGenParameterSpec)
+                keyGenerator.generateKey()
+            } else {
+                getSecretKeyFromKeystore(keyAlias) as SecretKey
+            }
 
-            val iv = Base64.decode(ivBase64, Base64.DEFAULT)
-            val encryptedHash = Base64.decode(encryptedHashBase64, Base64.DEFAULT)
 
-            // 4. Create a Cipher instance for decryption
+            // 2. Create a Cipher instance for encryption
             val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-            val spec = GCMParameterSpec(128, iv)
-            cipher.init(Cipher.DECRYPT_MODE, secretKey, spec)
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey)
+            val iv = cipher.iv
 
-            // Decrypt the hash
-            val decryptedHash = cipher.doFinal(encryptedHash)
+            // Encrypt the hash
+            val encryptedHash = cipher.doFinal(hash.toByteArray())
 
-            return String(decryptedHash)
-        } catch (e: Exception) {
-            e.printStackTrace()
+            // 3. Save the IV and encrypted hash in SharedPreferences
+            val sharedPreferences: SharedPreferences = context.getSharedPreferences("secure_prefs", Context.MODE_PRIVATE)
+            sharedPreferences.edit() {
+
+                // Convert IV and encrypted hash to Base64 strings
+                val ivBase64 = Base64.encodeToString(iv, Base64.DEFAULT)
+                val encryptedHashBase64 = Base64.encodeToString(encryptedHash, Base64.DEFAULT)
+
+                // Save to SharedPreferences
+                putString("${keyAlias}_iv", ivBase64)
+                putString("${keyAlias}_hash", encryptedHashBase64)
+            }
+
+            //val oriKey = retrieveEncryptedHashFromKeystore(context, "2FA_Key")
+
         }
 
-        return null
+
+        private fun getSecretKeyFromKeystore(keyAlias: String): SecretKey? {
+            return try {
+                val keyStore = KeyStore.getInstance("AndroidKeyStore").apply { load(null) }
+                return keyStore.getKey(keyAlias, null) as SecretKey
+            } catch (e: Exception) {
+                e.printStackTrace()
+                return null
+            }
+        }
+
+
+        fun retrieveEncryptedHashFromKeystore(context: Context, keyAlias: String): String? {
+            try {
+                val keyStore = KeyStore.getInstance("AndroidKeyStore")
+                keyStore.load(null)
+
+                // Retrieve the secret key
+                val secretKey = getSecretKeyFromKeystore(keyAlias)
+
+                // Retrieve the IV and encrypted hash from SharedPreferences
+                val sharedPreferences: SharedPreferences = context.getSharedPreferences("secure_prefs", Context.MODE_PRIVATE)
+                val ivBase64 = sharedPreferences.getString("${keyAlias}_iv", null) ?: return null
+                val encryptedHashBase64 = sharedPreferences.getString("${keyAlias}_hash", null) ?: return null
+
+                val iv = Base64.decode(ivBase64, Base64.DEFAULT)
+                val encryptedHash = Base64.decode(encryptedHashBase64, Base64.DEFAULT)
+
+                // 4. Create a Cipher instance for decryption
+                val cipher = Cipher.getInstance("AES/GCM/NoPadding")
+                val spec = GCMParameterSpec(128, iv)
+                cipher.init(Cipher.DECRYPT_MODE, secretKey, spec)
+
+                // Decrypt the hash
+                val decryptedHash = cipher.doFinal(encryptedHash)
+
+                return String(decryptedHash)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+            return null
+        }
+
     }
-
-
 }
 

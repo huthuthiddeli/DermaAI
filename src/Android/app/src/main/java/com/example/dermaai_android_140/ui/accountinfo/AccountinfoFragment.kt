@@ -62,25 +62,9 @@ class AccountinfoFragment() : Fragment() {
             val loginBtn = view.findViewById<Button>(R.id.loginBtn)
             val loginViewModel = ViewModelProvider(requireActivity())[LoginViewModel::class.java]
 
-            viewModel.isLoggedIn.observe(viewLifecycleOwner) { isLoggedIn ->
-                if (isLoggedIn) {
-                    Toast.makeText(context, "Credentials are correct!", Toast.LENGTH_LONG).show()
-
-                    if (loginViewModel.getStayLoggedIn() == true) {
-                        val token = generateToken()
-                        val expirationTime = System.currentTimeMillis() + (60 * 60 * 1000 * 24 * 7)
-
-                        storeToken(token, expirationTime)
-                    }
-
-                    val intent = Intent(requireContext(), MainActivity::class.java)
-                    startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+            setUpObserverLogin(loginViewModel,viewModel)
 
 
-                } else {
-                    Toast.makeText(context, "Credentials are incorrect!", Toast.LENGTH_LONG).show()
-                }
-            }
 
 
 
@@ -119,7 +103,6 @@ class AccountinfoFragment() : Fragment() {
                 //startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
 
                 
-
                 val email = editTextEmail.text.toString()
                 val password = editTextPassword.text.toString()
 
@@ -130,27 +113,12 @@ class AccountinfoFragment() : Fragment() {
                 
             }
 
-
-
-            viewModel.mfaEnabled.observe(viewLifecycleOwner) { mfaEnabled ->
-                if (mfaEnabled) {
-                    showTwoFAInputDialog(requireContext(), viewModel)
-                }
-            }
-            
-
-
-
         } else {
 
             val switchToLoginBtn = view.findViewById<Button>(R.id.switchToLoginBtn)
 
-            viewModel.registerCount.observe(viewLifecycleOwner) { registerCount ->
-                if(registerCount > 0)
-                {
-                    Toast.makeText(context, "Successfully registered!", Toast.LENGTH_LONG).show()
-                }
-            }
+            setUpObserverRegister(viewModel)
+
 
             switchToLoginBtn.setOnClickListener {
                 parentFragmentManager.beginTransaction()
@@ -159,6 +127,7 @@ class AccountinfoFragment() : Fragment() {
             }
 
             val registerBtn = view.findViewById<Button>(R.id.registerBtn)
+
             registerBtn.setOnClickListener {
 
                 val email = view.findViewById<EditText>(R.id.editTextEmail).text.toString()
@@ -176,6 +145,47 @@ class AccountinfoFragment() : Fragment() {
     }
 
 
+    private fun setUpObserverRegister(viewModel : AccountinfoViewModel)
+    {
+        viewModel.registerCount.observe(viewLifecycleOwner) { registerCount ->
+            if(registerCount > 0)
+            {
+                Toast.makeText(context, "Successfully registered!", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
+    private fun setUpObserverLogin(loginViewModel : LoginViewModel, viewModel : AccountinfoViewModel)
+    {
+        viewModel.isLoggedIn.observe(viewLifecycleOwner) { isLoggedIn ->
+            if (isLoggedIn) {
+                Toast.makeText(context, "Credentials are correct!", Toast.LENGTH_LONG).show()
+
+                if (loginViewModel.getStayLoggedIn() == true) {
+                    val token = generateToken()
+                    val expirationTime = System.currentTimeMillis() + (60 * 60 * 1000 * 24 * 7)
+
+                    storeToken(token, expirationTime)
+                }
+
+                val intent = Intent(requireContext(), MainActivity::class.java)
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+
+
+            } else {
+                Toast.makeText(context, "Credentials are incorrect!", Toast.LENGTH_LONG).show()
+            }
+        }
+
+
+        viewModel.mfaEnabled.observe(viewLifecycleOwner) { mfaEnabled ->
+            if (mfaEnabled) {
+                showTwoFAInputDialog(requireContext(), viewModel)
+            }
+        }
+
+    }
+
     private fun showTwoFAInputDialog(context: Context, viewModel : AccountinfoViewModel) {
 
         val authentication = Authentication()
@@ -190,7 +200,7 @@ class AccountinfoFragment() : Fragment() {
             .setPositiveButton("Submit") { _, _ ->
                 val code = input.text.toString()
                 if (code.isNotEmpty()) {
-                    if (authentication.validateTOTP(viewModel.getKey(), code)) {
+                    if (Authentication.validateTOTP(viewModel.getKey(), code)) {
 
                         Toast.makeText(context, "Verified Successfully!", Toast.LENGTH_SHORT).show()
 
@@ -205,8 +215,8 @@ class AccountinfoFragment() : Fragment() {
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .show()
 
-
     }
+
 
 
     fun isTokenValid(): Boolean {

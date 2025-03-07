@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dermaai_android_140.databinding.FragmentPhotoBinding
 import com.example.dermaai_android_140.ui.camera.CameraActivity
 import java.io.File
@@ -68,14 +69,21 @@ class PhotoFragment : Fragment() {
                 photoViewModel.requestCameraPermission()
             }
         }
+
+
+        setUpObserver(photoViewModel)
+
+        return root
+    }
+
+    private fun setUpObserver(photoViewModel : PhotoViewModel)
+    {
         photoViewModel.requestCameraPermission.observe(viewLifecycleOwner) { requestCount ->
             if (requestCount == 5) {
                 showPermissionSettingsDialog()
                 photoViewModel.resetCameraPermissionRequest()
             }
         }
-
-        return root
     }
 
 

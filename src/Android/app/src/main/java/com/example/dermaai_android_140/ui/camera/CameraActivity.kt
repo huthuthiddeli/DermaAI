@@ -27,7 +27,7 @@ class CameraActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCameraBinding
     private lateinit var imageCapture: ImageCapture
     private lateinit var cameraViewModel: CameraViewModel
-    
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,9 +42,8 @@ class CameraActivity : AppCompatActivity() {
 
         cameraViewModel.prediction.observe(this) { prediction ->
             if (prediction != null) {
-                val storage = Storage()
                 //storage.savePredictionToImageMetadata(cameraViewModel.getLastPath(), prediction.getPredictionMap())
-                storage.saveDiagnosisToFile(cameraViewModel.getLastPath(), prediction.getPredictionMap())
+                Storage.saveDiagnosisToFile(cameraViewModel.getLastPath(), prediction.getPredictionMap())
             } else {
                 
             }
@@ -78,8 +77,7 @@ class CameraActivity : AppCompatActivity() {
             return
         }
 
-        val storage = Storage()
-        val file = storage.createUniqueImagePath(this, true)
+        val file = Storage.createUniqueImagePath(this, true)
         val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
 
         imageCapture.takePicture(
