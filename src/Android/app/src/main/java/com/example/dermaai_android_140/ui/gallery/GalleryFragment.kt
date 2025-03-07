@@ -57,8 +57,7 @@ class GalleryFragment : Fragment() {
 
         val imageContainer = binding.imageContainer
         imageContainer.removeAllViews()
-
-
+        
         for (image in images) {
 
             val bitmap = BitmapFactory.decodeFile(image.absolutePath)

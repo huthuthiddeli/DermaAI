@@ -16,14 +16,12 @@ class GalleryViewModel : ViewModel() {
     val images: LiveData<List<File>> get() = _images
 
     fun loadImages(filesDir : File?) {
-
+        
         viewModelScope.launch(Dispatchers.IO) {
             val storage = Storage()
             val retrievedImages = storage.retrieveImagesFromStorage(filesDir, true)
             _images.postValue(retrievedImages)
         }
     }
-    
-
 
 }

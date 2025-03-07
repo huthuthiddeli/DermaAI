@@ -1,6 +1,5 @@
 package com.example.dermaai_android_140.repo
 
-import android.R
 import com.example.dermaai_android_140.myClasses.User
 
 
@@ -13,5 +12,5 @@ interface LoginRepo {
 
                 fun setMFA(user : User?, url : String) : User?
 
-                
+
 }

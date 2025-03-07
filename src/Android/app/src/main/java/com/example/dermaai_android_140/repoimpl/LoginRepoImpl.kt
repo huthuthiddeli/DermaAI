@@ -12,7 +12,7 @@ import kotlin.Result
 
 class LoginRepoImpl : LoginRepo {
 
-
+    
 
         override fun login(email : String, password : String, mfa : Boolean, url : String) : User?
         {
@@ -76,7 +76,7 @@ class LoginRepoImpl : LoginRepo {
         }
 
 
-        fun setMFA(user : User?, url : String) : User?
+        override fun setMFA(user : User?, url : String) : User?
         {
 
             val result = API.callApi(url, "POST", user)

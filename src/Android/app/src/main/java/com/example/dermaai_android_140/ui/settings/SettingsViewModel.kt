@@ -17,6 +17,8 @@ class SettingsViewModel : ViewModel() {
 
 
     private val userRepo: UserRepoImpl by KoinJavaComponent.inject(UserRepoImpl::class.java)
+    private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
+
 
     fun setMfa(url : String) : User?
     {
@@ -25,12 +27,9 @@ class SettingsViewModel : ViewModel() {
         viewModelScope.launch {
 
             receivedUser = withContext(Dispatchers.IO) {
-                LoginRepoImpl.setMFA(userRepo.getCurrentUser(), url)
+                loginRepo.setMFA(userRepo.getCurrentUser(), url)
             }
-
         }
-
         return receivedUser
     }
-
 }
