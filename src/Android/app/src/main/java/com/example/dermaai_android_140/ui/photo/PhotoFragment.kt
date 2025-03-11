@@ -12,15 +12,19 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.Button
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.FragmentPhotoBinding
+import com.example.dermaai_android_140.myClasses.ModelTrainer
 import com.example.dermaai_android_140.ui.camera.CameraActivity
 import java.io.File
+import com.example.dermaai_android_140.myClasses.ModelSelectionDialog
 
 class PhotoFragment : Fragment() {
 
@@ -59,9 +63,10 @@ class PhotoFragment : Fragment() {
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                 //openCamera(photoViewModel)
 
-                val intent = Intent(requireContext(), CameraActivity::class.java)
+                getModels()
 
-                startActivity(intent)
+                //val intent = Intent(requireContext(), CameraActivity::class.java)
+                //startActivity(intent)
 
                 
             }else{
@@ -76,6 +81,24 @@ class PhotoFragment : Fragment() {
         return root
     }
 
+
+    private fun getModels() {
+        val photoViewModel =
+            ViewModelProvider(this)[PhotoViewModel::class.java]
+
+        val url =
+            getString(R.string.main) + getString(R.string.model_controller_gateway) + getString(
+                R.string.getModels_gateway
+            )
+
+        photoViewModel.getModels(url)
+
+    }
+
+
+
+
+
     private fun setUpObserver(photoViewModel : PhotoViewModel)
     {
         photoViewModel.requestCameraPermission.observe(viewLifecycleOwner) { requestCount ->
@@ -84,6 +107,30 @@ class PhotoFragment : Fragment() {
                 photoViewModel.resetCameraPermissionRequest()
             }
         }
+
+        photoViewModel.models.observe(viewLifecycleOwner) { modelTrainer ->
+
+            if(modelTrainer != null)
+            {
+                showModelSelectionDialog(modelTrainer)
+            }
+        }
+    }
+
+
+    private fun showModelSelectionDialog(modelTrainer: ModelTrainer) {
+        ModelSelectionDialog(
+            requireContext(),
+            modelTrainer.ModelTrainerPyTorch,
+            modelTrainer.ModelTrainerSKLearn,
+            modelTrainer.ModelTrainerTensorFlow
+        ) { framework, model ->
+            // 6. Use the correct ViewModel reference
+            val photoViewModel = ViewModelProvider(this)[PhotoViewModel::class.java]
+            val test = "test"
+            
+            //photoViewModel.selectModel(framework, model)
+        }.show()
     }
 
 
