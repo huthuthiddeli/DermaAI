@@ -26,11 +26,7 @@ export const userSchema = new Schema<IUserData>({
             type: Schema.Types.Boolean,
             required: false
         }
-    },
-    {
-        collection: "userData"
-    }
-)
+    }, {collection: "userData" })
 
 userSchema.plugin(paginate);
 
