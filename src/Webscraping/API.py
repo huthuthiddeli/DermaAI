@@ -1,35 +1,24 @@
-from fastapi import FastAPI, UploadFile
-from pydantic import BaseModel
+from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import JSONResponse
-from fastapi import Request
+from pydantic import BaseModel
+from find_spot import real_crop_image_microservice
+from typing import List
 import uvicorn
-from find_spot import crop_image_microservice, test_find_picture
 
-# FastAPI instance
 app = FastAPI()
 
-
-class requestBody(BaseModel):
-    image: bytes
-
-
-# @app.post("/")
-# async def getPic(file: UploadFile):
-#     bytes_arr = await file.read()
-#     img = crop_image_microservice(bytes_arr)
-#     # img = test_find_picture(bytes_arr)
-#     if img is None:
-#         return JSONResponse(content={"file": "error!"})
-#     return JSONResponse(content={"file": img.tolist()})
+class ImageRequest(BaseModel):
+    image: List[int]  # Accept image as a list of bytes (integers)
 
 @app.post("/")
-async def find_spot(request: requestBody):
-    img = crop_image_microservice(request)
+async def find_spot(request: ImageRequest):
+    image_bytes = bytes(request.image)  # Convert list of integers back to bytes
+    img = real_crop_image_microservice(image_bytes)  # Process image
 
-    if img is None:
-        return
+    if img is None: 
+        return {"error": "Processing failed"}
 
-    return img
+    return {"file": img.tolist()}
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=6969)

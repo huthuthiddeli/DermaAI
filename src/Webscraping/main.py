@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import re
 import time
 import picture as Picture
+# from Pictrue import picture
 import json
 import sys
 import subprocess
@@ -12,16 +13,13 @@ outcome_diagnosis_regex_ENG_ISIC = r'\'outcome_diagnosis\':\s*\'([^\']+)'
 pic_regex_ENG_ISIC = r"'full':\s*{\s*'url':\s*'([^']+)'"
 next_ENG_ISIC = r"'next':\s*'([^']+)','"
 connection_string = 'https://api.isic-archive.com/api/v2/lesions/'
+MAX_THREADS = 5
+CUR_THREADS = 0
 
 
 def fetch_html(url):
-    # Send a GET request to the webpage
     response = requests.get(url)
-
-    # Check if the request was successful
     if response.status_code == 200:
-        # Parse the page content
-        # print(response.content)
         return BeautifulSoup(response.content, 'html.parser')
     else:
         print(f"Failed to retrieve the webpage. Status code: {response.status_code}", file=sys.stderr)
@@ -59,8 +57,8 @@ def fetch_from_isic_archive(link):
                 print("Iteration skipped!")
                 continue
 
-            print(f'Diagnosis: {diagnosis}')
-            print(f'Pictures: {picture}')
+            # print(f'Diagnosis: {diagnosis}')
+            # print(f'Pictures: {picture}')
             download_images(Picture.Picture(picture, diagnosis))
 
         except AttributeError as e:
@@ -71,7 +69,6 @@ def fetch_from_isic_archive(link):
 
     if len(next_link) > 0:
         fetch_from_isic_archive(next_link)
-
 
 def download_images(obj: Picture.Picture):
     # RUN IS NOT ASYNC BUT RATHER WAITS FOR THE RESPONSE
@@ -85,6 +82,7 @@ def download_images(obj: Picture.Picture):
     if len(result.stderr) > 5:
         print(f"STANDARD ERROR={result.stderr}")
 
+    exit(0)
 
 if __name__ == '__main__':
     start_time = time.perf_counter()

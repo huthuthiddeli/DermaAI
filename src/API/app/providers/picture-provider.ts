@@ -57,7 +57,7 @@ export class PictureProvider {
         locale: 'en',
       },
     };
-
+    
     try {
       return ctx.response.status(200).json(await pictureModel.paginate({}, options));
     } catch (error) {

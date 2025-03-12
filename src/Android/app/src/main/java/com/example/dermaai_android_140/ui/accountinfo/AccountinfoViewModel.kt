@@ -115,8 +115,9 @@ class AccountinfoViewModel() : ViewModel() {
             if (throwable == null) {
                 _registerCount.postValue(_registerCount.value!! + 1)
             }
-
         }
+
+
     }
     
 
