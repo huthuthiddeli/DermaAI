@@ -38,6 +38,9 @@ class APIHandler:
             labels = 1
             print("Database API not reachable for labels")
 
+        if labels == 0:
+            labels = 1
+
         self.model_trainer = ModelTrainerContainer(model_save_path, api_base_url[0], labels)
 
         model_controller = ModelController(api_base_url, self.model_trainer)
