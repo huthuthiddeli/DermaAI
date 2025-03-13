@@ -1,14 +1,14 @@
-title Train Model Process
+title Get Classifier Reports Process
 
 actor User
 participant "Mobile App" as MA
 participant "AI-Gateway" as AIG
 participant "Database Server" as DB
 
-User -> MA : Select specific/all models to train
-MA -> User : Ask for training parameters
-User -> MA : Provide training parameters
-MA -> AIG : Send training request with user data
+User -> MA : Select specific/all models to classify
+MA -> User : Ask for classification parameters
+User -> MA : Provide classification parameters
+MA -> AIG : Send classification request with user data
 AIG -> DB : Validate user data
 
 alt [User not OK]
@@ -17,7 +17,7 @@ alt [User not OK]
     MA -> User : Display error in UI
 else [User OK]
     DB -> AIG : Send full user data
-    AIG -> AIG : Check if user is allowed to train
+    AIG -> AIG : Check if user is allowed to do reports
 
     alt [User is not admin]
         AIG -> MA : Return error
@@ -29,10 +29,9 @@ else [User OK]
             AIG -> DB : Request next batch
         end
 
-    AIG -> AIG : Do training
-    
-             AIG -> MA : Send  response
+    AIG -> AIG : Generate classifier report
 
-        MA -> User : Display training result in UI
+    AIG -> MA : Send classifier report response
+    MA -> User : Display classifier report in UI
     end
 end

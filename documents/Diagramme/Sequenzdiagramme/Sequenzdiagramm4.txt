@@ -1,18 +1,46 @@
-title mBot Control Sequence Diagram
+title Make Prediction of Image
 
-User->Control Software: Start
-Control Software->Server: Establish connection
-alt Connection established
-    loop Real-time control
-        User->Control Software: Perform control action (Joystick or keyboard)
-        Control Software->Server: Convert control action into command
-        Server->MBot: Send command
-        alt Command executed successfully
-            MBot->MBot: Interpret command and adjust motor values
-        else Command execution failed
-            MBot->Control Software: Display error message
-        end
+actor User
+participant Mobile App
+participant AI-Gateway
+participant Database Server
+
+User -> Mobile App : Request available models
+Mobile App -> AI-Gateway : Send request for models
+AI-Gateway -> Mobile App : Respond with available models
+
+User -> Mobile App : Selects a model
+Mobile App -> Mobile App : Show available models in UI
+
+User -> Mobile App : Takes a photo
+Mobile App -> AI-Gateway : Send image and model
+AI-Gateway -> AI-Gateway : Check if model exists and is trained
+
+alt Model is OK
+    AI-Gateway -> AI-Gateway : Prediction process
+    AI-Gateway -> Mobile App : Send prediction to frontend
+else Model is not OK
+    AI-Gateway -> Mobile App : Send error to frontend
+end
+
+Mobile App -> User : Show prediction in UI
+
+alt User disagrees
+    Mobile App -> User : Ask if user wants to store the analysis
+else User agrees
+    Mobile App -> AI-Gateway : Send request with analysis and user data
+    AI-Gateway -> Database Server : Pass request
+    Database Server -> Database Server : Validate user data
+    alt New user OK
+        Database Server -> Database Server : Store new user in database
+    else New user not OK
+        Database Server -> AI-Gateway : Send response
     end
-else Connection not established
-    Control Software->User: Display error message
+    AI-Gateway -> Mobile App : Pass response
+end
+
+alt Request invalid
+    Mobile App -> User : Show error in UI
+else Request valid
+    Mobile App -> User : Successful prediction
 end

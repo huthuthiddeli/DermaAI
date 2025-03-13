@@ -1,15 +1,18 @@
-title Display Sensor Data Sequence Diagram
+title View History of Analyses
 
-User->Control Software: Start
-alt Connection established
-    loop Every 5 seconds
-        MBot->Sensors: Collect sensor data
-        MBot->Server: Send sensor data
-        Server->MongoDB: Save sensor data
-        Server->Control Software: Forward sensor data
-        Control Software->Control Software: Update sensor data
-        Control Software->User: Display sensor data
-    end
-else Connection not established
-    Control Software->User: Display error message
+actor User
+participant Application
+participant AI-Gateway
+participant Server
+
+User -> Application : Opens application and selects "History"
+Application -> AI-Gateway : Sends request with user data
+AI-Gateway -> Server : Pass request
+Server -> Server : Validate user data
+Server -> AI-Gateway : Send response with analyses
+AI-Gateway -> Application : Pass response
+alt History not empty
+    Application -> User : Display history in UI
+else History empty
+    Application -> User : Display message "No analysis history available"
 end
