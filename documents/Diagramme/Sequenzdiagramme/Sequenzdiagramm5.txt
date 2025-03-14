@@ -1,0 +1,23 @@
+title Automatically Crop Image
+
+actor User
+participant Mobile App
+participant AI-Gateway
+participant Database Server
+
+User -> Mobile App : Take Photo (Prediction)
+Mobile App -> User : Offer automatic resize function
+
+alt Accepted
+    Mobile App -> Database Server : Send image to database server
+    AI-Gateway -> Database Server : Pass request
+    Database Server -> Database Server : Automatically crop image and find spot
+    Database Server -> AI-Gateway : Send response with cropped image
+    AI-Gateway -> Mobile App : Pass response
+else Rejected
+    alt User disagrees
+        Mobile App -> User : User crops image manually
+    else User agrees
+        Mobile App -> Mobile App : Make prediction
+    end
+end

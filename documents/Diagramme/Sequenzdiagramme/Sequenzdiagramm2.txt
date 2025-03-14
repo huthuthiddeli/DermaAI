@@ -1,0 +1,18 @@
+title User Login
+
+actor User
+participant Application
+participant AI-Gateway
+participant Server
+
+User -> Application : Opens application and enters credentials (Email, Password)
+Application -> AI-Gateway : Sends login request with user data
+AI-Gateway -> Server : Pass request
+Server -> Server : Validate user data
+Server -> AI-Gateway : Send response
+AI-Gateway -> Application : Pass response
+alt Login OK
+    Application -> User : Confirmation "Login successful"
+else Login not OK
+    Application -> User : Error message "Invalid credentials"
+end

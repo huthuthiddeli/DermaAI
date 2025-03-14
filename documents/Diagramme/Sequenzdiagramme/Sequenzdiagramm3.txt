@@ -1,0 +1,18 @@
+title View History of Analyses
+
+actor User
+participant Application
+participant AI-Gateway
+participant Server
+
+User -> Application : Opens application and selects "History"
+Application -> AI-Gateway : Sends request with user data
+AI-Gateway -> Server : Pass request
+Server -> Server : Validate user data
+Server -> AI-Gateway : Send response with analyses
+AI-Gateway -> Application : Pass response
+alt History not empty
+    Application -> User : Display history in UI
+else History empty
+    Application -> User : Display message "No analysis history available"
+end

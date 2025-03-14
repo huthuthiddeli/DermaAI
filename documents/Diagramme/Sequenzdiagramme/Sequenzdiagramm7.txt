@@ -1,0 +1,38 @@
+title Train Model Process
+
+actor User
+participant "Mobile App" as MA
+participant "AI-Gateway" as AIG
+participant "Database Server" as DB
+
+User -> MA : Select specific/all models to train
+MA -> User : Ask for training parameters
+User -> MA : Provide training parameters
+MA -> AIG : Send training request with user data
+AIG -> DB : Validate user data
+
+alt [User not OK]
+    DB -> AIG : Send error response
+    AIG -> MA : Return error
+    MA -> User : Display error in UI
+else [User OK]
+    DB -> AIG : Send full user data
+    AIG -> AIG : Check if user is allowed to train
+
+    alt [User is not admin]
+        AIG -> MA : Return error
+        MA -> User : Display error in UI
+    else [User is admin]
+        AIG -> DB : Fetch training data
+        loop Fetch paginated training data
+            DB -> AIG : Send training data batch
+            AIG -> DB : Request next batch
+        end
+
+    AIG -> AIG : Do training
+    
+             AIG -> MA : Send  response
+
+        MA -> User : Display training result in UI
+    end
+end

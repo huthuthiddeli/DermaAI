@@ -1,4 +1,4 @@
-import mongoose, {Schema, Document} from "mongoose";
+import mongoose, {Schema, Document, mongo} from "mongoose";
 import paginate from 'mongoose-paginate-v2';
 
 
@@ -13,7 +13,8 @@ export const pictureSchema = new Schema<IPictureData>({
         }
     },
         {
-            collection: "images"
+            collection: "testimages"
+            // collection: "images"
         }
 )
 
@@ -24,4 +25,6 @@ interface IPictureData extends Document{
     diagnosis: String
 }
 
+
+// export const pictureModel = mongoose.model<IPictureData,mongoose.Model<IPictureData>>('testimages', pictureSchema, 'testimages')
 export const pictureModel = mongoose.model<IPictureData, mongoose.PaginateModel<IPictureData>>('images', pictureSchema, 'images')

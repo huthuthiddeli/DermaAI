@@ -1,0 +1,10 @@
+title See Model Information
+
+actor User
+participant Mobile App
+participant AI-Gateway
+
+User -> Mobile App : Request model information
+Mobile App -> AI-Gateway : Request model information
+AI-Gateway -> Mobile App : Return model information document
+Mobile App -> User : Show information in UI

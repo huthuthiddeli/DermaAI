@@ -1,0 +1,27 @@
+title User Registration
+
+actor User
+participant Application
+participant AI-Gateway
+participant Server
+
+User -> Application : Opens application and selects "Register"
+User -> Application : Enters personal details (Email, Password)
+Application -> Application : Checks input for correctness and completeness
+alt Password does not meet requirements
+    Application -> User : Error message "Password does not meet requirements"
+else Input is valid
+    Application -> AI-Gateway : Sends registration data (Email, Password)
+    AI-Gateway -> Server : Pass request
+    Server -> Server : Validate user data
+    alt Email already exists
+        Server -> AI-Gateway : Sends error response "Email already taken"
+        AI-Gateway -> Application : Pass response
+        Application -> User : Error message "Email already taken"
+    else New user OK
+        Server -> Server : Saves user data to the database
+        Server -> AI-Gateway : Sends confirmation response
+        AI-Gateway -> Application : Pass response
+        Application -> User : Confirmation "Registration successful"
+    end
+end

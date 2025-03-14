@@ -94,7 +94,7 @@ class ModelController:
                 raise HTTPException(status_code=404, detail=f"Error: {str(nie)}")
             except Exception as e:
                 print(str(e))
-                raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
+                raise HTTPException(status_code=500, detail=f"Error while predicting Image: {str(e)}")
 
         # Retrain all models
         @self.router.post("/retrain-all/")

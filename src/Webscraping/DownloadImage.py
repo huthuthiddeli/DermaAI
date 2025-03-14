@@ -1,13 +1,11 @@
-import os
 import sys
 import requests
 import numpy as np
 import json
 from io import BytesIO
 
-# check if link has been provided
+# Check if link has been provided
 assert len(sys.argv) > 1, "Not enough arguments given!"
-
 url = "http://localhost:3333/picture"
 
 try:
@@ -17,37 +15,33 @@ try:
     response = requests.get(item['picture'])
 
     if response.status_code == 200:
-        with open("picture.png", "wb") as file:
-            file.write(response.content)
+        image_data = list(response.content)  # Convert image bytes to a list of integers
+        new_response = requests.post("http://localhost:6969/", json={"image": image_data})
+        
+        # Check response
+        if new_response.status_code == 200:
+            print("Response:", new_response.json())
+        else:
+            print("Error:", new_response.status_code, new_response.text)
+            exit(-1)
 
-        file = {'file': open("picture.png", "rb")}
-        new_response = requests.get("http://localhost:6969/", files=file)
-        img = new_response.json()["file"]
+        print(new_response.json())
+        img = new_response.json()
 
-        if img == 'error!':
-            exit(10)
-
-        arr = np.array(img, dtype=np.uint8)
-
-        if arr.size == 0:
+        if img == 'error!' or np.array(img, dtype=np.uint8).size == 0:
             print("Error")
             exit(-1)
 
-        llist = new_response.json()['file']
-        np_arr = np.array(llist, dtype=np.uint8)
-
         data = {
-            "picture": np_arr.tolist(),
+            "picture": np.array(img, dtype=np.uint8).tolist(),
             "diagnosis": item['diagnosis']
         }
 
-        serialized_data = json.dumps(data).encode("utf-8")
-        file_like_obj = BytesIO(serialized_data)
-        filename = "data.json"
-        file = {"file": (filename, file_like_obj, "application/json")}
+        file = {"file": ("data.json", BytesIO(json.dumps(data).encode("utf-8")), "application/json")}
         response = requests.post(url, files=file)
+
     else:
-        print("ERROR", file=sys.stderr)
+        print("Request was not successful", file=sys.stderr)
 
 except Exception as e:
     print(f"General exception={e}")

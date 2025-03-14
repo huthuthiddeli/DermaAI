@@ -1,0 +1,37 @@
+title Get Classifier Reports Process
+
+actor User
+participant "Mobile App" as MA
+participant "AI-Gateway" as AIG
+participant "Database Server" as DB
+
+User -> MA : Select specific/all models to classify
+MA -> User : Ask for classification parameters
+User -> MA : Provide classification parameters
+MA -> AIG : Send classification request with user data
+AIG -> DB : Validate user data
+
+alt [User not OK]
+    DB -> AIG : Send error response
+    AIG -> MA : Return error
+    MA -> User : Display error in UI
+else [User OK]
+    DB -> AIG : Send full user data
+    AIG -> AIG : Check if user is allowed to do reports
+
+    alt [User is not admin]
+        AIG -> MA : Return error
+        MA -> User : Display error in UI
+    else [User is admin]
+        AIG -> DB : Fetch training data
+        loop Fetch paginated training data
+            DB -> AIG : Send training data batch
+            AIG -> DB : Request next batch
+        end
+
+    AIG -> AIG : Generate classifier report
+
+    AIG -> MA : Send classifier report response
+    MA -> User : Display classifier report in UI
+    end
+end
