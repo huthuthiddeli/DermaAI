@@ -97,8 +97,6 @@ class PhotoFragment : Fragment() {
 
 
 
-
-
     private fun setUpObserver(photoViewModel : PhotoViewModel)
     {
         photoViewModel.requestCameraPermission.observe(viewLifecycleOwner) { requestCount ->
@@ -127,11 +125,54 @@ class PhotoFragment : Fragment() {
         ) { framework, model ->
             // 6. Use the correct ViewModel reference
             val photoViewModel = ViewModelProvider(this)[PhotoViewModel::class.java]
-            val test = "test"
-            
-            //photoViewModel.selectModel(framework, model)
+
+
+            var models = photoViewModel.models.value
+            var index : Int? = null
+
+            if(framework.equals("PyTorch"))
+            {
+                for(mdl in models?.getPyTorch()!!)
+                {
+                    if(mdl.equals(model)) {
+                        index = models?.getPyTorch()?.indexOf(mdl)
+                    }
+                }
+            }
+            else if(framework.equals("Scikit-Learn"))
+            {
+                for(mdl in models?.getSKLearn()!!)
+                {
+                    if(mdl.equals(model)) {
+                        index = models?.getSKLearn()?.indexOf(mdl)
+                    }
+                }
+            }
+            else if(framework.equals("TensorFlow"))
+            {
+                for(mdl in models?.getTensorFlow()!!)
+                {
+                    if(mdl.equals(model)) {
+                        index = models?.getTensorFlow()?.indexOf(mdl)
+                    }
+                }
+            }
+
+            try {
+                val intent = Intent(requireContext(), CameraActivity::class.java)
+                intent.putExtra("SELECTED_INDEX", index)
+                intent.putExtra("SELECTED_FRAMEWORK", framework)
+                startActivity(intent)
+            }catch (ex : Exception)
+            {
+                ex.printStackTrace()
+            }
+
+
+
         }.show()
     }
+
 
 
     private fun showPermissionSettingsDialog() {

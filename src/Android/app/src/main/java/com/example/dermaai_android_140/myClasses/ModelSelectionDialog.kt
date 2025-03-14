@@ -53,10 +53,10 @@ public class ModelSelectionDialog(
 
 
 
-
     private fun setupList(listViewId: Int, models: List<String>, framework: String) {
         findViewById<ListView>(listViewId).apply {
             adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, models)
+
             setOnItemClickListener { _, _, position, _ ->
                 onModelSelected(framework, models[position])
                 dismiss()

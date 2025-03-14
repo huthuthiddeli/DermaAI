@@ -21,6 +21,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent
+import java.io.File
 
 class CameraViewModel : ViewModel() {
 
@@ -33,6 +34,28 @@ class CameraViewModel : ViewModel() {
     val prediction: LiveData<Prediction?> get() = _prediction
 
 
+    private var modelIndex : Int = 0
+
+    private var framework : String = ""
+
+    fun setModelIndex(index : Int)
+    {
+        modelIndex = index
+    }
+    fun setFramework(frw : String)
+    {
+        framework = frw
+    }
+
+    fun getModelIndex() : Int
+    {
+        return modelIndex
+    }
+    fun getFramework() : String
+    {
+        return framework
+    }
+
     private lateinit var lastPath: String
 
     fun getLastPath(): String {
@@ -41,17 +64,17 @@ class CameraViewModel : ViewModel() {
     
 
 
-    fun sendImage(url: String, base64Image: String, lastPathOfImg: String?) {
+    fun sendImage(url: String, modelIndex : Int, trainerString : String, base64Image: String, lastPathOfImg: String?) {
 
         viewModelScope.launch {
             try {
 
                 val prediction = withContext(Dispatchers.IO) {
-                    val model = AiModel(0, "ModelTrainerPyTorch", base64Image)
+
+                    val model = AiModel(modelIndex, trainerString, base64Image)
                     lastPath = lastPathOfImg.toString()
                     imageRepo.sendImage(model, url)
                 }
-
 
                 _prediction.postValue(prediction)
             } catch (e: Exception) {

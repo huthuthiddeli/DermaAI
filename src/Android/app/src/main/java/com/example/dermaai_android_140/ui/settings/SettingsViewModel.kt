@@ -25,7 +25,7 @@ class SettingsViewModel : ViewModel() {
     fun setMfa(url : String) : User?
     {
         var receivedUser : User? = null
-
+        
         viewModelScope.launch {
 
             receivedUser = withContext(Dispatchers.IO) {

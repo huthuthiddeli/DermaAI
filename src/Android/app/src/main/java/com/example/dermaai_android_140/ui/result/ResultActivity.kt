@@ -19,7 +19,7 @@ class ResultActivity : AppCompatActivity() {
 
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        
         val imagePath = intent.getStringExtra("EXTRA_IMAGE_PATH")
 
         //val predictionString : String = storage.readPredictionFromImageMetadata(imagePath.toString()).toString()

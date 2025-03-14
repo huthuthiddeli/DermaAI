@@ -1,9 +1,20 @@
 package com.example.dermaai_android_140.myClasses
 
 class ModelTrainer(
-    val ModelTrainerPyTorch: List<String>,
-    val ModelTrainerSKLearn: List<String>,
-    val ModelTrainerTensorFlow: List<String>)
+    var ModelTrainerPyTorch: List<String>,
+    var ModelTrainerSKLearn: List<String>,
+    var ModelTrainerTensorFlow: List<String>)
 {
-    
+    fun getPyTorch() : List<String>
+    {
+        return ModelTrainerPyTorch
+    }
+    fun getSKLearn() : List<String>
+    {
+        return ModelTrainerSKLearn
+    }
+    fun getTensorFlow() : List<String>
+    {
+        return ModelTrainerSKLearn
+    }
 }

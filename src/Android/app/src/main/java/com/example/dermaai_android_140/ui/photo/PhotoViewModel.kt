@@ -40,7 +40,9 @@ class PhotoViewModel() : ViewModel() {
     private lateinit var tmpImage : File
 
 
+
     fun getModels(url: String) {
+
         myJob = viewModelScope.launch {
             val receivedModels = withContext(Dispatchers.IO) {
                 modelRepo.getModels(url)
@@ -51,11 +53,11 @@ class PhotoViewModel() : ViewModel() {
             } else _models.postValue(null)
         }
 
-        /*
         myJob?.invokeOnCompletion { throwable ->
 
         }
-        */
+
+
 
     }
 
