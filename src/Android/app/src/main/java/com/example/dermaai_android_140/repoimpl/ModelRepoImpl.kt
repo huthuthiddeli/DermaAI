@@ -3,11 +3,12 @@ package com.example.dermaai_android_140.repoimpl
 import com.example.dermaai_android_140.myClasses.API
 import com.example.dermaai_android_140.myClasses.ModelTrainer
 import com.example.dermaai_android_140.myClasses.User
+import com.example.dermaai_android_140.repo.ModelRepo
 import com.google.gson.Gson
 
-class ModelRepoImpl {
+class ModelRepoImpl : ModelRepo {
 
-    fun getModels(url : String) : ModelTrainer?
+    override fun getModels(url : String) : ModelTrainer?
     {
         var models : ModelTrainer? = null
 
@@ -17,7 +18,7 @@ class ModelRepoImpl {
             val receivedData = result.getOrNull()
             val gson = Gson()
             try{
-                
+
                 models = gson.fromJson(receivedData, ModelTrainer::class.java)
                 
             }

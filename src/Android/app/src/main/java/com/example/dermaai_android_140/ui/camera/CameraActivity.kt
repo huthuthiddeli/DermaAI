@@ -37,8 +37,13 @@ class CameraActivity : AppCompatActivity() {
         binding = ActivityCameraBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        cameraViewModel = ViewModelProvider(this).get(CameraViewModel::class.java)
+        val selectedIndex = intent.getIntExtra("SELECTED_INDEX", -1)
+        val selectedFramework = intent.getIntExtra("SELECTED_FRAMEWORK", -1) as String
 
+
+        cameraViewModel = ViewModelProvider(this).get(CameraViewModel::class.java)
+        cameraViewModel.setModelIndex(selectedIndex)
+        cameraViewModel.setFramework(selectedFramework)
 
         cameraViewModel.prediction.observe(this) { prediction ->
             if (prediction != null) {
@@ -68,6 +73,7 @@ class CameraActivity : AppCompatActivity() {
             takePhoto()
         }
     }
+
 
     @OptIn(ExperimentalEncodingApi::class)
     private fun takePhoto() {
@@ -105,10 +111,9 @@ class CameraActivity : AppCompatActivity() {
                             val imageBytes = imageFile.readBytes()
 
 
-                            var base64 = Base64.encode(imageBytes)
-
-
-                            cameraViewModel.sendImage(url, base64,output.savedUri!!.path)
+                            val base64 = Base64.encode(imageBytes)
+                        
+                            cameraViewModel.sendImage(url, cameraViewModel.getModelIndex(), cameraViewModel.getFramework(), base64,output.savedUri!!.path)
 
                     }
 
