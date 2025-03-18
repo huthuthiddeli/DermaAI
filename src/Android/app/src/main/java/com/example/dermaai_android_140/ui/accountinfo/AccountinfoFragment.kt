@@ -215,7 +215,6 @@ class AccountinfoFragment() : Fragment() {
             }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .show()
-
     }
 
 

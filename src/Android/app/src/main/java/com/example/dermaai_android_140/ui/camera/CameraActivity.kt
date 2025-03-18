@@ -21,6 +21,7 @@ import com.example.dermaai_android_140.myClasses.Storage
 import java.io.File
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
+import com.example.dermaai_android_140.ui.resize.ResizeActivity
 
 class CameraActivity : AppCompatActivity() {
 
@@ -38,12 +39,16 @@ class CameraActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val selectedIndex = intent.getIntExtra("SELECTED_INDEX", -1)
-        val selectedFramework = intent.getIntExtra("SELECTED_FRAMEWORK", -1) as String
+        val selectedFramework = intent.getStringExtra("SELECTED_FRAMEWORK").toString()
 
 
         cameraViewModel = ViewModelProvider(this).get(CameraViewModel::class.java)
         cameraViewModel.setModelIndex(selectedIndex)
         cameraViewModel.setFramework(selectedFramework)
+
+        cameraViewModel.error.observe(this) { error ->
+            Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
+        }
 
         cameraViewModel.prediction.observe(this) { prediction ->
             if (prediction != null) {
@@ -94,6 +99,7 @@ class CameraActivity : AppCompatActivity() {
                     Log.e("TAG", "Photo capture failed: ${exc.message}", exc)
                 }
 
+
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val msg = "Photo capture succeeded: ${output.savedUri}"
                     Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
@@ -102,27 +108,40 @@ class CameraActivity : AppCompatActivity() {
 
                     val storage = Storage()
 
+                    var base64 : String? = null
+
+                    val url = getString(R.string.main) + getString(R.string.model_controller_gateway) + getString(R.string.model_predict_gateway)
+
                     if(output.savedUri != null)
                     {
 
-                            val url = getString(R.string.main) + getString(R.string.model_controller_gateway) + getString(R.string.model_predict_gateway)
-
-                            val imageFile = File(output.savedUri!!.path)
-                            val imageBytes = imageFile.readBytes()
+                        val imageFile = File(output.savedUri!!.path)
+                        val imageBytes = imageFile.readBytes()
 
 
-                            val base64 = Base64.encode(imageBytes)
-                        
-                            cameraViewModel.sendImage(url, cameraViewModel.getModelIndex(), cameraViewModel.getFramework(), base64,output.savedUri!!.path)
+                        base64 = Base64.encode(imageBytes)
+
+                        //cameraViewModel.sendImage(url, cameraViewModel.getModelIndex(), cameraViewModel.getFramework(), base64,output.savedUri!!.path)
 
                     }
 
+                    // Start Resize Activity
+                    
+                    val intent = Intent(baseContext, ResizeActivity::class.java).apply{
 
+                        putExtra("url", url)
+                        putExtra("modelIndex", cameraViewModel.getModelIndex())
+                        putExtra("framework", cameraViewModel.getFramework())
+                        putExtra("base64", base64)
+                        putExtra("image_uri", output.savedUri!!.path)
 
+                    }
 
-                    val intent = Intent(baseContext, MainActivity::class.java)
-                    //intent.putExtra("image_uri", output.savedUri.toString())
                     startActivity(intent)
+
+                    //val intent = Intent(baseContext, MainActivity::class.java)
+                    // //intent.putExtra("image_uri", output.savedUri.toString())
+                    //startActivity(intent)
 
                 }
             }

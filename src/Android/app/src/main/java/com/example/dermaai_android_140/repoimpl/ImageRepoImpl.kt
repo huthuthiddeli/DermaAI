@@ -5,6 +5,8 @@ import com.example.dermaai_android_140.myClasses.Prediction
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.ImageRepo
 import com.google.gson.Gson
+import com.example.dermaai_android_140.myClasses.Image
+
 
 /*
 import javax.inject.Inject
@@ -36,6 +38,32 @@ class ImageRepoImpl : ImageRepo {
             result.exceptionOrNull()?.message
         }
 
+        return null
+    }
+
+
+    override fun resizeImage(url : String, base64Image : String) : Image? {
+
+        val result = API.callApi(url, "POST", base64Image)
+
+        if (result.isSuccess) {
+
+            val receivedData = result.getOrNull()
+
+            try{
+                val resizedImage = Gson().fromJson(receivedData, Image::class.java)
+                return resizedImage
+
+            }
+            catch (e: Exception)
+            {
+
+            }
+
+        } else if (result.isFailure) {
+            result.exceptionOrNull()?.message
+        }
+        
         return null
     }
 

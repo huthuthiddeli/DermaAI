@@ -10,6 +10,7 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="35"
         tools:ignore="ScopedStorage" />
+    
 
     <application
         android:name=".myClasses.MyApplication"
@@ -35,6 +36,8 @@
             android:exported="false"
             android:theme="@style/Theme.DermaAI_Android_140"
             android:label="@string/title_activity_settings" />
+        <activity android:name=".ui.resize.ResizeActivity"
+            android:theme="@style/Theme.DermaAI_Android_140"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -28,6 +28,9 @@ class PhotoViewModel() : ViewModel() {
     private val _currentImage = MutableLiveData<File>()
     val currentImage : LiveData<File> get() = _currentImage
 
+    private val _error = MutableLiveData<String?>()
+    val error : LiveData<String?> get() = _error
+
 
     private val modelRepo: ModelRepoImpl by KoinJavaComponent.inject(ModelRepoImpl::class.java)
 
@@ -43,14 +46,21 @@ class PhotoViewModel() : ViewModel() {
 
     fun getModels(url: String) {
 
-        myJob = viewModelScope.launch {
-            val receivedModels = withContext(Dispatchers.IO) {
-                modelRepo.getModels(url)
-            }
+        try {
+            myJob = viewModelScope.launch {
+                val receivedModels = withContext(Dispatchers.IO) {
+                    modelRepo.getModels(url)
+                }
 
-            if (receivedModels != null) {
-                _models.postValue(receivedModels)
-            } else _models.postValue(null)
+                if (receivedModels != null) {
+                    _models.postValue(receivedModels)
+                } else {
+                    _models.postValue(null)
+                }
+            }
+        } catch(e : Exception)
+        {
+            _error.postValue(e.message)
         }
 
         myJob?.invokeOnCompletion { throwable ->
