@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.myClasses.AiModel
+import com.example.dermaai_android_140.myClasses.Image
 import com.example.dermaai_android_140.myClasses.Prediction
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
 import kotlinx.coroutines.Dispatchers
@@ -20,8 +21,8 @@ class ResizeViewModel : ViewModel() {
     private val _prediction = MutableLiveData<Prediction?>()
     val prediction: LiveData<Prediction?> get() = _prediction
 
-    private val _resizedImage = MutableLiveData<String>()
-    val resizedImage: LiveData<String> get() = _resizedImage
+    private val _resizedImage = MutableLiveData<Image?>()
+    val resizedImage: LiveData<Image?> get() = _resizedImage
 
     private lateinit var lastPath: String
 
