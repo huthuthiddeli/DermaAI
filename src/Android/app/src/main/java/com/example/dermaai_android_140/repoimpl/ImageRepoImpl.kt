@@ -42,7 +42,7 @@ class ImageRepoImpl : ImageRepo {
     }
 
 
-    override fun resizeImage(url : String, base64Image : String) : String? {
+    override fun resizeImage(url : String, base64Image : String) : Image? {
 
         val result = API.callApi(url, "POST", base64Image)
 
