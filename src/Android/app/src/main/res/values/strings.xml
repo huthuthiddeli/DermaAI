@@ -65,6 +65,8 @@
     <string name="mfa_disabled">Disabled</string>
     <string name="logout_header">Logout</string>
 
+    <string name="resize_resize">Resize via AI</string>
+    <string name="resize_accept">Accept and Send</string>
 
     <string name="photo_header">Anweisungen!</string>
     <string name="photo_desc">Zusammenfassung der wichtigsten Tipps für das Aufnehmen eines hochwertigen Fotos Ihrer Hautläsion:</string>

@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -92,13 +93,18 @@ class PhotoFragment : Fragment() {
             )
 
         photoViewModel.getModels(url)
-
     }
+
 
 
 
     private fun setUpObserver(photoViewModel : PhotoViewModel)
     {
+
+        photoViewModel.error.observe(viewLifecycleOwner) { error ->
+            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+        }
+
         photoViewModel.requestCameraPermission.observe(viewLifecycleOwner) { requestCount ->
             if (requestCount == 5) {
                 showPermissionSettingsDialog()
@@ -130,8 +136,11 @@ class PhotoFragment : Fragment() {
             var models = photoViewModel.models.value
             var index : Int? = null
 
+            var frameworkToSend : String = ""
+
             if(framework.equals("PyTorch"))
             {
+                frameworkToSend = "ModelTrainerPyTorch"
                 for(mdl in models?.getPyTorch()!!)
                 {
                     if(mdl.equals(model)) {
@@ -141,6 +150,8 @@ class PhotoFragment : Fragment() {
             }
             else if(framework.equals("Scikit-Learn"))
             {
+                frameworkToSend = "ModelTrainerSKLearn"
+
                 for(mdl in models?.getSKLearn()!!)
                 {
                     if(mdl.equals(model)) {
@@ -150,6 +161,7 @@ class PhotoFragment : Fragment() {
             }
             else if(framework.equals("TensorFlow"))
             {
+                frameworkToSend = "ModelTrainerTensorFlow"
                 for(mdl in models?.getTensorFlow()!!)
                 {
                     if(mdl.equals(model)) {
@@ -161,7 +173,7 @@ class PhotoFragment : Fragment() {
             try {
                 val intent = Intent(requireContext(), CameraActivity::class.java)
                 intent.putExtra("SELECTED_INDEX", index)
-                intent.putExtra("SELECTED_FRAMEWORK", framework)
+                intent.putExtra("SELECTED_FRAMEWORK", frameworkToSend)
                 startActivity(intent)
             }catch (ex : Exception)
             {

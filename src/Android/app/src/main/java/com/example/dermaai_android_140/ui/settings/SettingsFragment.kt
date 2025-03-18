@@ -100,7 +100,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.setMfa)
 
                 val viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
-
+                
                 val receivedUser = viewModel.setMfa(url)
 
 

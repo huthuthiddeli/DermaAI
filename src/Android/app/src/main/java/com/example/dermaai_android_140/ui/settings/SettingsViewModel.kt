@@ -35,6 +35,7 @@ class SettingsViewModel : ViewModel() {
         return receivedUser
     }
 
+
     fun generate2faKey(context: Context): String {
         return Authentication.generateSecret(context)
     }

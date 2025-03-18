@@ -1,14 +1,5 @@
-/*
- * Copyright (c) 2025. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- */
+package com.example.dermaai_android_140.ui.resize
 
-package com.example.dermaai_android_140.ui.camera
-
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,53 +12,26 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent
-import java.io.File
 
-class CameraViewModel : ViewModel() {
+class ResizeViewModel : ViewModel() {
 
     private val imageRepo: ImageRepoImpl by KoinJavaComponent.inject(ImageRepoImpl::class.java)
-    
-    private var myJob: Job? = null
-
 
     private val _prediction = MutableLiveData<Prediction?>()
     val prediction: LiveData<Prediction?> get() = _prediction
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> get() = _error
-
-
-    private var modelIndex : Int = 0
-
-    private var framework : String = ""
-
-    fun setModelIndex(index : Int)
-    {
-        modelIndex = index
-    }
-    fun setFramework(frw : String)
-    {
-        framework = frw
-    }
-
-    fun getModelIndex() : Int
-    {
-        return modelIndex
-    }
-    fun getFramework() : String
-    {
-        return framework
-    }
+    private val _resizedImage = MutableLiveData<String>()
+    val resizedImage: LiveData<String> get() = _resizedImage
 
     private lateinit var lastPath: String
+
+    private val _error = MutableLiveData<String?>()
+    val error: LiveData<String?> get() = _error
 
     fun getLastPath(): String {
         return lastPath
     }
-    
 
-
-    /*
     fun sendImage(url: String, modelIndex : Int, trainerString : String, base64Image: String, lastPathOfImg: String?) {
 
         viewModelScope.launch {
@@ -87,9 +51,27 @@ class CameraViewModel : ViewModel() {
                 _prediction.postValue(null)
             }
         }
-    }*/
+    }
 
+
+    fun resizeImage(url: String, base64Image: String)
+    {
+        viewModelScope.launch {
+            try {
+
+                val resizedImage = withContext(Dispatchers.IO) {
+
+                    //lastPath = lastPathOfImg.toString()
+                    imageRepo.resizeImage(url, base64Image)
+                }
+
+                _resizedImage.postValue(resizedImage)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _error.postValue(e.message)
+            }
+        }
+
+    }
 
 }
-
-

@@ -3,17 +3,22 @@ package com.example.dermaai_android_140.myClasses
 import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.ListView
 import android.widget.TabHost
+import android.widget.TextView
 import com.example.dermaai_android_140.R
+import android.graphics.Color
+
 
 public class ModelSelectionDialog(
     context: Context,
-    private val pytorchModels: List<String>, // Make them member variables
-    private val sklearnModels: List<String>, // Make them member variables
-    private val tensorflowModels: List<String>, // Make them member variables
+    private val pytorchModels: List<String>, 
+    private val sklearnModels: List<String>,
+    private val tensorflowModels: List<String>, 
     private val onModelSelected: (framework: String, model: String) -> Unit
 ) : Dialog(context) {
 
@@ -55,14 +60,26 @@ public class ModelSelectionDialog(
 
     private fun setupList(listViewId: Int, models: List<String>, framework: String) {
         findViewById<ListView>(listViewId).apply {
-            adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, models)
+
+            adapter = object : ArrayAdapter<String>(
+                context,
+                android.R.layout.simple_list_item_1,
+                models
+            ) {
+                // Override getView inside the adapter class for text: black color
+                override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                    val view = super.getView(position, convertView, parent)
+                    view.findViewById<TextView>(android.R.id.text1).setTextColor(Color.BLACK)
+                    return view
+                }
+            }
+
 
             setOnItemClickListener { _, _, position, _ ->
                 onModelSelected(framework, models[position])
-                dismiss()
+                //dismiss()
             }
         }
     }
-
 
 }

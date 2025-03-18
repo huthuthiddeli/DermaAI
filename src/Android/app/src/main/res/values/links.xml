@@ -16,6 +16,10 @@
     <string name="getModels_gateway">models/</string>
 
 
+    <string name="image_controller_gateway">image/</string>
+    <string name="resize">image/</string>
+
+
     <string name="saveUser">saveUser/</string>
     <string name="validateUser">validateUser/</string>
     <string name="setMfa">switchMfa/</string>
