@@ -13,8 +13,11 @@ class ImageController:
 
         @self.router.post("/resize/")
         async def resize_image(request: ResizeRequest):
+            request = request.dict()
             try:
-                res = requests.post(api_base_url[1], json=request.json())
+                res = requests.post(api_base_url[1], json=request)
+                print(res.headers["Content-Type"])
+                print(res.status_code)
                 return Response(content=res.content, media_type=res.headers["Content-Type"],
                                 status_code=res.status_code)
             except Exception as e:
