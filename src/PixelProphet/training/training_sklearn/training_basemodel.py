@@ -28,7 +28,8 @@ class BaseModel(IModel):
         try:
             x, y = dataset
             self.model.fit(x, y)
-            joblib.dump(self.model, f"{self.model_save_path}trained_{self.model_name}{self.model_name_extension}.joblib")
+            joblib.dump(self.model, f"{self.model_save_path}trained_"
+                                    f"{self.model_name}{self.model_name_extension}.joblib")
             print('Trained and dumped model: ', self.model_name)
             self.save_model_metadata(self.model_save_path, self.model_name, reshape_size, list(np.unique(y)))
             return True, None

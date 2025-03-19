@@ -24,21 +24,21 @@ class ModelTrainerContainer     :
         return all_models
 
     def make_prediction(self, trainer_string, model_int, image_array):
-        if trainer_string == 'ModelTrainerPyTorch':
+        if str(trainer_string).lower() == 'modeltrainerpytorch':
             return self.trainers[0].make_prediction(model_int, image_array)
-        elif trainer_string == 'ModelTrainerSKLearn':
+        elif str(trainer_string).lower() == 'modeltrainersklearn':
             return self.trainers[1].make_prediction(model_int, image_array)
-        elif trainer_string == 'ModelTrainerTensorFlow':
+        elif str(trainer_string).lower() == 'modeltrainertensorflow':
             return self.trainers[2].make_prediction(model_int, image_array)
         else:
             raise ValueError('Invalid trainer')
 
     def train_model(self, trainer_string, model_int, num_epochs, reshape_size):
-        if trainer_string == 'ModelTrainerPyTorch':
+        if str(trainer_string).lower() == 'modeltrainerpytorch':
             trainer = self.trainers[0]
-        elif trainer_string == 'ModelTrainerSKLearn':
+        elif str(trainer_string).lower() == 'modeltrainersklearn':
             trainer = self.trainers[1]
-        elif trainer_string == 'ModelTrainerTensorFlow':
+        elif str(trainer_string).lower() == 'modeltrainertensorflow':
             trainer = self.trainers[2]
         else:
             raise ValueError('Invalid trainer')
@@ -56,11 +56,11 @@ class ModelTrainerContainer     :
         return errors
 
     def get_classifier_report(self, trainer_string, model_int, reshape_size):
-        if trainer_string == 'ModelTrainerPyTorch':
+        if str(trainer_string).lower() == 'modeltrainerpytorch':
             trainer = self.trainers[0]
-        elif trainer_string == 'ModelTrainerSKLearn':
+        elif str(trainer_string).lower() == 'modeltrainersklearn':
             trainer = self.trainers[1]
-        elif trainer_string == 'ModelTrainerTensorFlow':
+        elif str(trainer_string).lower() == 'modeltrainertensorflow':
             trainer = self.trainers[2]
         else:
             raise ValueError('Invalid trainer')
@@ -88,7 +88,7 @@ class ModelTrainerContainer     :
 
         # Prüfen, ob die Datei existiert
         if not os.path.exists(file_path):
-            raise FileNotFoundError(f"Datei nicht gefunden: {file_path}")
+            raise FileNotFoundError(f"File not found: {file_path}")
 
         # Lade die Datei
         dataset = loadImagesAs1DVectorFromJson(file_path, reshape_size)
