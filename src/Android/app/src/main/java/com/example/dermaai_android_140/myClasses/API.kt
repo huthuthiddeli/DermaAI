@@ -13,7 +13,7 @@ import java.net.URL
 class API {
 
     companion object {
-
+        
         fun callApi(apiUrl: String, httpMethod: String, requestModel: Any? = null): Result<String> {
             try {
                 val url = URL(apiUrl)

@@ -126,14 +126,18 @@ class CameraActivity : AppCompatActivity() {
                     }
 
                     // Start Resize Activity
-                    
+
+
+                    val modelIndex = cameraViewModel.getModelIndex()
+                    val framework = cameraViewModel.getFramework()
+                    val imageUri = output.savedUri!!.path
+
                     val intent = Intent(baseContext, ResizeActivity::class.java).apply{
 
                         putExtra("url", url)
-                        putExtra("modelIndex", cameraViewModel.getModelIndex())
-                        putExtra("framework", cameraViewModel.getFramework())
-                        putExtra("base64", base64)
-                        putExtra("image_uri", output.savedUri!!.path)
+                        putExtra("modelIndex", modelIndex)
+                        putExtra("framework", framework)
+                        putExtra("image_uri", imageUri)
 
                     }
 

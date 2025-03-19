@@ -27,7 +27,6 @@ class SettingsViewModel : ViewModel() {
         var receivedUser : User? = null
         
         viewModelScope.launch {
-
             receivedUser = withContext(Dispatchers.IO) {
                 loginRepo.setMFA(userRepo.getCurrentUser(), url)
             }
