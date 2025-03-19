@@ -12,12 +12,12 @@
     <string name="saveUser_gateway">create-user/</string>
     <string name="validateUser_gateway">login/</string>
 
-    
+
     <string name="getModels_gateway">models/</string>
 
 
     <string name="image_controller_gateway">image/</string>
-    <string name="resize">image/</string>
+    <string name="resize">resize/</string>
 
 
     <string name="saveUser">saveUser/</string>

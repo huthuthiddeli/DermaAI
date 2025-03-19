@@ -103,7 +103,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 
                 val receivedUser = viewModel.setMfa(url)
 
-
                 if(receivedUser != null)
                 {
                     Toast.makeText(context, "Mfa set!", Toast.LENGTH_SHORT).show()

@@ -55,7 +55,7 @@ class ResizeViewModel : ViewModel() {
     }
 
 
-    fun resizeImage(url: String, base64Image: String)
+    fun resizeImage(url: String, base64 : String)
     {
         viewModelScope.launch {
             try {
@@ -63,8 +63,9 @@ class ResizeViewModel : ViewModel() {
                 val resizedImage = withContext(Dispatchers.IO) {
 
                     //lastPath = lastPathOfImg.toString()
-                    imageRepo.resizeImage(url, base64Image)
+                    imageRepo.resizeImage(url, base64)
                 }
+
 
                 _resizedImage.postValue(resizedImage)
             } catch (e: Exception) {

@@ -1,4 +1,5 @@
 package com.example.dermaai_android_140.repoimpl
+import android.util.Base64
 import com.example.dermaai_android_140.myClasses.API
 import com.example.dermaai_android_140.myClasses.AiModel
 import com.example.dermaai_android_140.myClasses.Prediction
@@ -31,7 +32,7 @@ class ImageRepoImpl : ImageRepo {
             }
             catch (e: Exception)
             {
-                
+
             }
 
         } else if (result.isFailure) {
@@ -42,9 +43,11 @@ class ImageRepoImpl : ImageRepo {
     }
 
 
-    override fun resizeImage(url : String, base64Image : String) : Image? {
+    override fun resizeImage(url : String, base64 : String) : Image? {
 
-        val result = API.callApi(url, "POST", base64Image)
+        val image = Image(base64)
+
+        val result = API.callApi(url, "POST", image)
 
         if (result.isSuccess) {
 
@@ -57,7 +60,7 @@ class ImageRepoImpl : ImageRepo {
             }
             catch (e: Exception)
             {
-
+                println(e.message)
             }
 
         } else if (result.isFailure) {

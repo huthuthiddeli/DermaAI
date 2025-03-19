@@ -100,8 +100,8 @@ class AccountinfoFragment() : Fragment() {
             loginBtn.setOnClickListener {
                 
                 //
-                val intent = Intent(requireContext(), MainActivity::class.java)
-                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+                //val intent = Intent(requireContext(), MainActivity::class.java)
+                //startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
                 //
                 
                 val email = editTextEmail.text.toString()
@@ -159,7 +159,7 @@ class AccountinfoFragment() : Fragment() {
     private fun setUpObserverLogin(loginViewModel : LoginViewModel, viewModel : AccountinfoViewModel)
     {
         viewModel.isLoggedIn.observe(viewLifecycleOwner) { isLoggedIn ->
-            if (isLoggedIn) {
+            if (isLoggedIn && viewModel.getUser() != null) {
                 Toast.makeText(context, "Credentials are correct!", Toast.LENGTH_LONG).show()
 
                 if (loginViewModel.getStayLoggedIn() == true) {
@@ -172,8 +172,7 @@ class AccountinfoFragment() : Fragment() {
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
 
-
-            } else {
+            } else if (!isLoggedIn && viewModel.getUser() != null) {
                 Toast.makeText(context, "Credentials are incorrect!", Toast.LENGTH_LONG).show()
             }
         }

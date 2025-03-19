@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.firebase.perf)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.firebase.crashlytics.buildtools)
+    implementation(libs.exifinterface)
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.dexmaker.mockito)
     androidTestImplementation(libs.androidx.espresso.contrib)

@@ -78,7 +78,6 @@ class LoginRepoImpl : LoginRepo {
 
         override fun setMFA(user : User?, url : String) : User?
         {
-
             val result = API.callApi(url, "POST", user)
 
             if (result.isSuccess) {

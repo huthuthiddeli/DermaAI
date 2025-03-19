@@ -85,9 +85,9 @@ class AccountinfoViewModel() : ViewModel() {
         return _key
     }
 
-    fun setUser(user : User?)
+    fun getUser() : User?
     {
-        _user = user
+        return _user
     }
 
 
@@ -116,9 +116,8 @@ class AccountinfoViewModel() : ViewModel() {
                 _registerCount.postValue(_registerCount.value!! + 1)
             }
         }
-
-
     }
+    
     
 
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -131,43 +130,40 @@ class AccountinfoViewModel() : ViewModel() {
 
         var receivedUser: User? = null
 
-        fun login(email: String, password: String, mfa: Boolean, url: String) {
-
-            var receivedUser: User? = null
-
-            viewModelScope.launch {
+        viewModelScope.launch {
                 
-                val receivedUser = withContext(Dispatchers.IO) {
-                    loginRepo.login(email, password, mfa, url)
-                }
+
+            val receivedUser = withContext(Dispatchers.IO) {
+                loginRepo.login(email, password, mfa, url)
+            }
 
                 
-                // succesfull
-                if (receivedUser != null) {
+            // succesfull
+            if (receivedUser != null) {
 
-                    _user = receivedUser
-                    userRepo.saveCurrentUser(receivedUser)
-                    _mfaEnabled.postValue(_user!!.mfa)
+                _user = receivedUser
+                userRepo.saveCurrentUser(receivedUser)
+                _mfaEnabled.postValue(_user!!.mfa)
 
 
-                    if (receivedUser.mfa) {
+                if (receivedUser.mfa) {
 
-                        _mfaEnabled.postValue(receivedUser.mfa)
-
-                    } else {
-                        _isLoggedIn.postValue(true)
-                    }
+                    _mfaEnabled.postValue(receivedUser.mfa)
 
                 } else {
-                    println("failed")
+                    _isLoggedIn.postValue(true)
                 }
 
-
+            } else {
+                println("failed")
             }
+
+
         }
-
-
     }
 
 
 }
+
+
+
