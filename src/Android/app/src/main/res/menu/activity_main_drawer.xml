@@ -26,6 +26,13 @@
             android:title="@string/menu_tutorial"
             android:textColor="@android:color/white"/>
 
+        <item
+            android:id="@+id/nav_admin"
+            android:icon="@drawable/ic_tutorial"
+            android:title="@string/menu_admin"
+            android:visible="false"
+            android:textColor="@android:color/white"/>
+
     </group>
     
 </menu>
