@@ -15,6 +15,8 @@
 
     <string name="getModels_gateway">models/</string>
 
+    <string name="retrainAll_gateway">retrain-all/</string>
+    <string name="retrain_gateway">retrain/</string>
 
     <string name="image_controller_gateway">image/</string>
     <string name="resize">resize/</string>
