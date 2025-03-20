@@ -8,7 +8,7 @@ class CNNModel(BaseModelTF):
         self.num_classes = classes
         super().__init__(self.__build_model(200), self.__build_model, model_save_path, model_name_extension="_cnn")
 
-    def __build_model(self, reshape_size):
+    def __build_model(self, reshape_size):  
         model = keras.Sequential([
             Input(shape=(reshape_size, reshape_size, 1)),
             Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_normal', padding='same'),
