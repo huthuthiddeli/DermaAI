@@ -19,7 +19,7 @@ class AdminRepoImpl : AdminRepo {
             val receivedData = result.getOrNull()
 
             try{
-                val stringResponse = Gson().fromJson(receivedData, Prediction::class.java)
+                val stringResponse = Gson().fromJson(receivedData, String::class.java)
                 return stringResponse
 
             }
@@ -45,7 +45,7 @@ class AdminRepoImpl : AdminRepo {
             val receivedData = result.getOrNull()
 
             try{
-                val stringResponse = Gson().fromJson(receivedData, Prediction::class.java)
+                val stringResponse = Gson().fromJson(receivedData, String::class.java)
                 return stringResponse
 
             }
