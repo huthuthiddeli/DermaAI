@@ -52,3 +52,4 @@ class SavePredictionRequest(BaseModel):
 
 class ResizeRequest(BaseModel):
     image: str
+

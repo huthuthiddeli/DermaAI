@@ -33,7 +33,6 @@ class BaseModelTorch(IModel):
                 self.model.to(self.device)
                 return True
         except Exception as e:
-            print(str(e))
             return False
         return False
 
