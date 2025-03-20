@@ -4,7 +4,7 @@ from tensorflow import keras
 
 class DenseNetModel(BaseModelTF):
     def __init__(self, model_save_path, classes):
-        self.num_classes = classes
+        self.num_classes =  classes
         super().__init__(self.__build_model(200), self.__build_model, model_save_path)
 
     def __build_model(self, reshape_size):
