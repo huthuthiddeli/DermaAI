@@ -1,20 +1,17 @@
 package com.example.dermaai_android_140.ui.admin
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dermaai_android_140.databinding.ActivityAdminBinding
-import kotlin.io.encoding.ExperimentalEncodingApi
 import com.example.dermaai_android_140.R
 import android.widget.Button
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.example.dermaai_android_140.myClasses.InputEpochReshapeDialog
 import com.example.dermaai_android_140.myClasses.ModelSelectionDialog
 import com.example.dermaai_android_140.myClasses.ModelTrainer
 import com.example.dermaai_android_140.myClasses.Retrain
 import com.example.dermaai_android_140.myClasses.RetrainAll
-import com.example.dermaai_android_140.ui.camera.CameraActivity
-import com.example.dermaai_android_140.ui.photo.PhotoViewModel
-import com.example.dermaai_android_140.ui.resize.ResizeViewModel
 
 class AdminActivity : AppCompatActivity() {
 
@@ -27,7 +24,9 @@ class AdminActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+
         val adminViewModel = ViewModelProvider(this).get(AdminViewModel::class.java)
+        adminViewModel.setCurrentUser()
 
         val retrainAllBtn = findViewById<Button>(R.id.retrainAllBtn)
         val retrainBtn = findViewById<Button>(R.id.retrainBtn)
@@ -47,7 +46,19 @@ class AdminActivity : AppCompatActivity() {
 
             if(modelTrainer != null)
             {
-                showModelSelectionDialog(modelTrainer)
+                showModelSelectionDialog(modelTrainer, adminViewModel)
+
+                val url = getString(R.string.main) + getString(R.string.model_controller_gateway) + getString(R.string.retrain_gateway)
+
+                val num_epoch : Int = 0
+                val reshape_size : Int = 0
+                val trainer_string : String = ""
+                val model_int : Int = 0
+
+                val model = Retrain(adminViewModel.currentUser.value?.email.toString(), adminViewModel.currentUser.value?.password.toString(),trainer_string, model_int, num_epoch, reshape_size)
+
+                adminViewModel.retrain(url, model)
+
             }
         }
 
@@ -62,25 +73,15 @@ class AdminActivity : AppCompatActivity() {
         val num_epoch : Int = 0
         val reshape_size : Int = 0
 
-        val model = RetrainAll(adminViewModel.getCurrentUser().email, adminViewModel.getCurrentUser().password, num_epoch, reshape_size)
+
+        val model = RetrainAll(adminViewModel.currentUser.value?.email.toString(), adminViewModel.currentUser.value?.password.toString(), num_epoch, reshape_size)
 
         adminViewModel.retrainAll(url, model)
     }
 
     private fun retrain(adminViewModel : AdminViewModel){
 
-        val url = getString(R.string.main) + getString(R.string.model_controller_gateway) + getString(R.string.retrain_gateway)
-
-        val num_epoch : Int = 0
-        val reshape_size : Int = 0
-        val trainer_string : String = ""
-        val model_int : Int = 0
-
-
-        val model = Retrain(adminViewModel.getCurrentUser().email, adminViewModel.getCurrentUser().password,trainer_string, model_int, num_epoch, reshape_size)
-
-        adminViewModel.retrain(url, model)
-
+        getModels(adminViewModel)
 
     }
 
@@ -95,18 +96,16 @@ class AdminActivity : AppCompatActivity() {
     }
 
 
-    private fun showModelSelectionDialog(modelTrainer: ModelTrainer) {
+    private fun showModelSelectionDialog(modelTrainer: ModelTrainer, adminViewModel: AdminViewModel) {
         ModelSelectionDialog(
             this,
             modelTrainer.ModelTrainerPyTorch,
             modelTrainer.ModelTrainerSKLearn,
             modelTrainer.ModelTrainerTensorFlow
         ) { framework, model ->
-            // 6. Use the correct ViewModel reference
-            val photoViewModel = ViewModelProvider(this)[PhotoViewModel::class.java]
 
 
-            var models = photoViewModel.models.value
+            var models = adminViewModel.models.value
             var index : Int? = null
 
             var frameworkToSend : String = ""
@@ -117,7 +116,7 @@ class AdminActivity : AppCompatActivity() {
                 for(mdl in models?.getPyTorch()!!)
                 {
                     if(mdl.equals(model)) {
-                        index = models?.getPyTorch()?.indexOf(mdl)
+                        index = models.getPyTorch().indexOf(mdl)
                     }
                 }
             }
@@ -128,7 +127,7 @@ class AdminActivity : AppCompatActivity() {
                 for(mdl in models?.getSKLearn()!!)
                 {
                     if(mdl.equals(model)) {
-                        index = models?.getSKLearn()?.indexOf(mdl)
+                        index = models.getSKLearn().indexOf(mdl)
                     }
                 }
             }
@@ -138,24 +137,50 @@ class AdminActivity : AppCompatActivity() {
                 for(mdl in models?.getTensorFlow()!!)
                 {
                     if(mdl.equals(model)) {
-                        index = models?.getTensorFlow()?.indexOf(mdl)
+                        index = models.getTensorFlow().indexOf(mdl)
                     }
                 }
             }
 
-            try {
-                val intent = Intent(requireContext(), CameraActivity::class.java)
-                intent.putExtra("SELECTED_INDEX", index)
-                intent.putExtra("SELECTED_FRAMEWORK", frameworkToSend)
-                startActivity(intent)
-            }catch (ex : Exception)
-            {
-                ex.printStackTrace()
+            // Start input dialog of epoch and reshape size
+            showEpochReshapeInputDialog { epochs, reshapeSize ->
+                // Now we have all parameters
+                val url = getString(R.string.main) +
+                        getString(R.string.model_controller_gateway) +
+                        getString(R.string.retrain_gateway)
+
+                val retrainModel = Retrain(
+                    adminViewModel.getCurrentUser().email,
+                    adminViewModel.getCurrentUser().password,
+                    frameworkToSend,
+                    index,
+                    epochs,
+                    reshapeSize
+                )
+
+                adminViewModel.retrain(url, retrainModel)
             }
 
 
-
         }.show()
+    }
+
+
+        fun showEpochReshapeInputDialog(
+        onInputSubmitted: (epochs: Int, reshapeSize: Int) -> Unit
+    ) {
+        val dialog = InputEpochReshapeDialog(this) { epochs, reshapeSize ->
+            if (epochs > 0 && reshapeSize > 0) {
+                onInputSubmitted(epochs, reshapeSize)
+            } else {
+                Toast.makeText(
+                    this,
+                    "Please enter valid positive numbers",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        dialog.show()
     }
 
 }

@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dermaai_android_140.myClasses.AiModel
 import com.example.dermaai_android_140.myClasses.ModelTrainer
-import com.example.dermaai_android_140.myClasses.Prediction
 import com.example.dermaai_android_140.myClasses.Retrain
 import com.example.dermaai_android_140.myClasses.RetrainAll
 import com.example.dermaai_android_140.myClasses.User
@@ -36,6 +34,9 @@ class AdminViewModel : ViewModel() {
     private var myJob: Job? = null
     
     private val modelRepo: ModelRepoImpl by KoinJavaComponent.inject(ModelRepoImpl::class.java)
+
+    private val _currentUser = MutableLiveData<User?>()
+    val currentUser: LiveData<User?> get() = _currentUser
 
 
     fun retrainAll(url : String, model : RetrainAll){
@@ -102,10 +103,13 @@ class AdminViewModel : ViewModel() {
         }
     }
 
-    suspend fun getCurrentUser() : User?
-    {
-        return userRepo.getCurrentUser()
+    fun setCurrentUser(){
+        viewModelScope.launch {
+            _currentUser.postValue(userRepo.getCurrentUser())
+        }
     }
+
+
 
 
 }

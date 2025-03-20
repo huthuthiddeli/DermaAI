@@ -74,6 +74,8 @@
     <string name="admin_panel">Admin-Panel</string>
     <string name="admin_retrain_all">Retrain All!</string>
 
+    <string name="admin_parameter">Wichtige Parameter</string>
+
     <string name="admin_retrain_all_desc">Retrain All dient dazu, alle KI-Modelle neu zu trainieren, basierend auf den Trainingsdaten, die sich in der Datenbank befinden. </string>
     <string name="admin_epoch">Epochs gibt dabei die Anzahl der Trainingsdurchläufe an, die das Modell durchlaufen soll. Eine Epoche ist ein vollständiger Durchlauf durch alle Trainingsdaten. Je höher dieser Wert, desto länger dauert das Training!</string>
     <string name="admin_reshape_size">Bei Reshape Size handelt es sich um den zweiten Parameter, der angibt ob die Eingabedaten für das Modell vor dem Training in eine bestimmte Größe umgeformt werden sollen, die sich eventuell besser für das Modell eignen. Ein komplexer Umformungsprozess kann mehr Zeit in Anspruch nehmen, während ein einfache Umformung die Trainingsdauer verringern kann, aufgrund des geringeren Aufbereitsungsaufwands.</string>
