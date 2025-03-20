@@ -66,9 +66,6 @@ class PhotoViewModel() : ViewModel() {
         myJob?.invokeOnCompletion { throwable ->
 
         }
-
-
-
     }
 
 
