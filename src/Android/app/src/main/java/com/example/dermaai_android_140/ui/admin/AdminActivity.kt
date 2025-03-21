@@ -23,22 +23,38 @@ class AdminActivity : AppCompatActivity() {
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         val adminViewModel = ViewModelProvider(this).get(AdminViewModel::class.java)
         adminViewModel.setCurrentUser()
 
         val retrainAllBtn = findViewById<Button>(R.id.retrainAllBtn)
         val retrainBtn = findViewById<Button>(R.id.retrainBtn)
 
+
         val url = getString(R.string.main) + getString(R.string.model_controller_gateway) + getString(R.string.retrainAll_gateway)
 
         retrainAllBtn.setOnClickListener{
-            retrainAll(adminViewModel)
+            if(adminViewModel.getCurrentUser()!!.isAdmin)
+            {
+                retrainAll(adminViewModel)
+            }
+            else{
+                Toast.makeText(this, "You are not a Admin!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         retrainBtn.setOnClickListener{
-            retrain(adminViewModel)
+
+            if(adminViewModel.getCurrentUser()!!.isAdmin) {
+                retrain(adminViewModel)
+            }
+            else{
+                Toast.makeText(this, "You are not a Admin!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        adminViewModel.responseString.observe(this) { responseString ->
+            Toast.makeText(this, responseString, Toast.LENGTH_SHORT).show()
         }
 
 
@@ -78,6 +94,7 @@ class AdminActivity : AppCompatActivity() {
 
         adminViewModel.retrainAll(url, model)
     }
+
 
     private fun retrain(adminViewModel : AdminViewModel){
 
@@ -150,8 +167,8 @@ class AdminActivity : AppCompatActivity() {
                         getString(R.string.retrain_gateway)
 
                 val retrainModel = Retrain(
-                    adminViewModel.getCurrentUser().email,
-                    adminViewModel.getCurrentUser().password,
+                    adminViewModel.getCurrentUser()!!.email,
+                    adminViewModel.getCurrentUser()!!.password,
                     frameworkToSend,
                     index,
                     epochs,

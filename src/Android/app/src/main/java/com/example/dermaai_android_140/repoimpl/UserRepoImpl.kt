@@ -14,11 +14,12 @@ class UserRepoImpl(context : Context) : UserRepo {
         val password = sharedPreferences.getString("password", null)
         val email = sharedPreferences.getString("email", null)
         val mfa = sharedPreferences.getString("mfa", null)
-
+        val isAdmin = sharedPreferences.getBoolean("isAdmin", false)
+        
         return if (email != null && password != null && mfa != null) {
-            User(email,password,mfa.toBoolean()) // Create the user object
+            User(email,password,mfa.toBoolean(), isAdmin)
         } else {
-            null // No user data found
+            null
         }
     }
 
@@ -27,6 +28,7 @@ class UserRepoImpl(context : Context) : UserRepo {
             putString("password", user.password)
             putString("email", user.email)
             putString("mfa", user.mfa.toString())
+            putBoolean("isAdmin", user.isAdmin)
             
             apply() //  asynchronously
         }

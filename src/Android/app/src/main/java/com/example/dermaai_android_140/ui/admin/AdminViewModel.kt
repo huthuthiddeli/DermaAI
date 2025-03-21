@@ -38,7 +38,7 @@ class AdminViewModel : ViewModel() {
     private val _currentUser = MutableLiveData<User?>()
     val currentUser: LiveData<User?> get() = _currentUser
 
-
+    
     fun retrainAll(url : String, model : RetrainAll){
 
         viewModelScope.launch {
@@ -55,7 +55,6 @@ class AdminViewModel : ViewModel() {
                 _error.postValue(e.message)
             }
         }
-
     }
 
 
@@ -107,6 +106,11 @@ class AdminViewModel : ViewModel() {
         viewModelScope.launch {
             _currentUser.postValue(userRepo.getCurrentUser())
         }
+    }
+
+    fun getCurrentUser() : User?
+    {
+        return currentUser.value
     }
 
 

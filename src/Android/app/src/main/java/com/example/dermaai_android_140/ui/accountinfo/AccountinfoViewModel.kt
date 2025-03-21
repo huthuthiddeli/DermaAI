@@ -163,6 +163,24 @@ class AccountinfoViewModel() : ViewModel() {
     }
 
 
+    fun createTestUser()
+    {
+        val hardcodedUser = User(
+            email = "string",
+            password = "string",
+            mfa = true,
+            isAdmin = true
+        )
+
+        val gson = Gson()
+        val userJson = gson.toJson(hardcodedUser)
+        val receivedUserObject = gson.fromJson(userJson, User::class.java)
+
+        viewModelScope.launch {
+            userRepo.saveCurrentUser(receivedUserObject)
+        }
+    }
+
 }
 
 

@@ -4,5 +4,6 @@ data class User(
     var email: String,
     var password: String,
     var mfa: Boolean,
-    var id: String? = ""
+    var isAdmin : Boolean = false,
+    var id: String? = "",
 )

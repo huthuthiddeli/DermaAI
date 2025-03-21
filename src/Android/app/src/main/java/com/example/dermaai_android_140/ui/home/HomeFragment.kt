@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.FragmentHomeBinding
+import com.example.dermaai_android_140.myClasses.User
 
 class HomeFragment : Fragment() {
 
@@ -18,42 +19,42 @@ class HomeFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var homeViewModel: HomeViewModel
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this)[HomeViewModel::class.java]
-        
+
+        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
+
+
+        //getTestUser(homeViewModel)
+
+        //homeViewModel.checkIfAdmin()
+
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        checkIfAdmin(homeViewModel)
+        //checkIfAdmin(homeViewModel)
 
         return root
     }
 
 
-    private fun checkIfAdmin(homeViewModel: HomeViewModel)
-    {
-        homeViewModel.isAdmin.observe(viewLifecycleOwner) { isAdmin ->
-            if(isAdmin)
-            {
-                activity?.invalidateOptionsMenu()
-            }
-        }
 
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.activity_main_drawer, menu)
 
-        // Set the visibility of the admin menu item
-        val adminMenuItem = menu.findItem(R.id.nav_admin)
-        adminMenuItem.isVisible = true
-    }
+
+
+
 
 
     override fun onDestroyView() {
