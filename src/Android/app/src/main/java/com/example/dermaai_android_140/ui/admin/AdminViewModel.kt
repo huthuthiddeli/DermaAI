@@ -4,9 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dermaai_android_140.myClasses.AiModel
+import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.ModelTrainer
-import com.example.dermaai_android_140.myClasses.Prediction
 import com.example.dermaai_android_140.myClasses.Retrain
 import com.example.dermaai_android_140.myClasses.RetrainAll
 import com.example.dermaai_android_140.myClasses.User
@@ -37,6 +36,12 @@ class AdminViewModel : ViewModel() {
     
     private val modelRepo: ModelRepoImpl by KoinJavaComponent.inject(ModelRepoImpl::class.java)
 
+    private val _currentUser = MutableLiveData<User?>()
+    val currentUser: LiveData<User?> get() = _currentUser
+
+    private val _report = MutableLiveData<String?>()
+    val report: LiveData<String?> get() = _report
+
 
     fun retrainAll(url : String, model : RetrainAll){
 
@@ -54,7 +59,6 @@ class AdminViewModel : ViewModel() {
                 _error.postValue(e.message)
             }
         }
-
     }
 
 
@@ -75,6 +79,8 @@ class AdminViewModel : ViewModel() {
         }
 
     }
+
+
 
 
 
@@ -102,10 +108,52 @@ class AdminViewModel : ViewModel() {
         }
     }
 
-    suspend fun getCurrentUser() : User?
-    {
-        return userRepo.getCurrentUser()
+    fun setCurrentUser(){
+        viewModelScope.launch {
+            _currentUser.postValue(userRepo.getCurrentUser())
+        }
     }
 
+    fun getCurrentUser() : User?
+    {
+        return currentUser.value
+    }
+
+
+
+    fun getAllReports(url : String, model : Retrain)
+    {
+        viewModelScope.launch {
+            try {
+
+                val responseString = withContext(Dispatchers.IO) {
+                    adminRepo.getReport(model,url)
+                }
+
+                _report.postValue(responseString)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _error.postValue(e.message)
+            }
+        }
+    }
+
+    fun getOneReport(url : String, model: Retrain)
+    {
+        viewModelScope.launch {
+            try {
+
+                val responseString = withContext(Dispatchers.IO) {
+                    adminRepo.getReport(model,url)
+                }
+
+                _report.postValue(responseString)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _error.postValue(e.message)
+            }
+        }
+
+    }
 
 }

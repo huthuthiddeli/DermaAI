@@ -14,6 +14,8 @@
 
 
     <string name="getModels_gateway">models/</string>
+    <string name="getAllReports_gateway">classifier-reports/</string>
+    <string name="getReport_gateway">classifier-report/</string>
 
     <string name="retrainAll_gateway">retrain-all/</string>
     <string name="retrain_gateway">retrain/</string>

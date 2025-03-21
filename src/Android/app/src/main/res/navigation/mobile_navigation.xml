@@ -28,7 +28,12 @@
         android:id="@+id/nav_tutorial"
         android:name="com.example.dermaai_android_140.ui.tutorial.TutorialFragment"
         android:label="@string/menu_tutorial"
-        tools:layout="@layout/fragment_photo" />
+        tools:layout="@layout/fragment_tutorial" />
 
+    <fragment
+        android:id="@+id/nav_admin"
+        android:name="com.example.dermaai_android_140.ui.admin.AdminFragment"
+        android:label="@string/menu_admin"
+        tools:layout="@layout/fragment_admin" />
 
 </navigation>

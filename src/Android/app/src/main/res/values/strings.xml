@@ -17,6 +17,13 @@
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_admin">Admin</string>
 
+    <string name="admin_report_title">Report anfordern</string>
+    <string name="admin_report_all">Report für alle Modelle anfordern:</string>
+    <string name="admin_report_one">Report für ein spezifisches Modelle anfordern:</string>
+
+    <string name="admin_report_all_btn">alle Reports!</string>
+    <string name="admin_report_one_btn">spezifischer Report!</string>
+
     <string name="home_whatIsDermaAI">Was ist DermaAI?</string>
     <string name="home_purposeDesc">DermaAI ist eine Android-App, die KI nutzt, um pigmentierte Hautläsionen zu analysieren und zu klassifizieren.Du kannst Bilder deiner Hautläsionen hochladen, und die App liefert in Echtzeit Hinweise, indem es den Hautlässion einen Wert zuteilt, der aussagt wie sicher es ist, dass es sich um einen bösartigen oder gutartigen Befund handelt.</string>
     <string name="home_desktopApp">Zusätlich zur Android-App stellt dieses Projekt noch eine Desktop-Anwendung bereit, die unter folgendem Link erhältlich ist!</string>
@@ -73,6 +80,8 @@
     <string name="admin_retrain">Retrain!</string>
     <string name="admin_panel">Admin-Panel</string>
     <string name="admin_retrain_all">Retrain All!</string>
+
+    <string name="admin_parameter">Wichtige Parameter</string>
 
     <string name="admin_retrain_all_desc">Retrain All dient dazu, alle KI-Modelle neu zu trainieren, basierend auf den Trainingsdaten, die sich in der Datenbank befinden. </string>
     <string name="admin_epoch">Epochs gibt dabei die Anzahl der Trainingsdurchläufe an, die das Modell durchlaufen soll. Eine Epoche ist ein vollständiger Durchlauf durch alle Trainingsdaten. Je höher dieser Wert, desto länger dauert das Training!</string>

@@ -20,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.MainActivity
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.Authentication
+import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.ui.login.LoginViewModel
 import java.util.UUID
 import kotlin.jvm.java
@@ -100,8 +101,7 @@ class AccountinfoFragment() : Fragment() {
             loginBtn.setOnClickListener {
                 
                 //
-                //val intent = Intent(requireContext(), MainActivity::class.java)
-                //startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+                hardcoded(viewModel)
                 //
                 
                 val email = editTextEmail.text.toString()
@@ -184,6 +184,13 @@ class AccountinfoFragment() : Fragment() {
             }
         }
 
+    }
+
+    private fun hardcoded(viewModel: AccountinfoViewModel)
+    {
+        viewModel.createTestUser()
+        val intent = Intent(requireContext(), MainActivity::class.java)
+        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
     }
 
     private fun showTwoFAInputDialog(context: Context, viewModel : AccountinfoViewModel) {
