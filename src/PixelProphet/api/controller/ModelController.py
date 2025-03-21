@@ -35,7 +35,6 @@ class ModelController:
                     "email": request["email"],
                     "password": request["password"]
                 }
-                #res = __validate_user(payload)
                 res = requests.post(api_base_url[0] + '/user/validateUser', json=payload)
                 if res.status_code != 200:
                     raise HTTPException(status_code=res.status_code, detail=res.text)
@@ -47,7 +46,6 @@ class ModelController:
                 else:
                     raise HTTPException(status_code=401, detail="Unauthorized")
                 return JSONResponse(content={"report": res[0], "error": res[1]}, status_code=200)
-
             except NotImplementedError as nie:
                 raise HTTPException(status_code=404, detail=f"Error: {str(nie)}")
             except Exception as e:

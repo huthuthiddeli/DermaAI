@@ -62,7 +62,6 @@ figure = plt.figure(figsize=(27, 9))
 i = 1
 # iterate over datasets
 for ds_cnt, ds in enumerate(datasets):
-    # preprocess dataset, split into training_sklearn and test part
     X, y = ds
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=0.4, random_state=42
@@ -71,15 +70,14 @@ for ds_cnt, ds in enumerate(datasets):
     x_min, x_max = X[:, 0].min() - 0.5, X[:, 0].max() + 0.5
     y_min, y_max = X[:, 1].min() - 0.5, X[:, 1].max() + 0.5
 
-    # just plot the dataset first
     cm = plt.cm.RdBu
     cm_bright = ListedColormap(["#FF0000", "#0000FF"])
     ax = plt.subplot(len(datasets), len(classifiers) + 1, i)
     if ds_cnt == 0:
         ax.set_title("Input data")
-    # Plot the training_sklearn points
+
     ax.scatter(X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright, edgecolors="k")
-    # Plot the testing points
+
     ax.scatter(
         X_test[:, 0], X_test[:, 1], c=y_test, cmap=cm_bright, alpha=0.6, edgecolors="k"
     )
@@ -89,7 +87,6 @@ for ds_cnt, ds in enumerate(datasets):
     ax.set_yticks(())
     i += 1
 
-    # iterate over classifiers
     for name, clf in zip(names, classifiers):
         ax = plt.subplot(len(datasets), len(classifiers) + 1, i)
 
@@ -100,11 +97,10 @@ for ds_cnt, ds in enumerate(datasets):
             clf, X, cmap=cm, alpha=0.8, ax=ax, eps=0.5
         )
 
-        # Plot the training_sklearn points
         ax.scatter(
             X_train[:, 0], X_train[:, 1], c=y_train, cmap=cm_bright, edgecolors="k"
         )
-        # Plot the testing points
+
         ax.scatter(
             X_test[:, 0],
             X_test[:, 1],

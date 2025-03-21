@@ -56,7 +56,7 @@ class UserController:
             except Exception as e:
                 raise HTTPException(status_code=500, detail=f"Error: {str(e)}")
 
-        @self.router.post("/load-prediction/")
+        @self.router.post("/load-predictions/")
         async def load_predictions(request: UserRequest):
             request = request.dict()
             try:
