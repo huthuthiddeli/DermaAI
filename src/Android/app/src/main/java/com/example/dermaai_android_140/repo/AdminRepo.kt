@@ -9,4 +9,6 @@ interface AdminRepo {
 
     fun retrainAllModel(model : RetrainAll, url : String) : String?
 
+    fun getReport(model : Retrain, url : String) : String?
+    
 }

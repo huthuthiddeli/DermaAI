@@ -61,4 +61,24 @@ class AdminRepoImpl : AdminRepo {
         return null
     }
 
+
+
+    override fun getReport(model : Retrain, url : String) : String? {
+
+        val result = API.callApi(url, "POST", model)
+        
+        if (result.isSuccess) {
+
+            val receivedData = result.getOrNull()
+            return receivedData
+
+        } else if (result.isFailure) {
+            result.exceptionOrNull()?.message
+        }
+
+        return null
+    }
+
+
+
 }

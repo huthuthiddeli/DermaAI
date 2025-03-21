@@ -38,8 +38,6 @@
             android:label="@string/title_activity_settings" />
         <activity android:name=".ui.resize.ResizeActivity"
             android:theme="@style/Theme.DermaAI_Android_140"/>
-        <activity android:name=".ui.admin.AdminActivity"
-            android:theme="@style/Theme.DermaAI_Android_140"/>
 
         <activity
             android:name=".MainActivity"

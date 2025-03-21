@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -36,15 +37,40 @@ class AdminFragment : Fragment() {
 
         adminViewModel.setCurrentUser()
 
-        binding.retrainAllBtn.setOnClickListener {
+
+        val retrainAllBtn = view.findViewById<Button>(R.id.retrainAllBtn)
+        val retrainBtn = view.findViewById<Button>(R.id.retrainBtn)
+
+        val allReportsBtn = view.findViewById<Button>(R.id.allReportsBtn)
+        val oneReportBtn = view.findViewById<Button>(R.id.oneReportBtn)
+
+        allReportsBtn.setOnClickListener {
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
-                retrainAll()
+
             } else {
                 showToast("You are not an Admin!")
             }
         }
 
-        binding.retrainBtn.setOnClickListener {
+        oneReportBtn.setOnClickListener {
+            if (adminViewModel.getCurrentUser()?.isAdmin == true) {
+
+            } else {
+                showToast("You are not an Admin!")
+            }
+        }
+
+
+        retrainAllBtn.setOnClickListener {
+            if (adminViewModel.getCurrentUser()?.isAdmin == true) {
+                showEpochReshapeInputDialog()
+            //retrainAll()
+            } else {
+                showToast("You are not an Admin!")
+            }
+        }
+
+        retrainBtn.setOnClickListener {
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
                 retrain()
             } else {
@@ -63,6 +89,30 @@ class AdminFragment : Fragment() {
         }
     }
 
+    private fun getAllReports()
+    {
+        val url = getString(R.string.main) +
+                getString(R.string.model_controller_gateway) +
+                getString(R.string.getAllReports_gateway)
+
+
+        val model : Retrain? = null
+
+        adminViewModel.getAllReports(url,model)
+    }
+
+    private fun getOneReport()
+    {
+        val url = getString(R.string.main) +
+                getString(R.string.model_controller_gateway) +
+                getString(R.string.getReport_gateway)
+
+        val model : Retrain? = null
+
+        adminViewModel.getOneReport(url, model)
+
+    }
+
     private fun retrainAll() {
         val url = getString(R.string.main) +
                 getString(R.string.model_controller_gateway) +
@@ -71,12 +121,13 @@ class AdminFragment : Fragment() {
         val model = RetrainAll(
             adminViewModel.getCurrentUser()?.email ?: "",
             adminViewModel.getCurrentUser()?.password ?: "",
-            0,  // You might want to collect these values from input
+            0,
             0
         )
 
         adminViewModel.retrainAll(url, model)
     }
+
 
     private fun retrain() {
         getModels()
@@ -125,8 +176,8 @@ class AdminFragment : Fragment() {
                     getString(R.string.retrain_gateway)
 
             val retrainModel = Retrain(
-                adminViewModel.getCurrentUser()?.email ?: "",
-                adminViewModel.getCurrentUser()?.password ?: "",
+                adminViewModel.getCurrentUser()?.email!!,
+                adminViewModel.getCurrentUser()?.password!!,
                 frameworkToSend,
                 index,
                 epochs,
@@ -157,4 +208,5 @@ class AdminFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

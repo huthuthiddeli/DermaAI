@@ -165,15 +165,43 @@
                 android:id="@+id/textView16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12sp"
                 android:text="@string/admin_report_title"
                 android:textSize="19sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imageView7"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/background_fragment_line_2" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6sp"
+                android:text="@string/admin_report_all" />
+
+            <Button
+                android:id="@+id/allReportsBtn"
+                android:layout_width="265dp"
+                android:layout_height="39dp"
+                android:layout_marginBottom="12sp"
+                android:text="@string/admin_report_all_btn" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6sp"
+                android:text="@string/admin_report_one" />
+
+            <Button
+                android:id="@+id/oneReportBtn"
+                android:layout_width="265dp"
+                android:layout_height="39dp"
+                android:text="@string/admin_report_one_btn" />
 
         </LinearLayout>
     </ScrollView>

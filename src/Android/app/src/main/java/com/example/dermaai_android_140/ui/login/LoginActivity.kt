@@ -23,7 +23,7 @@ class LoginActivity : AppCompatActivity() {
                 .commit()
         }
 
-        //val switch = findViewById<Switch>(R.)
+
 
     }
 
