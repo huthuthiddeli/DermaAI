@@ -12,7 +12,11 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import com.example.dermaai_android_140.myClasses.Diagnosis
+import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.ui.camera.CameraViewModel
+import com.example.dermaai_android_140.ui.home.HomeFragment
 import java.io.File
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -20,6 +24,9 @@ import kotlin.io.encoding.ExperimentalEncodingApi
 class ResizeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityResizeBinding
+    private lateinit var base64: String
+    private lateinit var imageUriString: String
+
 
     @OptIn(ExperimentalEncodingApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +36,7 @@ class ResizeActivity : AppCompatActivity() {
         binding = ActivityResizeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val imageUriString = intent.getStringExtra("image_uri").toString()
+        imageUriString = intent.getStringExtra("image_uri").toString()
         val modelIndex = intent.getIntExtra("modelIndex", -1)
         val framework : String = intent.getStringExtra("framework").toString()
         val url : String = intent.getStringExtra("url").toString()
@@ -39,14 +46,14 @@ class ResizeActivity : AppCompatActivity() {
         val imageFile = File(imageUriString)
         val imageBytes = imageFile.readBytes()
 
-        val base64 = Base64.encode(imageBytes)
+        base64 = Base64.encode(imageBytes)
 
 
        //val imageUri = imageUriString.toUri()
         val imageUri = Uri.fromFile(File(imageUriString))
 
         loadImageIntoImageView(imageUri)
-
+        
 
         val resizeViewModel = ViewModelProvider(this).get(ResizeViewModel::class.java)
 
@@ -58,9 +65,8 @@ class ResizeActivity : AppCompatActivity() {
 
             if(resizedImage != null)
             {
+                base64 = resizedImage.image
                 loadBase64ImageIntoImageView(resizedImage.image)
-
-
             }
         }
 
@@ -70,6 +76,20 @@ class ResizeActivity : AppCompatActivity() {
         acceptAndSendBtn.setOnClickListener{
             resizeViewModel.sendImage(url, modelIndex, framework, base64, imageUriString)
         }
+
+        resizeViewModel.prediction.observe(this) { prediction ->
+
+            // Save Prediction to JSON
+            val diagnosis = Diagnosis(prediction!!.getPredictionMap(), imageUriString)
+
+            Storage.saveDiagnosis(this,imageUriString, diagnosis)
+
+            prediction?.let {
+                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_home)
+            }
+            
+        }
+
 
         resizeViaAiBtn.setOnClickListener{
             val urlResize = getString(R.string.main) + getString(R.string.image_controller_gateway) + getString(R.string.resize)
@@ -106,6 +126,7 @@ class ResizeActivity : AppCompatActivity() {
     private fun loadBase64ImageIntoImageView(base64Image: String) {
         try {
             // Decode the base64 string into a ByteArray
+
             val imageBytes = Base64.decode(base64Image)
 
             // Decode the ByteArray into a Bitmap
@@ -122,3 +143,4 @@ class ResizeActivity : AppCompatActivity() {
 
 
 }
+

@@ -59,7 +59,7 @@ class GalleryFragment : Fragment() {
         imageContainer.removeAllViews()
 
         for (image in images) {
-
+            
             val bitmap = BitmapFactory.decodeFile(image.absolutePath)
             
             val imageName = image.name
@@ -78,8 +78,6 @@ class GalleryFragment : Fragment() {
                 setPadding(12, 12, 12, 12)
 
                 setOnClickListener {
-
-
 
                     val intent = Intent(requireContext(), ResultActivity::class.java).apply {
                         putExtra("EXTRA_IMAGE_PATH", image.absolutePath)
@@ -116,7 +114,6 @@ class GalleryFragment : Fragment() {
             imageContainer.addView(horizontalContainer)
         }
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

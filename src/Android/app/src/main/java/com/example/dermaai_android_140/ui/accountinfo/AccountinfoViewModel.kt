@@ -140,12 +140,13 @@ class AccountinfoViewModel() : ViewModel() {
                 
             // succesfull
             if (receivedUser != null) {
-
+                
                 _user = receivedUser
+                receivedUser.password = password
                 userRepo.saveCurrentUser(receivedUser)
                 _mfaEnabled.postValue(_user!!.mfa)
 
-
+                
                 if (receivedUser.mfa) {
 
                     _mfaEnabled.postValue(receivedUser.mfa)

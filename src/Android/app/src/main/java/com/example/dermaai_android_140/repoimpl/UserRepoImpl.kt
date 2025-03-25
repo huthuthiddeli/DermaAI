@@ -11,16 +11,12 @@ class UserRepoImpl(context : Context) : UserRepo {
         context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
 
     override suspend fun getCurrentUser(): User? {
-        val password = sharedPreferences.getString("password", null)
-        val email = sharedPreferences.getString("email", null)
+        val password = sharedPreferences.getString("password", null).toString()
+        val email = sharedPreferences.getString("email", null).toString()
         val mfa = sharedPreferences.getString("mfa", null)
         val isAdmin = sharedPreferences.getBoolean("isAdmin", false)
         
-        return if (email != null && password != null && mfa != null) {
-            User(email,password,mfa.toBoolean(), isAdmin)
-        } else {
-            null
-        }
+        return User(email,password,mfa.toBoolean(), isAdmin)
     }
 
     override suspend fun saveCurrentUser(user: User) {

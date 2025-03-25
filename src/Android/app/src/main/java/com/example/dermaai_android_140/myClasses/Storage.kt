@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.media.ExifInterface
 import android.os.Environment
+import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
 import java.io.File
@@ -14,6 +15,7 @@ import java.io.OutputStream
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.google.gson.reflect.TypeToken
 
 class Storage {
 
@@ -35,7 +37,6 @@ class Storage {
             }
             return images
         }
-
 
         fun saveFileToStorage(bitmap: Bitmap, context: Context, filePath: String) {
             val outputStream: OutputStream = FileOutputStream(filePath)
@@ -77,47 +78,100 @@ class Storage {
             } catch (e: IOException) {
                 e.printStackTrace()
             }
-            
+
             return predictionStr
         }
 
 
-        fun saveDiagnosisToFile(imagePath: String, diagnosis: Map<String, Int>) {
+        // Save diagnosis to file (all in one file)
+        fun saveDiagnosis(activity: Activity, imagePath: String, diagnosis: Diagnosis) {
             try {
-                // Get the directory of the image
-                val imageFile = File(imagePath)
-                val imageDir = imageFile.parentFile
+                // 1. Create or find storage folder
+                val folder = File(activity.getExternalFilesDir(null), "diagnoses")
+                if (!folder.exists()) {
+                    folder.mkdirs()
+                }
 
-                // Create the diagnosis file in the same directory
-                val diagnosisFile = File(imageDir, "${imageFile.nameWithoutExtension}_diagnosis.json")
-                val diagnosisJson = Gson().toJson(diagnosis)
-                diagnosisFile.writeText(diagnosisJson)
+                // 2. Create the diagnosis file
+                val file = File(folder, "all_diagnoses.json")
+
+                // 3. Read old diagnoses if file exists
+                val oldDiagnoses = if (file.exists()) {
+                    val jsonString = file.readText()
+                    Gson().fromJson(jsonString, Array<Diagnosis>::class.java).toList()
+                } else {
+                    emptyList()
+                }
+
+                // 4. Add new diagnosis
+                val newDiagnosis = diagnosis
+                val allDiagnoses = oldDiagnoses + newDiagnosis
+
+                // 5. Save back to file
+                file.writeText(Gson().toJson(allDiagnoses))
+
             } catch (e: Exception) {
-                e.printStackTrace()
+                println("Error saving diagnosis: ${e.message}")
             }
         }
 
-
-        // Read diagnosis from a separate file
-        fun readDiagnosisFromFile(imagePath: String): Map<String, Int>? {
+        // Read all diagnoses from file
+        fun readAllDiagnoses(activity: Activity): List<Diagnosis> {
             return try {
-                // Get the directory of the image
-                val imageFile = File(imagePath)
-                val imageDir = imageFile.parentFile
-
-                // Locate the diagnosis file in the same directory
-                val diagnosisFile = File(imageDir, "${imageFile.nameWithoutExtension}_diagnosis.json")
-                if (diagnosisFile.exists()) {
-                    val diagnosisJson = diagnosisFile.readText()
-                    Gson().fromJson(diagnosisJson, Map::class.java) as Map<String, Int>
+                val file = File(activity.getExternalFilesDir(null), "diagnoses/all_diagnoses.json")
+                if (file.exists()) {
+                    val jsonString = file.readText()
+                    Gson().fromJson(jsonString, Array<Diagnosis>::class.java).toList()
                 } else {
-                    null
+                    emptyList()
                 }
             } catch (e: Exception) {
-                e.printStackTrace()
-                null
+                println("Error reading diagnoses: ${e.message}")
+                emptyList()
             }
         }
+
+        // Read diagnosis for a specific image
+        fun readDiagnosisForImage(activity: Activity, imagePath: String): Map<String, Int>? {
+            val allDiagnoses = readAllDiagnoses(activity)
+            return allDiagnoses.find { it.imagePath == imagePath }?.prediction
+        }
+
+
+        fun createReportFile(activity: Activity, report : String) {
+
+            try {
+
+                //create File name
+                val timeStamp: String =
+                    SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
+                val storageDir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+                var subDir = "Reports"
+
+                val dir = File(storageDir, subDir)
+
+                if (!dir.exists()) {
+                    dir.mkdirs()
+                }
+
+
+                val tempFile = File.createTempFile(
+                    "HTML_${timeStamp}_",
+                    ".html",
+                    dir
+                )
+
+
+
+                tempFile.writeText(report)
+
+            } catch (e: Exception){
+            e.printStackTrace()
+            }
+
+        }
+
 
 
         fun createUniqueImagePath(activity: Activity, takenByUser: Boolean): File {
@@ -139,7 +193,6 @@ class Storage {
                 ".jpg",
                 dir
             )
-
             Storage.addMetadata(tempFile)
 
             return tempFile

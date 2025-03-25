@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.ModelTrainer
+import com.example.dermaai_android_140.myClasses.Report
+import com.example.dermaai_android_140.myClasses.ReportAll
 import com.example.dermaai_android_140.myClasses.Retrain
 import com.example.dermaai_android_140.myClasses.RetrainAll
 import com.example.dermaai_android_140.myClasses.User
@@ -36,7 +38,7 @@ class AdminViewModel : ViewModel() {
     
     private val modelRepo: ModelRepoImpl by KoinJavaComponent.inject(ModelRepoImpl::class.java)
 
-    private val _currentUser = MutableLiveData<User?>()
+    private val _currentUser = MutableLiveData<User?>(null)
     val currentUser: LiveData<User?> get() = _currentUser
 
     private val _report = MutableLiveData<String?>()
@@ -108,6 +110,8 @@ class AdminViewModel : ViewModel() {
         }
     }
 
+
+
     fun setCurrentUser(){
         viewModelScope.launch {
             _currentUser.postValue(userRepo.getCurrentUser())
@@ -121,13 +125,14 @@ class AdminViewModel : ViewModel() {
 
 
 
-    fun getAllReports(url : String, model : Retrain)
+
+    fun getAllReports(url : String, model : ReportAll)
     {
         viewModelScope.launch {
             try {
 
                 val responseString = withContext(Dispatchers.IO) {
-                    adminRepo.getReport(model,url)
+                    adminRepo.getAllReports(model,url)
                 }
 
                 _report.postValue(responseString)
@@ -138,13 +143,13 @@ class AdminViewModel : ViewModel() {
         }
     }
 
-    fun getOneReport(url : String, model: Retrain)
+    fun getOneReport(url : String, model: Report)
     {
         viewModelScope.launch {
             try {
 
                 val responseString = withContext(Dispatchers.IO) {
-                    adminRepo.getReport(model,url)
+                    adminRepo.getOneReport(model,url)
                 }
 
                 _report.postValue(responseString)

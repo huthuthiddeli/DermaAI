@@ -12,16 +12,21 @@ import androidx.lifecycle.lifecycleScope
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.FragmentAdminBinding
 import com.example.dermaai_android_140.myClasses.InputEpochReshapeDialog
+import com.example.dermaai_android_140.myClasses.InputReshapeDialog
 import com.example.dermaai_android_140.myClasses.ModelSelectionDialog
 import com.example.dermaai_android_140.myClasses.ModelTrainer
+import com.example.dermaai_android_140.myClasses.Report
+import com.example.dermaai_android_140.myClasses.ReportAll
 import com.example.dermaai_android_140.myClasses.Retrain
 import com.example.dermaai_android_140.myClasses.RetrainAll
+import com.example.dermaai_android_140.myClasses.Storage
 
 class AdminFragment : Fragment() {
 
     private var _binding: FragmentAdminBinding? = null
     private val binding get() = _binding!!
     private val adminViewModel: AdminViewModel by viewModels()
+    private lateinit var decision : String
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,7 +48,7 @@ class AdminFragment : Fragment() {
 
         val allReportsBtn = view.findViewById<Button>(R.id.allReportsBtn)
         val oneReportBtn = view.findViewById<Button>(R.id.oneReportBtn)
-
+        
         allReportsBtn.setOnClickListener {
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
 
@@ -54,7 +59,8 @@ class AdminFragment : Fragment() {
 
         oneReportBtn.setOnClickListener {
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
-
+                decision = "report"
+                getModels()
             } else {
                 showToast("You are not an Admin!")
             }
@@ -63,15 +69,22 @@ class AdminFragment : Fragment() {
 
         retrainAllBtn.setOnClickListener {
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
-                showEpochReshapeInputDialog()
+                showEpochReshapeInputDialog { epochs, reshapeSize ->
+                    retrainAll(epochs, reshapeSize)
+                }
+                //showEpochReshapeInputDialog()
+
+                //showModelSelectionDialog()
             //retrainAll()
             } else {
                 showToast("You are not an Admin!")
             }
         }
-
+        
         retrainBtn.setOnClickListener {
+            val user = adminViewModel.getCurrentUser()
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
+                decision = "retrain"
                 retrain()
             } else {
                 showToast("You are not an Admin!")
@@ -87,6 +100,17 @@ class AdminFragment : Fragment() {
                 showModelSelectionDialog(it)
             }
         }
+
+
+        adminViewModel.report.observe(viewLifecycleOwner){report ->
+            showToast("Report received!")
+            Storage.createReportFile(requireActivity(), report.toString())
+        }
+
+        adminViewModel.error.observe(viewLifecycleOwner){error ->
+            showToast(error.toString())
+        }
+        
     }
 
     private fun getAllReports()
@@ -96,24 +120,51 @@ class AdminFragment : Fragment() {
                 getString(R.string.getAllReports_gateway)
 
 
-        val model : Retrain? = null
 
-        adminViewModel.getAllReports(url,model)
+        if(adminViewModel.getCurrentUser() == null)
+        {
+            adminViewModel.setCurrentUser()
+        }
+        else{
+
+            val currentUser = adminViewModel.getCurrentUser()!!
+
+            showReshapeSizeInputDialog { reshapeSize ->
+
+                val model = ReportAll(currentUser.email, currentUser.password,reshapeSize)
+                adminViewModel.getAllReports(url,model)
+            }
+
+        }
     }
 
-    private fun getOneReport()
+    private fun getOneReport(framework : String, index : Int)
     {
         val url = getString(R.string.main) +
                 getString(R.string.model_controller_gateway) +
                 getString(R.string.getReport_gateway)
 
-        val model : Retrain? = null
+        showReshapeSizeInputDialog { reshapeSize ->
 
-        adminViewModel.getOneReport(url, model)
+            val currentUser = adminViewModel.getCurrentUser()!!
 
+            val model = Report(currentUser.email,currentUser.password,framework,index,reshapeSize)
+
+            adminViewModel.getOneReport(url, model)
+        }
     }
 
-    private fun retrainAll() {
+
+
+    private fun showReshapeSizeInputDialog(
+        onReshapeSubmitted: (reshapeSize: Int) -> Unit
+    ) {
+        InputReshapeDialog(requireContext()) { reshapeSize ->
+            onReshapeSubmitted(reshapeSize)
+        }.show()
+    }
+
+    private fun retrainAll(epochs : Int, reshapeSize: Int) {
         val url = getString(R.string.main) +
                 getString(R.string.model_controller_gateway) +
                 getString(R.string.retrainAll_gateway)
@@ -121,8 +172,8 @@ class AdminFragment : Fragment() {
         val model = RetrainAll(
             adminViewModel.getCurrentUser()?.email ?: "",
             adminViewModel.getCurrentUser()?.password ?: "",
-            0,
-            0
+            epochs,
+            reshapeSize
         )
 
         adminViewModel.retrainAll(url, model)
@@ -133,10 +184,12 @@ class AdminFragment : Fragment() {
         getModels()
     }
 
+
     private fun getModels() {
         val url = getString(R.string.main) +
                 getString(R.string.model_controller_gateway) +
                 getString(R.string.getModels_gateway)
+
         adminViewModel.getModels(url)
     }
 
@@ -149,6 +202,9 @@ class AdminFragment : Fragment() {
         ) { framework, model ->
             handleModelSelection(framework, model, modelTrainer)
         }.show()
+
+        //showEpochReshapeInputDialog { epochs, reshapeSize ->  }
+
     }
 
     private fun handleModelSelection(
@@ -156,36 +212,51 @@ class AdminFragment : Fragment() {
         model: String,
         modelTrainer: ModelTrainer
     ) {
-        val frameworkToSend = when (framework) {
-            "PyTorch" -> "ModelTrainerPyTorch"
-            "Scikit-Learn" -> "ModelTrainerSKLearn"
-            "TensorFlow" -> "ModelTrainerTensorFlow"
-            else -> return
+        val frameworkToSend = if (framework == "PyTorch") {
+            "ModelTrainerPyTorch"
+        } else if (framework == "Scikit-Learn") {
+            "ModelTrainerSKLearn"
+        } else if (framework == "TensorFlow") {
+            "ModelTrainerTensorFlow"
+        } else {
+            return
         }
 
-        val index = when (framework) {
-            "PyTorch" -> modelTrainer.ModelTrainerPyTorch.indexOf(model)
-            "Scikit-Learn" -> modelTrainer.ModelTrainerSKLearn.indexOf(model)
-            "TensorFlow" -> modelTrainer.ModelTrainerTensorFlow.indexOf(model)
-            else -> null
+        val index = if (framework == "PyTorch") {
+            modelTrainer.ModelTrainerPyTorch.indexOf(model)
+        } else if (framework == "Scikit-Learn") {
+            modelTrainer.ModelTrainerSKLearn.indexOf(model)
+        } else if (framework == "TensorFlow") {
+            modelTrainer.ModelTrainerTensorFlow.indexOf(model)
+        } else {
+            null
         } ?: return
 
-        showEpochReshapeInputDialog { epochs, reshapeSize ->
-            val url = getString(R.string.main) +
-                    getString(R.string.model_controller_gateway) +
-                    getString(R.string.retrain_gateway)
 
-            val retrainModel = Retrain(
-                adminViewModel.getCurrentUser()?.email!!,
-                adminViewModel.getCurrentUser()?.password!!,
-                frameworkToSend,
-                index,
-                epochs,
-                reshapeSize
-            )
+        if(decision != "report")
+        {
+            showEpochReshapeInputDialog { epochs, reshapeSize ->
+                val url = getString(R.string.main) +
+                        getString(R.string.model_controller_gateway) +
+                        getString(R.string.retrain_gateway)
 
-            adminViewModel.retrain(url, retrainModel)
+                val retrainModel = Retrain(
+                    adminViewModel.getCurrentUser()?.email!!,
+                    adminViewModel.getCurrentUser()?.password!!,
+                    frameworkToSend,
+                    index,
+                    epochs,
+                    reshapeSize
+                )
+
+                adminViewModel.retrain(url, retrainModel)
+            }
+        }else{
+            getOneReport(frameworkToSend, index)
         }
+
+
+
     }
 
     private fun showEpochReshapeInputDialog(
