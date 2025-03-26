@@ -5,8 +5,10 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.widget.Toast
 import androidx.core.content.edit
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
@@ -15,20 +17,24 @@ import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.Authentication
+import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import com.example.dermaai_android_140.repoimpl.UserRepoImpl
 import com.example.dermaai_android_140.ui.accountinfo.AccountinfoViewModel
+import com.example.dermaai_android_140.ui.admin.AdminViewModel
 import com.example.dermaai_android_140.ui.gallery.GalleryViewModel
 import com.example.dermaai_android_140.ui.login.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import org.koin.java.KoinJavaComponent
+import java.io.File
 import kotlin.getValue
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
     private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
 
+    private val settingsViewModel: SettingsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +42,42 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         val settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
+        settingsViewModel.setCurrentUser()
 
         val enable2faSwitch: SwitchPreferenceCompat? = findPreference("enable_2fa")
         val logoutBtn: Preference? = findPreference("logout")
+        val syncBtn: Preference? = findPreference("sync_images")
+
+
+
+        settingsViewModel.allPredictions.observe(viewLifecycleOwner) { response ->
+            response!!.predictions.forEach { prediction ->
+
+                val filesDir : File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+
+                val localImages = Storage.retrieveImagesFromStorage(filesDir,true)
+
+                for(localImage in localImages)
+                {
+                    localImage
+                }
+                val localImages = Storage.retrieveImagesFromStorage(filesDir,true)
+
+                for(localImage in localImages)
+                {
+                    localImage
+                }
+
+            }
+        }
+
+
+        settingsViewModel.currentUser.observe(viewLifecycleOwner){user ->
+            if (enable2faSwitch != null && user != null) {
+                    enable2faSwitch.isEnabled = user.isAdmin
+            }
+        }
+
 
         enable2faSwitch?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             val is2faEnabled = newValue as Boolean
@@ -56,6 +95,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
+        syncBtn?.setOnPreferenceClickListener {
+            syncWithDb(settingsViewModel)
+            true
+        }
 
 
     }
@@ -64,6 +107,15 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         setPreferencesFromResource(R.xml.root_preferences, rootKey)
 
+    }
+
+    private fun syncWithDb(settingsViewModel : SettingsViewModel)
+    {
+        val url = getString(R.string.main) +
+                getString(R.string.user_controller_gateway) +
+                getString(R.string.loadPrediction_gateway)
+
+        settingsViewModel.syncImages(url)
     }
 
     private fun logout() {

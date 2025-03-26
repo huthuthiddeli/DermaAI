@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.ModelTrainer
+import com.example.dermaai_android_140.myClasses.ReceivedReport
+import com.example.dermaai_android_140.myClasses.ReceivedReportAll
 import com.example.dermaai_android_140.myClasses.Report
 import com.example.dermaai_android_140.myClasses.ReportAll
 import com.example.dermaai_android_140.myClasses.Retrain
@@ -16,8 +18,10 @@ import com.example.dermaai_android_140.repoimpl.ModelRepoImpl
 import com.example.dermaai_android_140.repoimpl.UserRepoImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.TimeoutCancellationException
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import com.google.gson.Gson
 import org.koin.java.KoinJavaComponent
 
 class AdminViewModel : ViewModel() {
@@ -41,8 +45,14 @@ class AdminViewModel : ViewModel() {
     private val _currentUser = MutableLiveData<User?>(null)
     val currentUser: LiveData<User?> get() = _currentUser
 
-    private val _report = MutableLiveData<String?>()
-    val report: LiveData<String?> get() = _report
+    private val _report = MutableLiveData<ReceivedReport>()
+    val report: LiveData<ReceivedReport> get() = _report
+
+    private val _allReports = MutableLiveData<ReceivedReportAll>()
+    val allReports: LiveData<ReceivedReportAll> get() = _allReports
+
+
+    private val timeoutMillis = 10_000L
 
 
     fun retrainAll(url : String, model : RetrainAll){
@@ -100,6 +110,8 @@ class AdminViewModel : ViewModel() {
                     _models.postValue(null)
                 }
             }
+        }catch (e: TimeoutCancellationException) {
+            _error.postValue("Operation timed out after 10 seconds")
         } catch(e : Exception)
         {
             _error.postValue(e.message)
@@ -131,11 +143,14 @@ class AdminViewModel : ViewModel() {
         viewModelScope.launch {
             try {
 
-                val responseString = withContext(Dispatchers.IO) {
+                val allReportsJson = withContext(Dispatchers.IO) {
                     adminRepo.getAllReports(model,url)
                 }
 
-                _report.postValue(responseString)
+                val gson = Gson()
+                val receivedReport = gson.fromJson(allReportsJson, ReceivedReportAll::class.java)
+
+                _allReports.postValue(receivedReport)
             } catch (e: Exception) {
                 e.printStackTrace()
                 _error.postValue(e.message)
@@ -148,11 +163,14 @@ class AdminViewModel : ViewModel() {
         viewModelScope.launch {
             try {
 
-                val responseString = withContext(Dispatchers.IO) {
+                val reportJson = withContext(Dispatchers.IO) {
                     adminRepo.getOneReport(model,url)
                 }
 
-                _report.postValue(responseString)
+                val gson = Gson()
+                val receivedReport = gson.fromJson(reportJson, ReceivedReport::class.java)
+
+                _report.postValue(receivedReport)
             } catch (e: Exception) {
                 e.printStackTrace()
                 _error.postValue(e.message)

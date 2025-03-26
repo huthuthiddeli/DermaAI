@@ -14,6 +14,8 @@ import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.dermaai_android_140.myClasses.Diagnosis
+import com.example.dermaai_android_140.myClasses.Prediction
+import com.example.dermaai_android_140.myClasses.PredictionImage
 import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.ui.camera.CameraViewModel
 import com.example.dermaai_android_140.ui.home.HomeFragment
@@ -36,6 +38,11 @@ class ResizeActivity : AppCompatActivity() {
         binding = ActivityResizeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val resizeViewModel = ViewModelProvider(this).get(ResizeViewModel::class.java)
+
+        resizeViewModel.setCurrentUser()
+
+
         imageUriString = intent.getStringExtra("image_uri").toString()
         val modelIndex = intent.getIntExtra("modelIndex", -1)
         val framework : String = intent.getStringExtra("framework").toString()
@@ -54,8 +61,6 @@ class ResizeActivity : AppCompatActivity() {
 
         loadImageIntoImageView(imageUri)
         
-
-        val resizeViewModel = ViewModelProvider(this).get(ResizeViewModel::class.java)
 
         resizeViewModel.error.observe(this) { error ->
             Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
@@ -84,6 +89,8 @@ class ResizeActivity : AppCompatActivity() {
 
             Storage.saveDiagnosis(this,imageUriString, diagnosis)
 
+            savePrediction(resizeViewModel, prediction)
+
             prediction?.let {
                  findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_home)
             }
@@ -98,6 +105,20 @@ class ResizeActivity : AppCompatActivity() {
     }
 
 
+    private fun savePrediction(resizeViewModel: ResizeViewModel, prediction : Prediction)
+    {
+        val url = getString(R.string.main) +
+                getString(R.string.user_controller_gateway) +
+                getString(R.string.savePrediction_gateway)
+
+        val user = resizeViewModel.getCurrentUser()!!
+
+        val model = PredictionImage(user.email,user.password,base64,prediction.getPredictionMap())
+
+        resizeViewModel.savePrediction(url,model)
+
+    }
+
 
 
 
@@ -105,13 +126,7 @@ class ResizeActivity : AppCompatActivity() {
         try {
             val inputStream = contentResolver.openInputStream(imageUri)
             val bitmap = BitmapFactory.decodeStream(inputStream)
-
-            /*
-            val exif = ExifInterface(inputStream)
-            val orientation = exif.getAttributeInt(
-                ExifInterface.TAG_ORIENTATION,
-                ExifInterface.ORIENTATION_NORMAL
-            )*/
+            
 
             val imageView = findViewById<ImageView>(R.id.fullscreen_image)
             imageView.setImageBitmap(bitmap)

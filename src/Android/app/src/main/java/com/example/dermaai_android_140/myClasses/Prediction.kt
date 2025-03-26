@@ -10,4 +10,3 @@ data class Prediction(
         return prediction
     }
 }
-

@@ -17,7 +17,6 @@ class SettingsActivity : AppCompatActivity() {
                 .commit()
         }
         
-
         //  back button
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

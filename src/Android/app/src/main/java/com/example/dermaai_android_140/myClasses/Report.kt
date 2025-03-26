@@ -1,5 +1,6 @@
 package com.example.dermaai_android_140.myClasses
 
+
 data class Report (
     val email: String,
     val password: String,

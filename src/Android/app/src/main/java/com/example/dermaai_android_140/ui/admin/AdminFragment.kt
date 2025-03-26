@@ -20,6 +20,7 @@ import com.example.dermaai_android_140.myClasses.ReportAll
 import com.example.dermaai_android_140.myClasses.Retrain
 import com.example.dermaai_android_140.myClasses.RetrainAll
 import com.example.dermaai_android_140.myClasses.Storage
+import kotlinx.serialization.json.Json
 
 class AdminFragment : Fragment() {
 
@@ -100,10 +101,11 @@ class AdminFragment : Fragment() {
                 showModelSelectionDialog(it)
             }
         }
-
+        
 
         adminViewModel.report.observe(viewLifecycleOwner){report ->
             showToast("Report received!")
+
             Storage.createReportFile(requireActivity(), report.toString())
         }
 
@@ -233,7 +235,7 @@ class AdminFragment : Fragment() {
         } ?: return
 
 
-        if(decision != "report")
+        if(decision.equals("retrain"))
         {
             showEpochReshapeInputDialog { epochs, reshapeSize ->
                 val url = getString(R.string.main) +
@@ -248,16 +250,14 @@ class AdminFragment : Fragment() {
                     epochs,
                     reshapeSize
                 )
-
                 adminViewModel.retrain(url, retrainModel)
             }
-        }else{
+        }else if(decision.equals("report")){
             getOneReport(frameworkToSend, index)
         }
-
-
-
     }
+
+
 
     private fun showEpochReshapeInputDialog(
         onInputSubmitted: (epochs: Int, reshapeSize: Int) -> Unit

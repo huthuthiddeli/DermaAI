@@ -66,7 +66,7 @@ class AdminRepoImpl : AdminRepo {
 
     override fun getOneReport(model : Report, url : String) : String? {
 
-        val result = API.callApi(url, "POST", model)
+        val result = API.callApi(url, "GET", model)
         
         if (result.isSuccess) {
 
@@ -82,7 +82,8 @@ class AdminRepoImpl : AdminRepo {
 
     override fun getAllReports(model : ReportAll, url : String) : String? {
 
-        val result = API.callApi(url, "POST", model)
+        val result = API.callApi(url, "GET", model)
+        
 
         if (result.isSuccess) {
 

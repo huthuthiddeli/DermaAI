@@ -7,6 +7,8 @@ import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.ImageRepo
 import com.google.gson.Gson
 import com.example.dermaai_android_140.myClasses.Image
+import com.example.dermaai_android_140.myClasses.PredictionImage
+import com.example.dermaai_android_140.myClasses.PredictionImageList
 
 
 /*
@@ -34,6 +36,45 @@ class ImageRepoImpl : ImageRepo {
             {
 
             }
+
+        } else if (result.isFailure) {
+            result.exceptionOrNull()?.message
+        }
+
+        return null
+    }
+
+
+    override fun savePrediction(model : PredictionImage, url : String) : String? {
+
+        val result = API.callApi(url, "POST", model)
+
+        if (result.isSuccess) {
+
+            val receivedData = result.getOrNull()
+
+            return receivedData
+
+
+        } else if (result.isFailure) {
+            result.exceptionOrNull()?.message
+        }
+
+        return null
+    }
+
+
+
+    override fun loadPredictions(model : User, url : String) : PredictionImageList? {
+
+        val result = API.callApi(url, "POST", model)
+
+        if (result.isSuccess) {
+
+            val receivedData = result.getOrNull()
+            val receivedPredictions  = Gson().fromJson(receivedData, PredictionImageList::class.java)
+
+            return receivedPredictions
 
         } else if (result.isFailure) {
             result.exceptionOrNull()?.message
