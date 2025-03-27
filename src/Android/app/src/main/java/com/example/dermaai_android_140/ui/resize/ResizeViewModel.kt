@@ -7,7 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.myClasses.AiModel
 import com.example.dermaai_android_140.myClasses.Image
 import com.example.dermaai_android_140.myClasses.Prediction
+import com.example.dermaai_android_140.myClasses.PredictionImage
+import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
+import com.example.dermaai_android_140.repoimpl.UserRepoImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -17,6 +20,8 @@ import org.koin.java.KoinJavaComponent
 class ResizeViewModel : ViewModel() {
 
     private val imageRepo: ImageRepoImpl by KoinJavaComponent.inject(ImageRepoImpl::class.java)
+    private val userRepo: UserRepoImpl by KoinJavaComponent.inject(UserRepoImpl::class.java)
+
 
     private val _prediction = MutableLiveData<Prediction?>()
     val prediction: LiveData<Prediction?> get() = _prediction
@@ -28,6 +33,13 @@ class ResizeViewModel : ViewModel() {
 
     private val _error = MutableLiveData<String?>()
     val error: LiveData<String?> get() = _error
+
+    private val _currentUser = MutableLiveData<User?>(null)
+    val currentUser: LiveData<User?> get() = _currentUser
+
+    private val _response = MutableLiveData<String?>(null)
+    val response: LiveData<String?> get() = _response
+
 
     fun getLastPath(): String {
         return lastPath
@@ -53,6 +65,42 @@ class ResizeViewModel : ViewModel() {
             }
         }
     }
+
+
+    fun savePrediction(url: String, model : PredictionImage) {
+
+        viewModelScope.launch {
+            try {
+
+                val response = withContext(Dispatchers.IO) {
+
+                    imageRepo.savePrediction(model, url)
+                }
+
+                _response.postValue(response)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                _error.postValue(e.message)
+                _response.postValue(null)
+            }
+        }
+    }
+
+
+
+    fun setCurrentUser(){
+        viewModelScope.launch {
+            _currentUser.postValue(userRepo.getCurrentUser())
+        }
+    }
+
+    fun getCurrentUser() : User?
+    {
+        return currentUser.value
+    }
+
+
+
 
 
     fun resizeImage(url: String, base64 : String)

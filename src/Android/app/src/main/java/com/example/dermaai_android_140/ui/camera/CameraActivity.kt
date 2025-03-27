@@ -50,14 +50,6 @@ class CameraActivity : AppCompatActivity() {
             Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
         }
 
-        cameraViewModel.prediction.observe(this) { prediction ->
-            if (prediction != null) {
-                //storage.savePredictionToImageMetadata(cameraViewModel.getLastPath(), prediction.getPredictionMap())
-                Storage.saveDiagnosisToFile(cameraViewModel.getLastPath(), prediction.getPredictionMap())
-            } else {
-                
-            }
-        }
 
         val previewView: PreviewView = binding.previewView
 
@@ -118,8 +110,11 @@ class CameraActivity : AppCompatActivity() {
                         val imageFile = File(output.savedUri!!.path)
                         val imageBytes = imageFile.readBytes()
 
-
                         base64 = Base64.encode(imageBytes)
+
+                        // Save Image
+
+                        //
 
                         //cameraViewModel.sendImage(url, cameraViewModel.getModelIndex(), cameraViewModel.getFramework(), base64,output.savedUri!!.path)
 

@@ -11,7 +11,8 @@
     <string name="picture_controller_gateway">image/</string>
     <string name="saveUser_gateway">create-user/</string>
     <string name="validateUser_gateway">login/</string>
-
+    <string name="savePrediction_gateway">login/</string>
+    <string name="loadPrediction_gateway">load-prediction/</string>
 
     <string name="getModels_gateway">models/</string>
     <string name="getAllReports_gateway">classifier-reports/</string>

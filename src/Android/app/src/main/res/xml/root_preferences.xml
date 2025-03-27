@@ -28,4 +28,15 @@
             android:title="@string/logout_header"
             android:onClick="onLogoutClicked" />
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/sync_header">
+
+        <Preference
+            android:key="sync_images"
+            android:title="@string/sync_title"/>
+
+    </PreferenceCategory>
+
+
 </PreferenceScreen>

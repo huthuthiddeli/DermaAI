@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.ActivityResultBinding
 import com.example.dermaai_android_140.myClasses.Storage
+import com.google.gson.Gson
 
 class ResultActivity : AppCompatActivity() {
 
@@ -24,16 +25,14 @@ class ResultActivity : AppCompatActivity() {
 
         //val predictionString : String = storage.readPredictionFromImageMetadata(imagePath.toString()).toString()
 
-        val predictionString : String = Storage.readDiagnosisFromFile(imagePath.toString()).toString()
+        val predicitionMap :  Map<String, Int>? = Storage.readDiagnosisForImage(this, imagePath.toString())
 
         val resultView = findViewById<TextView>(R.id.result_text)
-        resultView.text = predictionString
-
+        resultView.text = Gson().toJson(predicitionMap)
 
         val bitmap = BitmapFactory.decodeFile(imagePath)
         binding.fullscreenImage.setImageBitmap(bitmap)
 
-
-
+        
     }
 }
