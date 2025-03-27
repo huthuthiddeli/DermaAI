@@ -3,6 +3,7 @@ package com.example.dermaai_android_140.myClasses
 import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.media.ExifInterface
 import android.os.Environment
 import android.util.Log
@@ -16,10 +17,22 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import com.google.gson.reflect.TypeToken
+import java.io.ByteArrayOutputStream
 
 class Storage {
 
     companion object{
+
+        fun base64ToBitmap(base64String: String): Bitmap? {
+            return try {
+                val decodedBytes = android.util.Base64.decode(base64String, android.util.Base64.DEFAULT)
+                BitmapFactory.decodeByteArray(decodedBytes, 0, decodedBytes.size)
+            } catch (e: Exception) {
+                Log.e("Storage", "Error converting Base64 to Bitmap: ${e.message}")
+                null
+            }
+        }
+
 
         fun retrieveImagesFromStorage(filesDir: File?, takenByUser: Boolean): MutableList<File> {
 
@@ -47,40 +60,7 @@ class Storage {
             Toast.makeText(context, "Image successfully stored!", Toast.LENGTH_SHORT).show()
         }
 
-
-
-
-        fun savePredictionToImageMetadata(imagePath: String, prediction: Map<String, Int>) {
-            try {
-                val exif = ExifInterface(imagePath)
-
-                // Convert the prediction map to a JSON string
-                val predictionJson = prediction.entries.joinToString(",") { "${it.key}:${it.value}" }
-
-                // Save the prediction in the metadata
-                exif.setAttribute("Prediction", predictionJson)
-                exif.saveAttributes() // Save changes
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
-
-
-        fun readPredictionFromImageMetadata(imagePath: String): String? {
-
-            var predictionStr : String? = null
-
-            try {
-                val exif = ExifInterface(imagePath)
-
-                // Retrieve the prediction JSON string from the metadata
-                predictionStr = exif.getAttribute("Prediction")
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-
-            return predictionStr
-        }
+        
 
 
         // Save diagnosis to file (all in one file)
@@ -193,7 +173,7 @@ class Storage {
                 ".jpg",
                 dir
             )
-            Storage.addMetadata(tempFile)
+            //Storage.addMetadata(tempFile)
 
             return tempFile
         }
@@ -221,7 +201,38 @@ class Storage {
                 "Photo_ServerResponse"
             }
         }
+
+        fun convertImageToBase64(imageFile: File): String? {
+            return try {
+
+                val compressQuality: Int = 100
+
+                // 2. Decode the image file into a Bitmap
+                val options = BitmapFactory.Options().apply {
+                    inPreferredConfig = Bitmap.Config.RGB_565 // More memory efficient
+                }
+                val bitmap = BitmapFactory.decodeFile(imageFile.absolutePath, options)
+                    ?: throw IOException("Failed to decode image file")
+
+                // 3. Compress the bitmap into a ByteArray
+                val byteArrayOutputStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, byteArrayOutputStream)
+                val byteArray = byteArrayOutputStream.toByteArray()
+
+                // 4. Convert to Base64 and return
+                android.util.Base64.encodeToString(byteArray, android.util.Base64.DEFAULT)
+            } catch (e: Exception) {
+                Log.e("Storage", "Error converting image to Base64: ${e.message}")
+                null
+            }
+        }
+
     }
+
+
+
+
+
 
 
 }
