@@ -43,7 +43,6 @@ class BaseModelTF(IModel):
 
             x = np.array([cv2.resize(img, (reshape_size, reshape_size)) for img in x])
 
-            self.model = adjust_model_output_layer_keras(self.model, num_classes, self.model_name)
 
             self.model.fit(x, y_encoded, epochs=epochs, batch_size=batch_size, verbose=1)
 

@@ -3,7 +3,9 @@ import os
 from training.training_pytorch.ModelTrainerPyTorch import ModelTrainerPyTorch
 from training.training_sklearn.ModelTrainerSKLearn import ModelTrainerSKLearn
 from training.training_tensorflow.ModelTrainerTensorFlow import ModelTrainerTensorFlow
-from modules.ImageProcessor import loadImagesAs1DVectorFromJson
+from modules.ImageProcessor import loadImagesAs1DVectorFromJson, loadImagesAs1DVectorFromAPI
+
+
 class ModelTrainerContainer     :
     def __init__(self, model_save_path, api_base_url, num_classes):
         self.api_base_url = api_base_url
@@ -82,7 +84,6 @@ class ModelTrainerContainer     :
         return reports, errors
 
     def __fetch_dataset(self, reshape_size):
-        #dataset = loadImagesAs1DVectorFromAPI(self.apir_base_url + "/picture/picture", reshape_size)
         base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "test"))
         file_path = os.path.join(base_dir, "IMAGES1.images.json")
 
@@ -92,4 +93,5 @@ class ModelTrainerContainer     :
 
         # Lade die Datei
         dataset = loadImagesAs1DVectorFromJson(file_path, reshape_size)
+        #dataset = loadImagesAs1DVectorFromAPI(self.api_base_url + "/picture/picture", reshape_size)
         return dataset
