@@ -22,6 +22,7 @@ import com.example.dermaai_android_140.myClasses.PredictionImage
 import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.ui.camera.CameraViewModel
 import com.example.dermaai_android_140.ui.home.HomeFragment
+import com.example.dermaai_android_140.ui.result.ResultViewModel
 import java.io.File
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -31,6 +32,7 @@ class ResizeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResizeBinding
     private lateinit var base64: String
     private lateinit var imageUriString: String
+    private lateinit var resizeViewModel: ResizeViewModel
 
 
     @OptIn(ExperimentalEncodingApi::class)
@@ -41,7 +43,7 @@ class ResizeActivity : AppCompatActivity() {
         binding = ActivityResizeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val resizeViewModel = ViewModelProvider(this).get(ResizeViewModel::class.java)
+        resizeViewModel = ViewModelProvider(this).get(ResizeViewModel::class.java)
 
         resizeViewModel.setCurrentUser()
 
@@ -92,7 +94,7 @@ class ResizeActivity : AppCompatActivity() {
 
             Storage.saveDiagnosis(this, diagnosis, resizeViewModel.getCurrentUser()!!.email)
 
-            savePrediction(resizeViewModel, prediction)
+            savePrediction(prediction)
 
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
@@ -107,7 +109,7 @@ class ResizeActivity : AppCompatActivity() {
     }
 
 
-    private fun savePrediction(resizeViewModel: ResizeViewModel, prediction : Prediction)
+    private fun savePrediction(prediction : Prediction)
     {
         val url = getString(R.string.main) +
                 getString(R.string.user_controller_gateway) +

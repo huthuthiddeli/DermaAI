@@ -26,7 +26,7 @@ class AdminFragment : Fragment() {
 
     private var _binding: FragmentAdminBinding? = null
     private val binding get() = _binding!!
-    private val adminViewModel: AdminViewModel by viewModels()
+    private lateinit var adminViewModel: AdminViewModel
     private lateinit var decision : String
 
     override fun onCreateView(

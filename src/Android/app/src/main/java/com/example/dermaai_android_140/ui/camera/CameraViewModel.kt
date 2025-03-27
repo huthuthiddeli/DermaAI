@@ -72,12 +72,18 @@ class CameraViewModel : ViewModel() {
         return lastPath
     }
 
-    
+
     fun setCurrentUser(){
-        viewModelScope.launch {
-            _currentUser.postValue(userRepo.getCurrentUser())
+
+        val currentUserJob = viewModelScope.launch {
+            userRepo.getCurrentUser()
+        }
+
+        currentUserJob.invokeOnCompletion {
+            _currentUser.postValue(currentUser.value)
         }
     }
+
 
     fun getCurrentUser() : User?
     {

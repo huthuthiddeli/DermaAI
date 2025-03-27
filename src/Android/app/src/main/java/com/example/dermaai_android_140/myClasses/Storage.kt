@@ -143,8 +143,7 @@ class Storage {
                     ".html",
                     dir
                 )
-
-
+                
 
                 tempFile.writeText(report)
 
@@ -153,8 +152,7 @@ class Storage {
             }
 
         }
-
-
+        
 
         fun createUniqueImagePath(activity: Activity, username : String): File {
             //create File name

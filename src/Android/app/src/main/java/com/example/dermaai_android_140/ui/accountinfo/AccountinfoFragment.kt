@@ -66,8 +66,7 @@ class AccountinfoFragment() : Fragment() {
             setUpObserverLogin(loginViewModel,viewModel)
 
 
-
-
+            
 
             if(isTokenValid())
             {
@@ -99,9 +98,9 @@ class AccountinfoFragment() : Fragment() {
 
 
             loginBtn.setOnClickListener {
-                
+
                 //
-                //hardcoded(viewModel)
+                hardcoded(viewModel)
                 //
                 
                 val email = editTextEmail.text.toString()
