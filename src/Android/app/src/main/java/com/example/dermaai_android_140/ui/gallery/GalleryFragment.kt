@@ -14,6 +14,7 @@ import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.databinding.FragmentGalleryBinding
+import com.example.dermaai_android_140.ui.camera.CameraViewModel
 import com.example.dermaai_android_140.ui.result.ResultActivity
 import java.io.File
 
@@ -22,13 +23,15 @@ class GalleryFragment : Fragment() {
     private var _binding: FragmentGalleryBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var galleryViewModel: GalleryViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
 
-        val galleryViewModel = ViewModelProvider(this)[GalleryViewModel::class.java]
+        galleryViewModel = ViewModelProvider(this)[GalleryViewModel::class.java]
 
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
 
@@ -38,7 +41,6 @@ class GalleryFragment : Fragment() {
         val textView: TextView = binding.textGallery
 
         val filesDir : File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-
 
         galleryViewModel.loadImages(filesDir)
 

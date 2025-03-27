@@ -1,5 +1,6 @@
 package com.example.dermaai_android_140.ui.resize
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -45,26 +46,26 @@ class ResizeViewModel : ViewModel() {
         return lastPath
     }
 
-    fun sendImage(url: String, modelIndex : Int, trainerString : String, base64Image: String, lastPathOfImg: String?) {
-
+    fun sendImage(url: String, modelIndex: Int, trainerString: String, base64Image: String, lastPathOfImg: String?) {
         viewModelScope.launch {
-            try {
+            val prediction = try {
 
-                val prediction = withContext(Dispatchers.IO) {
-
+                withContext(Dispatchers.IO) {
                     val model = AiModel(modelIndex, trainerString, base64Image)
                     lastPath = lastPathOfImg.toString()
-                    imageRepo.sendImage(model, url)
+                    imageRepo.sendImage(model, url) // This should return the prediction
                 }
-
-                _prediction.postValue(prediction)
             } catch (e: Exception) {
                 e.printStackTrace()
-                _error.postValue(e.message)
-                _prediction.postValue(null)
+                _error.postValue(e.message ?: "Unknown error occurred")
+                null
             }
+            
+            _prediction.postValue(prediction)
         }
     }
+
+
 
 
     fun savePrediction(url: String, model : PredictionImage) {

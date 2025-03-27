@@ -1,5 +1,6 @@
 package com.example.dermaai_android_140.ui.resize
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -10,9 +11,11 @@ import android.widget.Button
 import android.net.Uri
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.dermaai_android_140.MainActivity
 import com.example.dermaai_android_140.myClasses.Diagnosis
 import com.example.dermaai_android_140.myClasses.Prediction
 import com.example.dermaai_android_140.myClasses.PredictionImage
@@ -87,13 +90,12 @@ class ResizeActivity : AppCompatActivity() {
             // Save Prediction to JSON
             val diagnosis = Diagnosis(prediction!!.getPredictionMap(), imageUriString)
 
-            Storage.saveDiagnosis(this,imageUriString, diagnosis)
+            Storage.saveDiagnosis(this, diagnosis, resizeViewModel.getCurrentUser()!!.email)
 
             savePrediction(resizeViewModel, prediction)
 
-            prediction?.let {
-                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_home)
-            }
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
             
         }
 
@@ -116,7 +118,6 @@ class ResizeActivity : AppCompatActivity() {
         val model = PredictionImage(user.email,user.password,base64,prediction.getPredictionMap())
 
         resizeViewModel.savePrediction(url,model)
-
     }
 
 

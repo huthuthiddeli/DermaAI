@@ -27,7 +27,7 @@ class SettingsViewModel : ViewModel() {
     private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
     private val imageRepo: ImageRepoImpl by KoinJavaComponent.inject(ImageRepoImpl::class.java)
 
-    private val _currentUser = MutableLiveData<User?>(null)
+    private val _currentUser = MutableLiveData<User?>()
     val currentUser: LiveData<User?> get() = _currentUser
 
     private val _allPredictions = MutableLiveData<PredictionImageList?>(null)

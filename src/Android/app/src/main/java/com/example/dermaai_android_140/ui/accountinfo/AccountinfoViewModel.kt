@@ -1,6 +1,7 @@
 package com.example.dermaai_android_140.ui.accountinfo
 
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -131,13 +132,13 @@ class AccountinfoViewModel() : ViewModel() {
         var receivedUser: User? = null
 
         viewModelScope.launch {
-                
 
             val receivedUser = withContext(Dispatchers.IO) {
                 loginRepo.login(email, password, mfa, url)
             }
 
-                
+            Log.d("Tag", receivedUser.toString())
+
             // succesfull
             if (receivedUser != null) {
                 
@@ -158,9 +159,8 @@ class AccountinfoViewModel() : ViewModel() {
             } else {
                 println("failed")
             }
-
-
         }
+
     }
 
 

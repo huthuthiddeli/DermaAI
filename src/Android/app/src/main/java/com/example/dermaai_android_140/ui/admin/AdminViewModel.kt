@@ -157,6 +157,7 @@ class AdminViewModel : ViewModel() {
             }
         }
     }
+    
 
     fun getOneReport(url : String, model: Report)
     {

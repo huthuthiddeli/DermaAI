@@ -52,7 +52,7 @@ class AdminFragment : Fragment() {
         
         allReportsBtn.setOnClickListener {
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
-
+                getAllReports()
             } else {
                 showToast("You are not an Admin!")
             }
@@ -104,15 +104,20 @@ class AdminFragment : Fragment() {
         
 
         adminViewModel.report.observe(viewLifecycleOwner){report ->
-            showToast("Report received!")
-
-            Storage.createReportFile(requireActivity(), report.toString())
+            if(report != null)
+            {
+                showToast("Report received!")
+                Storage.createReportFile(requireActivity(), report.toString(), adminViewModel.getCurrentUser()!!.email)
+            }else
+            {
+                showToast("Error receiving report")
+            }
         }
 
         adminViewModel.error.observe(viewLifecycleOwner){error ->
             showToast(error.toString())
         }
-        
+
     }
 
     private fun getAllReports()

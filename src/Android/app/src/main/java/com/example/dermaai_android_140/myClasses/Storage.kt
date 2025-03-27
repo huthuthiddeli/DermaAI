@@ -34,9 +34,9 @@ class Storage {
         }
 
 
-        fun retrieveImagesFromStorage(filesDir: File?, takenByUser: Boolean): MutableList<File> {
+        fun retrieveImagesFromStorage(filesDir: File?, username : String): MutableList<File> {
 
-            var subDir = getSubDir(takenByUser)
+            var subDir = getSubDir(username)
 
             val folder = File(filesDir, subDir)
             val images = mutableListOf<File>()
@@ -60,14 +60,15 @@ class Storage {
             Toast.makeText(context, "Image successfully stored!", Toast.LENGTH_SHORT).show()
         }
 
-        
 
 
         // Save diagnosis to file (all in one file)
-        fun saveDiagnosis(activity: Activity, imagePath: String, diagnosis: Diagnosis) {
+        fun saveDiagnosis(activity: Activity, diagnosis: Diagnosis, username : String) {
             try {
                 // 1. Create or find storage folder
-                val folder = File(activity.getExternalFilesDir(null), "diagnoses")
+                var subDir = "Diagnoses_" + username
+
+                val folder = File(activity.getExternalFilesDir(null), subDir)
                 if (!folder.exists()) {
                     folder.mkdirs()
                 }
@@ -96,9 +97,10 @@ class Storage {
         }
 
         // Read all diagnoses from file
-        fun readAllDiagnoses(activity: Activity): List<Diagnosis> {
+        fun readAllDiagnoses(activity: Activity, username : String): List<Diagnosis> {
             return try {
-                val file = File(activity.getExternalFilesDir(null), "diagnoses/all_diagnoses.json")
+                val subdir = "Diagnoses_" + username + "/all_diagnoses.json"
+                val file = File(activity.getExternalFilesDir(null), subdir)
                 if (file.exists()) {
                     val jsonString = file.readText()
                     Gson().fromJson(jsonString, Array<Diagnosis>::class.java).toList()
@@ -112,13 +114,13 @@ class Storage {
         }
 
         // Read diagnosis for a specific image
-        fun readDiagnosisForImage(activity: Activity, imagePath: String): Map<String, Int>? {
-            val allDiagnoses = readAllDiagnoses(activity)
+        fun readDiagnosisForImage(activity: Activity, imagePath: String, username : String): Map<String, Double>? {
+            val allDiagnoses = readAllDiagnoses(activity, username)
             return allDiagnoses.find { it.imagePath == imagePath }?.prediction
         }
 
 
-        fun createReportFile(activity: Activity, report : String) {
+        fun createReportFile(activity: Activity, report : String, username : String) {
 
             try {
 
@@ -127,7 +129,7 @@ class Storage {
                     SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
                 val storageDir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
-                var subDir = "Reports"
+                var subDir = "Reports_" + username
 
                 val dir = File(storageDir, subDir)
 
@@ -154,12 +156,12 @@ class Storage {
 
 
 
-        fun createUniqueImagePath(activity: Activity, takenByUser: Boolean): File {
+        fun createUniqueImagePath(activity: Activity, username : String): File {
             //create File name
             val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
             val storageDir: File? = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
 
-            var subDir = getSubDir(takenByUser)
+            var subDir = getSubDir(username)
 
             val dir = File(storageDir, subDir)
 
@@ -179,27 +181,10 @@ class Storage {
         }
 
 
-        private fun removeMetadata() {
-
-        }
-
-        fun addMetadata(image: File) {
-            try {
-                val exif = ExifInterface(image)
-                exif.setAttribute(ExifInterface.TAG_USER_COMMENT, "Text")
-                exif.saveAttributes()
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
-        }
 
 
-        private fun getSubDir(takenByUser: Boolean): String {
-            return if (takenByUser) {
-                "Photo_User"
-            } else {
-                "Photo_ServerResponse"
-            }
+        private fun getSubDir(username : String): String {
+            return "Photo_User_" + username
         }
 
         fun convertImageToBase64(imageFile: File): String? {
@@ -226,13 +211,12 @@ class Storage {
                 null
             }
         }
-
     }
-
-
-
-
-
-
-
 }
+
+
+
+
+
+
+

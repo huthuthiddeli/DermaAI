@@ -6,16 +6,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.edit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.activity
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.example.dermaai_android_140.R
+import com.example.dermaai_android_140.databinding.SettingsActivityBinding
 import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.Diagnosis
 import com.example.dermaai_android_140.myClasses.Storage
@@ -33,43 +36,46 @@ import kotlin.getValue
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
 
-    private val settingsViewModel: SettingsViewModel by viewModels()
+    private lateinit var settingsViewModel: SettingsViewModel
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
-        val settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
+        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
         settingsViewModel.setCurrentUser()
+
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val enable2faSwitch: SwitchPreferenceCompat? = findPreference("enable_2fa")
         val logoutBtn: Preference? = findPreference("logout")
         val syncBtn: Preference? = findPreference("sync_images")
 
-
-
+        /*
         settingsViewModel.allPredictions.observe(viewLifecycleOwner) { response ->
-
             val filesDir : File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             var imageCount = 0
-            val localImages = Storage.retrieveImagesFromStorage(filesDir,true)
+            val localImages = Storage.retrieveImagesFromStorage(filesDir, settingsViewModel.getCurrentUser()!!.email)
 
 
             response!!.predictions.forEach { prediction ->
                 for (localImage in localImages) {
 
+
                     val localBase64 = Storage.convertImageToBase64(localImage)
                     if(!localBase64.equals(prediction.image))
                     {
-                        val file = Storage.createUniqueImagePath(requireActivity(), true)
+                        val file = Storage.createUniqueImagePath(requireActivity(), settingsViewModel.getCurrentUser()!!.email)
                         val newBitmap = Storage.base64ToBitmap(prediction.image)
                         if (newBitmap != null) {
                             Storage.saveFileToStorage(newBitmap, requireContext(), file.absolutePath)
                             val diagnosis = Diagnosis(prediction.prediction,file.absolutePath)
-                            Storage.saveDiagnosis(requireActivity(),file.absolutePath,diagnosis)
+                            Storage.saveDiagnosis(requireActivity(),diagnosis, settingsViewModel.getCurrentUser()!!.email)
                             imageCount++
                         }
 
@@ -79,11 +85,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             Toast.makeText(context, "Synchronized $imageCount images", Toast.LENGTH_LONG).show()
         }
-        
+*/
 
         settingsViewModel.currentUser.observe(viewLifecycleOwner){user ->
+
             if (enable2faSwitch != null && user != null) {
-                    enable2faSwitch.isEnabled = user.isAdmin
+                enable2faSwitch.isEnabled = user.mfa
             }
         }
 
@@ -108,7 +115,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
             syncWithDb(settingsViewModel)
             true
         }
-
 
     }
 
@@ -148,11 +154,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
 
         FaKeyInput?.isEnabled = true
-        
+
         FaKeyInput?.setOnPreferenceChangeListener { preference, enteredCode ->
 
             val correctCode = settingsViewModel.validate2faCode(key,enteredCode.toString())
-            
+
             if(correctCode)
             {
                 Toast.makeText(context, "Correct Code: 2FA Activated", Toast.LENGTH_SHORT).show()
@@ -161,7 +167,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.setMfa)
 
                 val viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
-                
+
                 val receivedUser = viewModel.setMfa(url)
 
                 if(receivedUser != null)
@@ -191,15 +197,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         clipboard.setPrimaryClip(clip)
     }
 
-
     fun disable2FA() {
 
         val twoFAKeyInput = findPreference<EditTextPreference>("two_fa_key")
         twoFAKeyInput?.isEnabled = false
 
-
-
         //FaKeyInput?.setText("")
     }
+
 
 }

@@ -41,8 +41,9 @@ class CameraActivity : AppCompatActivity() {
         val selectedIndex = intent.getIntExtra("SELECTED_INDEX", -1)
         val selectedFramework = intent.getStringExtra("SELECTED_FRAMEWORK").toString()
 
-
         cameraViewModel = ViewModelProvider(this).get(CameraViewModel::class.java)
+        cameraViewModel.setCurrentUser()
+
         cameraViewModel.setModelIndex(selectedIndex)
         cameraViewModel.setFramework(selectedFramework)
 
@@ -80,7 +81,7 @@ class CameraActivity : AppCompatActivity() {
             return
         }
 
-        val file = Storage.createUniqueImagePath(this, true)
+        val file = Storage.createUniqueImagePath(this, cameraViewModel.getCurrentUser()!!.email)
         val outputOptions = ImageCapture.OutputFileOptions.Builder(file).build()
 
         imageCapture.takePicture(
