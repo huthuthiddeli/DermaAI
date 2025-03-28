@@ -21,7 +21,6 @@ class GalleryViewModel : ViewModel() {
     private val userRepo: UserRepoImpl by KoinJavaComponent.inject(UserRepoImpl::class.java)
 
     fun loadImages(filesDir : File?) {
-
         viewModelScope.launch(Dispatchers.IO) {
             val retrievedImages = Storage.retrieveImagesFromStorage(filesDir, userRepo.getCurrentUser()!!.email)
             _images.postValue(retrievedImages)

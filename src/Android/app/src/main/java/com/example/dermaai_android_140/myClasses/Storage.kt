@@ -4,8 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import android.media.ExifInterface
 import android.os.Environment
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.util.Log
 import android.widget.Toast
 import com.google.gson.Gson
@@ -18,6 +22,8 @@ import java.util.Date
 import java.util.Locale
 import com.google.gson.reflect.TypeToken
 import java.io.ByteArrayOutputStream
+
+
 
 class Storage {
 
@@ -37,7 +43,6 @@ class Storage {
         fun retrieveImagesFromStorage(filesDir: File?, username : String): MutableList<File> {
 
             var subDir = getSubDir(username)
-
             val folder = File(filesDir, subDir)
             val images = mutableListOf<File>()
 
@@ -50,6 +55,7 @@ class Storage {
             }
             return images
         }
+
 
         fun saveFileToStorage(bitmap: Bitmap, context: Context, filePath: String) {
             val outputStream: OutputStream = FileOutputStream(filePath)
@@ -209,6 +215,9 @@ class Storage {
                 null
             }
         }
+
+
+
     }
 }
 

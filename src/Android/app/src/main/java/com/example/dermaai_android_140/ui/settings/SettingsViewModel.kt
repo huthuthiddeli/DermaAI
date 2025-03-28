@@ -22,7 +22,6 @@ import kotlin.getValue
 
 class SettingsViewModel : ViewModel() {
 
-
     private val userRepo: UserRepoImpl by KoinJavaComponent.inject(UserRepoImpl::class.java)
     private val loginRepo: LoginRepoImpl by KoinJavaComponent.inject(LoginRepoImpl::class.java)
     private val imageRepo: ImageRepoImpl by KoinJavaComponent.inject(ImageRepoImpl::class.java)
@@ -33,7 +32,7 @@ class SettingsViewModel : ViewModel() {
     private val _allPredictions = MutableLiveData<PredictionImageList?>(null)
     val allPredictions: LiveData<PredictionImageList?> get() = _allPredictions
 
-
+    
     fun syncImages(url : String) : PredictionImageList?{
 
         var response : PredictionImageList? = null
@@ -73,21 +72,11 @@ class SettingsViewModel : ViewModel() {
 
 
 
-    fun setCurrentUser(){
-
-        val currentUserJob = viewModelScope.launch {
-            userRepo.getCurrentUser()
-        }
-
-        currentUserJob.invokeOnCompletion {
-            _currentUser.postValue(currentUser.value)
-        }
-    }
 
 
-    fun getCurrentUser() : User?
+    fun getCurrentUser() : User
     {
-        return currentUser.value
+        return userRepo.getCurrentUser()
     }
 
 

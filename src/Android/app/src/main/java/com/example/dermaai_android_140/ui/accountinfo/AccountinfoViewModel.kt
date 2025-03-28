@@ -2,6 +2,7 @@ package com.example.dermaai_android_140.ui.accountinfo
 
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -118,50 +119,40 @@ class AccountinfoViewModel() : ViewModel() {
             }
         }
     }
-    
-    
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun login(email : String, password : String, mfa: Boolean, url : String) {
-        /*
-        if(stayLoggedIn.value == true)
-        {
-
-        }*/
-
-        var receivedUser: User? = null
+    fun login(email: String, password: String, mfa: Boolean, url: String) {
+        // var receivedUser: User? = null // You don't need this line here.
 
         viewModelScope.launch {
-
-            val receivedUser = withContext(Dispatchers.IO) {
+            // Call the repository function
+            val result = withContext(Dispatchers.IO) {
                 loginRepo.login(email, password, mfa, url)
             }
 
-            Log.d("Tag", receivedUser.toString())
+            // Handle the result properly
+            result.onSuccess { receivedUser ->
+                Log.d("Tag", receivedUser.toString())
 
-            // succesfull
-            if (receivedUser != null) {
-                
+                // success: do something with the user
                 _user = receivedUser
                 receivedUser.password = password
                 userRepo.saveCurrentUser(receivedUser)
                 _mfaEnabled.postValue(_user!!.mfa)
 
-                
                 if (receivedUser.mfa) {
-
                     _mfaEnabled.postValue(receivedUser.mfa)
-
                 } else {
                     _isLoggedIn.postValue(true)
                 }
-
-            } else {
-                println("failed")
+            }
+            result.onFailure { exception ->
+                Toast.makeText(null, "Login failed" + exception.message, Toast.LENGTH_SHORT).show()
             }
         }
-
     }
+
+
 
 
     fun createTestUser()

@@ -10,7 +10,7 @@ class UserRepoImpl(context : Context) : UserRepo {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
 
-    override suspend fun getCurrentUser(): User? {
+    override fun getCurrentUser(): User {
         val password = sharedPreferences.getString("password", null).toString()
         val email = sharedPreferences.getString("email", null).toString()
         val mfa = sharedPreferences.getBoolean("mfa", false)

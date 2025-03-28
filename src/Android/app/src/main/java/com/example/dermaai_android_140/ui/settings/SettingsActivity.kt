@@ -3,24 +3,25 @@ package com.example.dermaai_android_140.ui.settings
 import android.os.Bundle
 import android.os.Environment
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.Storage
 import java.io.File
 import com.example.dermaai_android_140.myClasses.Diagnosis
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : AppCompatActivity() {
 
 
-    private lateinit var settingsViewModel: SettingsViewModel
-
+    private val settingsViewModel: SettingsViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
 
-        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
+        //settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
 
         if (savedInstanceState == null) {
@@ -35,12 +36,18 @@ class SettingsActivity : AppCompatActivity() {
 
 
         settingsViewModel.allPredictions.observe(this) { response ->
+
+            if(response == null)
+            {
+                return@observe
+            }
+
             val filesDir : File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             var imageCount = 0
             val localImages = Storage.retrieveImagesFromStorage(filesDir, settingsViewModel.getCurrentUser()!!.email)
 
 
-            response!!.predictions.forEach { prediction ->
+            response.predictions.forEach { prediction ->
                 for (localImage in localImages) {
 
 

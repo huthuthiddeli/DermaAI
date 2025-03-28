@@ -40,10 +40,6 @@ class CameraViewModel : ViewModel() {
     val error: LiveData<String?> get() = _error
 
 
-    private val _currentUser = MutableLiveData<User?>(null)
-    val currentUser: LiveData<User?> get() = _currentUser
-
-
     private var modelIndex : Int = 0
 
     private var framework : String = ""
@@ -73,21 +69,9 @@ class CameraViewModel : ViewModel() {
     }
 
 
-    fun setCurrentUser(){
-
-        val currentUserJob = viewModelScope.launch {
-            userRepo.getCurrentUser()
-        }
-
-        currentUserJob.invokeOnCompletion {
-            _currentUser.postValue(currentUser.value)
-        }
-    }
-
-
-    fun getCurrentUser() : User?
+    fun getCurrentUser() : User
     {
-        return currentUser.value
+        return userRepo.getCurrentUser()
     }
 
 

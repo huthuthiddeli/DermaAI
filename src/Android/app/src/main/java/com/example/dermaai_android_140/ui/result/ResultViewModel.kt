@@ -17,20 +17,10 @@ class ResultViewModel : ViewModel(){
     val currentUser: LiveData<User?> get() = _currentUser
 
 
-    fun setCurrentUser(){
 
-        val currentUserJob = viewModelScope.launch {
-            userRepo.getCurrentUser()
-        }
-
-        currentUserJob.invokeOnCompletion {
-            _currentUser.postValue(currentUser.value)
-        }
-    }
-
-    fun getCurrentUser() : User?
+    fun getCurrentUser() : User
     {
-        return currentUser.value
+        return userRepo.getCurrentUser()
     }
 
 }

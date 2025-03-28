@@ -62,7 +62,7 @@ class PhotoViewModel() : ViewModel() {
         {
             _error.postValue(e.message)
         }
-
+        
         myJob?.invokeOnCompletion { throwable ->
 
         }

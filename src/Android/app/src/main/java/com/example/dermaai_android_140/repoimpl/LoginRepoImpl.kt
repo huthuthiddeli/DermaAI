@@ -12,33 +12,23 @@ import kotlin.Result
 
 class LoginRepoImpl : LoginRepo {
 
-    
 
-        override fun login(email : String, password : String, mfa : Boolean, url : String) : User?
-        {
-            val user = User(email,password, mfa)
 
-            var receivedUserObject : User? = null
+    override fun login(email: String, password: String, mfa: Boolean, url: String): Result<User> {
+        val user = User(email, password, mfa)
 
-            val result = API.callApi(url, "POST", user)
+        val result = API.callApi(url, "POST", user)
 
-            if (result.isSuccess) {
-                val receivedData = result.getOrNull()
-                val gson = Gson()
-                try{
-                    receivedUserObject = gson.fromJson(receivedData, User::class.java)
-
-                }
-                catch (e: Exception)
-                {
-
-                }
-
-            } else if (result.isFailure) {
-
-            }
-            return receivedUserObject
+        if (result.isSuccess) {
+            val receivedUser = Gson().fromJson(result.getOrNull(), User::class.java)
+            return Result.success(receivedUser)
+        } else if (result.isFailure) {
+            val errorMessage = result.exceptionOrNull()?.message
+            return Result.failure(Exception(errorMessage))
         }
+
+        return Result.failure(Exception("Unexpected result"))
+    }
 
 
         @SuppressLint("SuspiciousIndentation")

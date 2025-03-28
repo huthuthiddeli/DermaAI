@@ -45,7 +45,6 @@ class ResizeActivity : AppCompatActivity() {
 
         resizeViewModel = ViewModelProvider(this).get(ResizeViewModel::class.java)
 
-        resizeViewModel.setCurrentUser()
 
 
         imageUriString = intent.getStringExtra("image_uri").toString()
@@ -75,6 +74,7 @@ class ResizeActivity : AppCompatActivity() {
 
             if(resizedImage != null)
             {
+                Toast.makeText(this, "Image sending to Server to resize! Wait a few Seconds!", Toast.LENGTH_SHORT).show()
                 base64 = resizedImage.image
                 loadBase64ImageIntoImageView(resizedImage.image)
             }
@@ -84,6 +84,7 @@ class ResizeActivity : AppCompatActivity() {
         val acceptAndSendBtn = findViewById<Button>(R.id.acceptBtn)
 
         acceptAndSendBtn.setOnClickListener{
+            Toast.makeText(this, "Sending Image to Server! Wait a few Seconds!", Toast.LENGTH_SHORT).show()
             resizeViewModel.sendImage(url, modelIndex, framework, base64, imageUriString)
         }
 

@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.FragmentAdminBinding
@@ -37,19 +38,18 @@ class AdminFragment : Fragment() {
         _binding = FragmentAdminBinding.inflate(inflater, container, false)
         return binding.root
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        adminViewModel.setCurrentUser()
-
 
         val retrainAllBtn = view.findViewById<Button>(R.id.retrainAllBtn)
         val retrainBtn = view.findViewById<Button>(R.id.retrainBtn)
 
         val allReportsBtn = view.findViewById<Button>(R.id.allReportsBtn)
         val oneReportBtn = view.findViewById<Button>(R.id.oneReportBtn)
-        
+
+        adminViewModel = ViewModelProvider(this)[AdminViewModel::class.java]
+
         allReportsBtn.setOnClickListener {
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
                 getAllReports()

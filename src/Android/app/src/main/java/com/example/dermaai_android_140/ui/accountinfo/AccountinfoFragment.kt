@@ -98,7 +98,7 @@ class AccountinfoFragment() : Fragment() {
 
 
             loginBtn.setOnClickListener {
-
+                
                 //
                 hardcoded(viewModel)
                 //

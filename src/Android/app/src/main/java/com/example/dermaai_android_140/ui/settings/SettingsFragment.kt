@@ -30,6 +30,7 @@ import com.example.dermaai_android_140.ui.gallery.GalleryViewModel
 import com.example.dermaai_android_140.ui.login.LoginActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.java.KoinJavaComponent
 import java.io.File
 import kotlin.getValue
@@ -37,15 +38,14 @@ import kotlin.getValue
 class SettingsFragment : PreferenceFragmentCompat() {
 
 
-    private lateinit var settingsViewModel: SettingsViewModel
+    private val settingsViewModel: SettingsViewModel by viewModel()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
+        //settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
-        settingsViewModel.setCurrentUser()
 
     }
 
@@ -112,10 +112,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
         syncBtn?.setOnPreferenceClickListener {
+            Toast.makeText(context, "Syncing Images...", Toast.LENGTH_SHORT).show()
             syncWithDb(settingsViewModel)
             true
         }
-
     }
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
