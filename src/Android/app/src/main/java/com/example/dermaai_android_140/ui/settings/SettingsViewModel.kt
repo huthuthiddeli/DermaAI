@@ -32,33 +32,39 @@ class SettingsViewModel : ViewModel() {
     private val _allPredictions = MutableLiveData<PredictionImageList?>(null)
     val allPredictions: LiveData<PredictionImageList?> get() = _allPredictions
 
-    
-    fun syncImages(url : String) : PredictionImageList?{
 
-        var response : PredictionImageList? = null
+    private val _error = MutableLiveData<String?>()
+    val error : LiveData<String?> get() = _error
 
+
+    fun syncImages(url: String) {
         viewModelScope.launch {
-            response = withContext(Dispatchers.IO) {
-                imageRepo.loadPredictions(getCurrentUser()!!, url)
+            val result = withContext(Dispatchers.IO) {
+
+                imageRepo.loadPredictions(getCurrentUser(), url)
             }
-
-            _allPredictions.postValue(response)
+            result.onSuccess { predictionList ->
+                _allPredictions.postValue(predictionList)
+            }.onFailure { exception ->
+                _error.postValue(exception.message)
+                exception.printStackTrace()
+            }
         }
-
-        return response
     }
 
 
-    fun setMfa(url : String) : User?
-    {
-        var receivedUser : User? = null
-        
+    fun setMfa(url: String) {
         viewModelScope.launch {
-            receivedUser = withContext(Dispatchers.IO) {
+            val result = withContext(Dispatchers.IO) {
                 loginRepo.setMFA(userRepo.getCurrentUser(), url)
             }
+            result.onSuccess { updatedUser ->
+                _currentUser.postValue(updatedUser)
+            }.onFailure { exception ->
+                _error.postValue(exception.message)
+                exception.printStackTrace()
+            }
         }
-        return receivedUser
     }
 
 

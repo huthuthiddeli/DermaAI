@@ -20,8 +20,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.MainActivity
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.Authentication
+import com.example.dermaai_android_140.myClasses.HealthCheckResponse
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.ui.login.LoginViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
 import java.util.UUID
 import kotlin.jvm.java
 
@@ -56,7 +59,19 @@ class AccountinfoFragment() : Fragment() {
         } else {
             inflater.inflate(R.layout.fragment_accountinfo_register, container, false)
         }
+
+        viewModel.isHealthy.observe(viewLifecycleOwner) { healthStatus ->
+            Toast.makeText(context, healthStatus, Toast.LENGTH_LONG).show()
+        }
+
+        viewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        }
         
+        checkHealth(viewModel)
+
+
+
         if (isLogin) {
 
             val switchToRegisterBtn = view.findViewById<Button>(R.id.switchToRegisterBtn)
@@ -64,9 +79,6 @@ class AccountinfoFragment() : Fragment() {
             val loginViewModel = ViewModelProvider(requireActivity())[LoginViewModel::class.java]
 
             setUpObserverLogin(loginViewModel,viewModel)
-
-
-            
 
             if(isTokenValid())
             {
@@ -98,9 +110,9 @@ class AccountinfoFragment() : Fragment() {
 
 
             loginBtn.setOnClickListener {
-                
+
                 //
-                hardcoded(viewModel)
+                //hardcoded(viewModel)
                 //
                 
                 val email = editTextEmail.text.toString()
@@ -115,6 +127,9 @@ class AccountinfoFragment() : Fragment() {
 
         } else {
 
+
+            setUpInputValidation(view)
+            
             val switchToLoginBtn = view.findViewById<Button>(R.id.switchToLoginBtn)
 
             setUpObserverRegister(viewModel)
@@ -130,20 +145,71 @@ class AccountinfoFragment() : Fragment() {
 
             registerBtn.setOnClickListener {
 
-                val email = view.findViewById<EditText>(R.id.editTextEmail).text.toString()
-                val password = view.findViewById<EditText>(R.id.editTextPassword).text.toString()
+                /*
+                val email = view.findViewById<EditText>(R.id.editTextEmail)
+                val password = view.findViewById<EditText>(R.id.editTextPassword)
+                val confirmPassword = view.findViewById<EditText>(R.id.editTextConfirmPassword)
+                 */
+
+                val emailStr = view.findViewById<EditText>(R.id.editTextEmail).text.toString()
+                val passwordStr = view.findViewById<EditText>(R.id.editTextPassword).text.toString()
+                //val confirmPasswordStr = view.findViewById<EditText>(R.id.editTextConfirmPassword).text.toString()
+
+
+
 
                 val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.saveUser_gateway)
 
-                viewModel.register(email, password, url)
+                viewModel.register(emailStr, passwordStr, url)
 
 
             }
+
         }
 
         return view
     }
 
+    private fun checkHealth(viewModel: AccountinfoViewModel)
+    {
+        val url = getString(R.string.main) + getString(R.string.checkHealth_gateway)
+        val model = HealthCheckResponse("")
+
+        viewModel.startHealthCheck(model,url)
+
+    }
+
+    private fun setUpInputValidation(view: View): Boolean {
+        val email = view.findViewById<EditText>(R.id.editTextEmail)
+        val password = view.findViewById<EditText>(R.id.editTextPassword)
+        val confirmPassword = view.findViewById<EditText>(R.id.editTextConfirmPassword)
+
+        val emailStr = email.text.toString().trim()
+        val passwordStr = password.text.toString()
+        val confirmPasswordStr = confirmPassword.text.toString()
+
+        if (emailStr.isEmpty()) {
+            email.error = "Email is required"
+            return false
+        }
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailStr).matches()) {
+            email.error = "Enter a valid email address"
+            return false
+        }
+        if (passwordStr.isEmpty()) {
+            password.error = "Password is required"
+            return false
+        }
+        if (confirmPasswordStr.isEmpty()) {
+            confirmPassword.error = "Please confirm your password"
+            return false
+        }
+        if (passwordStr != confirmPasswordStr) {
+            confirmPassword.error = "Passwords do not match"
+            return false
+        }
+        return true
+    }
 
     private fun setUpObserverRegister(viewModel : AccountinfoViewModel)
     {
@@ -153,6 +219,8 @@ class AccountinfoFragment() : Fragment() {
                 Toast.makeText(context, "Successfully registered!", Toast.LENGTH_LONG).show()
             }
         }
+
+
     }
 
     private fun setUpObserverLogin(loginViewModel : LoginViewModel, viewModel : AccountinfoViewModel)
@@ -182,6 +250,8 @@ class AccountinfoFragment() : Fragment() {
                 showTwoFAInputDialog(requireContext(), viewModel)
             }
         }
+
+
 
     }
 
@@ -221,6 +291,8 @@ class AccountinfoFragment() : Fragment() {
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
             .show()
     }
+
+
 
 
 

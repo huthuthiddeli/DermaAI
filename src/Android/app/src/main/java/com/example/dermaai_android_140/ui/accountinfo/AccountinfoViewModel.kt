@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.myClasses.API
+import com.example.dermaai_android_140.myClasses.HealthCheckResponse
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.LoginRepo
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
@@ -17,9 +18,13 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+
 
 //import org.koin.core.Koin
 
@@ -50,6 +55,15 @@ class AccountinfoViewModel() : ViewModel() {
 
     private val _registerCount = MutableLiveData<Int>(0)
     val registerCount: LiveData<Int> get() = _registerCount
+
+    private val _isHealthy = MutableLiveData<String>()
+    val isHealthy: LiveData<String> get() = _isHealthy
+
+    private val _message = MutableLiveData<String?>()
+    val message: LiveData<String?> get() = _message
+
+
+    var healthCheckJob: Job? = null
 
     private var myJob: Job? = null
 
@@ -93,32 +107,25 @@ class AccountinfoViewModel() : ViewModel() {
     }
 
 
-    fun register(email : String, password : String, url : String)
-    {
 
-        var receivedUser: User? = null
-
-        myJob = viewModelScope.launch{
-
-            receivedUser  = withContext(Dispatchers.IO) {
+    fun register(email: String, password: String, url: String) {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
                 loginRepo.register(email, password, false, url)
             }
 
-            if (receivedUser != null) {
+            result.onSuccess { receivedUser ->
                 _user = receivedUser
-
-            } else {
-                println("failed")
+                _message.postValue("Registration successful")
+                _registerCount.postValue(_registerCount.value?.plus(1) ?: 1)
             }
-        }
 
-        myJob?.invokeOnCompletion {throwable ->
-
-            if (throwable == null) {
-                _registerCount.postValue(_registerCount.value!! + 1)
+            result.onFailure { exception ->
+                _message.postValue(exception.message)
             }
         }
     }
+
 
     @OptIn(ExperimentalCoroutinesApi::class)
     fun login(email: String, password: String, mfa: Boolean, url: String) {
@@ -138,6 +145,7 @@ class AccountinfoViewModel() : ViewModel() {
                 _user = receivedUser
                 receivedUser.password = password
                 userRepo.saveCurrentUser(receivedUser)
+
                 _mfaEnabled.postValue(_user!!.mfa)
 
                 if (receivedUser.mfa) {
@@ -147,10 +155,11 @@ class AccountinfoViewModel() : ViewModel() {
                 }
             }
             result.onFailure { exception ->
-                Toast.makeText(null, "Login failed" + exception.message, Toast.LENGTH_SHORT).show()
+                _message.postValue(exception.message)
             }
         }
     }
+
 
 
 
@@ -170,6 +179,42 @@ class AccountinfoViewModel() : ViewModel() {
 
         viewModelScope.launch {
             userRepo.saveCurrentUser(receivedUserObject)
+        }
+    }
+
+
+    private fun checkHealth(model : HealthCheckResponse, url : String)
+    {
+        viewModelScope.launch {
+
+            val result = withContext(Dispatchers.IO) {
+                loginRepo.checkHealth(model, url)
+            }
+
+            fun checkHealth(model: HealthCheckResponse, url : String) {
+                viewModelScope.launch {
+                    val result = withContext(Dispatchers.IO) {
+                        loginRepo.checkHealth(model, url)
+                    }
+
+                    _isHealthy.postValue(result)
+
+                }
+            }
+
+
+        }
+
+    }
+
+    fun startHealthCheck(model: HealthCheckResponse, url: String) {
+        // Cancel any existing job
+        healthCheckJob?.cancel()
+        healthCheckJob = viewModelScope.launch {
+            while (isActive) {
+                checkHealth(model, url)
+                delay(10_000)
+            }
         }
     }
 
