@@ -37,7 +37,7 @@ class Authentication {
 
     companion object {
         private const val REQUEST_SIGN_IN = 1001
-        private const val KEY_ALIAS = "TOTP_SECRET_KEY_ALIAS"
+        private lateinit var KEY_ALIAS : String
 
         private val auth: FirebaseAuth = FirebaseAuth.getInstance()
         private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -46,10 +46,12 @@ class Authentication {
          * Starts sign-in via browser using Firebase Authentication.
          * Pass the Activity instance to launch the sign-in intent.
          */
-        fun signInWithBrowser(activity: Activity) {
+        fun signInWithBrowser(activity: Activity, alias : String) {
+
+            KEY_ALIAS = alias
+
             val providers = arrayListOf(
                 AuthUI.IdpConfig.GoogleBuilder().build(),  // Google Sign-In
-                AuthUI.IdpConfig.EmailBuilder().build()      // Email + Password
             )
             val signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
@@ -61,7 +63,12 @@ class Authentication {
         /**
          * Handles the sign-in result.
          */
-        fun handleSignInResult(activity: Activity, requestCode: Int, resultCode: Int, data: Intent?) {
+        fun handleSignInResult(
+            activity: Activity,
+            requestCode: Int,
+            resultCode: Int,
+            data: Intent?
+        ) {
             if (requestCode == REQUEST_SIGN_IN) {
                 val response = IdpResponse.fromResultIntent(data)
                 if (resultCode == Activity.RESULT_OK) {
@@ -99,7 +106,12 @@ class Authentication {
          * Verifies a TOTP code entered by the user.
          * It first checks the Keystore, and if the secret isn't found, it falls back to Firebase.
          */
-        fun verifyTOTP(activity: Activity, userId: String, userInputCode: String, callback: (Boolean) -> Unit) {
+        fun verifyTOTP(
+            activity: Activity,
+            userId: String,
+            userInputCode: String,
+            callback: (Boolean) -> Unit
+        ) {
             // First check in Keystore
             val secretKey = getSecretFromKeystore(activity)
             if (secretKey != null) {
@@ -190,6 +202,7 @@ class Authentication {
             return verifier.isValidCode(secret, code)
         }
 
+
         /**
          * Saves the secret securely in the Keystore via EncryptedSharedPreferences.
          */
@@ -198,8 +211,12 @@ class Authentication {
             keystore.load(null)
             // Create key if it doesn't exist
             if (!keystore.containsAlias(KEY_ALIAS)) {
-                val keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
-                val keyGenParameterSpec = KeyGenParameterSpec.Builder(KEY_ALIAS, KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT)
+                val keyGenerator =
+                    KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore")
+                val keyGenParameterSpec = KeyGenParameterSpec.Builder(
+                    KEY_ALIAS,
+                    KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
+                )
                     .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
                     .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
                     .build()
@@ -240,10 +257,15 @@ class Authentication {
             val encryptedSecretString = sharedPrefs.getString("2fa_secret_key", null)
             val ivString = sharedPrefs.getString("iv", null)
             if (encryptedSecretString != null && ivString != null) {
-                val encryptedBytes = encryptedSecretString.split(",").map { it.toByte() }.toByteArray()
+                val encryptedBytes =
+                    encryptedSecretString.split(",").map { it.toByte() }.toByteArray()
                 val iv = ivString.split(",").map { it.toByte() }.toByteArray()
                 val cipher = Cipher.getInstance("AES/GCM/NoPadding")
-                cipher.init(Cipher.DECRYPT_MODE, getSecretKeyFromKeystore(), GCMParameterSpec(128, iv))
+                cipher.init(
+                    Cipher.DECRYPT_MODE,
+                    getSecretKeyFromKeystore(),
+                    GCMParameterSpec(128, iv)
+                )
                 val decryptedBytes = cipher.doFinal(encryptedBytes)
                 return String(decryptedBytes)
             }
@@ -278,6 +300,7 @@ class Authentication {
         }
 
     }
+}
 
 
 
@@ -415,5 +438,5 @@ class Authentication {
     }
     */
 
-}
+
 

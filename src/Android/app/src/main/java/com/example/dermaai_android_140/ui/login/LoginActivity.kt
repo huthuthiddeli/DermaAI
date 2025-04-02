@@ -23,10 +23,6 @@ class LoginActivity : AppCompatActivity() {
                 .replace(R.id.fragment_placeholder_accountinfo, AccountinfoFragment.newInstance(true))
                 .commit()
         }
-        
-
-
-
 
     }
 

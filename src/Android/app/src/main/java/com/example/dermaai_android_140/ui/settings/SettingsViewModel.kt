@@ -1,5 +1,6 @@
 package com.example.dermaai_android_140.ui.settings
 
+import android.app.Activity
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -31,6 +32,9 @@ class SettingsViewModel : ViewModel() {
 
     private val _message = MutableLiveData<String?>()
     val message: LiveData<String?> get() = _message
+
+    private val _secretKey = MutableLiveData<String>()
+    val secretKey: LiveData<String> get() = _secretKey
 
     fun syncImages(url: String) {
         viewModelScope.launch {
@@ -66,16 +70,27 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
-    fun signInFirebase() {
-        val user = getCurrentUser()
-        loginRepo.signInFirebase(user.email, user.password)
+    fun signInFirebase(activity: Activity) {
+        viewModelScope.launch {
+            try {
+                withContext(Dispatchers.Main) {
+                    Authentication.signInWithBrowser(activity, getCurrentUser().email)
+                }
+                _message.postValue("Opening Firebase Sign-In")
+            } catch (e: Exception) {
+                _message.postValue("Unexpected Sign-In Error: ${e.message}")
+            }
+        }
     }
 
-    fun save2FAKey()
-    {
-        //Authentication.save2FAKey()
-    }
 
+    fun enable2FA(activity: Activity, userId: String){
+
+        val secret = Authentication.enable2FA(activity, userId) { secret ->
+            _message.postValue("2FA Enabled successfully")
+            _secretKey.postValue(secret)
+        }
+    }
 
     fun generate2faKey(context: Context): String {
         //return Authentication.generateSecret(context)

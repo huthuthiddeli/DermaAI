@@ -71,20 +71,6 @@ class LoginRepoImpl : LoginRepo {
         }
     }
 
-    fun signInFirebase(email: String, password: String): Result<Boolean> {
-        return try {
-            val auth = FirebaseAuth.getInstance()
-            val task = auth.signInWithEmailAndPassword(email, password)
-
-            if (task.isSuccessful) {
-                Result.success(true)
-            } else {
-                Result.failure(Exception("Sign-in failed"))
-            }
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
 
 
 }

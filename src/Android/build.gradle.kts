@@ -6,7 +6,9 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.google.firebase.firebase.perf) apply false
     alias(libs.plugins.google.gms.google.services) apply false
+    //id("com.google.gms.google-services") version "4.4.2" apply false
 }
+
 
 
 buildscript {
@@ -15,19 +17,12 @@ buildscript {
         mavenCentral()
     }
 
+
     dependencies {
-        classpath(libs.google.services.v442) {
-            exclude(group = "com.google.guava", module = "listenablefuture")
-        }
+        classpath(libs.google.services.v442)
     }
 }
 
-configurations.all {
-    resolutionStrategy {
-        force("com.google.firebase:firebase-common:24.0.0")
-        force("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict")
-    }
-}
 
 
 val compileSdkVersion = 35

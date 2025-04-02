@@ -117,7 +117,7 @@ class AccountinfoFragment() : Fragment() {
             loginBtn.setOnClickListener {
 
                 //
-                //hardcoded(viewModel)
+                hardcoded(viewModel)
                 //
                 
                 val email = editTextEmail.text.toString()
@@ -271,7 +271,7 @@ class AccountinfoFragment() : Fragment() {
     {
         val auth = FirebaseAuth.getInstance()
         val viewModel = ViewModelProvider(this)[AccountinfoViewModel::class.java]
-        viewModel.signInFirebase()
+        viewModel.signInFirebase(requireActivity())
 
     }
 

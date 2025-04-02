@@ -1,13 +1,16 @@
 package com.example.dermaai_android_140.ui.settings
 
+import android.app.Activity
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.edit
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +31,11 @@ import com.example.dermaai_android_140.ui.accountinfo.AccountinfoViewModel
 import com.example.dermaai_android_140.ui.admin.AdminViewModel
 import com.example.dermaai_android_140.ui.gallery.GalleryViewModel
 import com.example.dermaai_android_140.ui.login.LoginActivity
+import com.firebase.ui.auth.AuthUI
+import com.firebase.ui.auth.IdpResponse
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -60,35 +68,45 @@ class SettingsFragment : PreferenceFragmentCompat() {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
 
+        /*
+        settingsViewModel.secretKey.observe(viewLifecycleOwner) { secretKey ->
+            checkTOPT(secretKey)
+
+        }*/
 
         settingsViewModel.allPredictions.observe(viewLifecycleOwner) { response ->
-            val filesDir : File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            var imageCount = 0
-            val localImages = Storage.retrieveImagesFromStorage(filesDir, settingsViewModel.getCurrentUser()!!.email)
+
+            if(response != null)
+            {
+                val filesDir : File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                var imageCount = 0
+                val localImages = Storage.retrieveImagesFromStorage(filesDir, settingsViewModel.getCurrentUser()!!.email)
 
 
-            response!!.predictions.forEach { prediction ->
-                for (localImage in localImages) {
+                response!!.predictions.forEach { prediction ->
+                    for (localImage in localImages) {
 
 
-                    val localBase64 = Storage.convertImageToBase64(localImage)
-                    if(!localBase64.equals(prediction.image))
-                    {
-                        val file = Storage.createUniqueImagePath(requireActivity(), settingsViewModel.getCurrentUser()!!.email)
-                        val newBitmap = Storage.base64ToBitmap(prediction.image)
-                        if (newBitmap != null) {
-                            Storage.saveFileToStorage(newBitmap, requireContext(), file.absolutePath)
-                            val diagnosis = Diagnosis(prediction.prediction,file.absolutePath)
-                            Storage.saveDiagnosis(requireActivity(),diagnosis, settingsViewModel.getCurrentUser()!!.email)
-                            imageCount++
+                        val localBase64 = Storage.convertImageToBase64(localImage)
+                        if(!localBase64.equals(prediction.image))
+                        {
+                            val file = Storage.createUniqueImagePath(requireActivity(), settingsViewModel.getCurrentUser()!!.email)
+                            val newBitmap = Storage.base64ToBitmap(prediction.image)
+                            if (newBitmap != null) {
+                                Storage.saveFileToStorage(newBitmap, requireContext(), file.absolutePath)
+                                val diagnosis = Diagnosis(prediction.prediction,file.absolutePath)
+                                Storage.saveDiagnosis(requireActivity(),diagnosis, settingsViewModel.getCurrentUser()!!.email)
+                                imageCount++
+                            }
+
                         }
 
                     }
-
                 }
+                Toast.makeText(context, "Synchronized $imageCount images", Toast.LENGTH_LONG).show()
             }
-            Toast.makeText(context, "Synchronized $imageCount images", Toast.LENGTH_LONG).show()
-        }
+            }
+
 
 
         settingsViewModel.currentUser.observe(viewLifecycleOwner){user ->
@@ -102,9 +120,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         enable2faSwitch?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             val is2faEnabled = newValue as Boolean
             if (is2faEnabled) {
-                settingsViewModel.signInFirebase()
-                settingsViewModel.save2FAKey()
-                enable2FA(settingsViewModel)
+                //settingsViewModel.signInFirebase(requireActivity())
+                signInWithGoogle()
+
+
+                //settingsViewModel.enable2FA(requireActivity(), settingsViewModel.getCurrentUser().id.toString())
+                //enable2FA(settingsViewModel)
             } else {
                 disable2FA()
             }
@@ -123,6 +144,52 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
     }
+
+
+    private fun signInWithGoogle() {
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.GoogleBuilder().build()  // Only Google Sign-In
+        )
+
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .build()
+
+        signInLauncher.launch(signInIntent)
+    }
+
+    private val signInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val response = IdpResponse.fromResultIntent(result.data)
+
+            val user = FirebaseAuth.getInstance().currentUser
+
+            val userEmail = user?.email
+            val userUid = user?.uid
+
+
+            Authentication.enable2FA(requireActivity(), userUid.toString()) { secret ->
+                checkTOPT(secret)
+            }
+
+            Log.d("SignIn", "Signed in as: $userEmail")
+        } else {
+            val response = IdpResponse.fromResultIntent(result.data)
+
+            if (response?.error != null) {
+                Log.e("SignIn", "Sign-in failed: ${response.error?.errorCode}")
+            }
+
+            Toast.makeText(context, "Sign-in failed.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+
+
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
 
@@ -148,7 +215,50 @@ class SettingsFragment : PreferenceFragmentCompat() {
         activity?.finish()
     }
 
+    private fun checkTOPT(key : String)
+    {
+        val FaKeySwitch: SwitchPreferenceCompat? = findPreference("enable_2fa")
+        val FaKeyInput: EditTextPreference? = findPreference("two_fa_key")
 
+        saveToClipboard(key)
+
+        FaKeyInput?.isEnabled = true
+
+        FaKeyInput?.setOnPreferenceChangeListener { preference, enteredCode ->
+
+            val correctCode = settingsViewModel.validate2faCode(key,enteredCode.toString())
+
+            if(correctCode)
+            {
+                Toast.makeText(context, "Correct Code: 2FA Activated", Toast.LENGTH_SHORT).show()
+                //
+
+                val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.setMfa)
+
+                val viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
+
+                val receivedUser = viewModel.setMfa(url)
+
+                if(receivedUser != null)
+                {
+                    Toast.makeText(context, "Mfa set!", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    Toast.makeText(context, "Failure!", Toast.LENGTH_SHORT).show()
+                }
+
+                true
+            }
+            else
+            {
+                Toast.makeText(context, "Incorrect Code", Toast.LENGTH_SHORT).show()
+                FaKeySwitch?.isEnabled = false
+                false
+            }
+        }
+    }
+
+    /*
     fun enable2FA(settingsViewModel : SettingsViewModel) {
 
         val key = settingsViewModel.generate2faKey(requireContext())
@@ -194,7 +304,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
         }
     }
-
+*/
 
     fun saveToClipboard(key : String)
     {
@@ -203,13 +313,23 @@ class SettingsFragment : PreferenceFragmentCompat() {
         clipboard.setPrimaryClip(clip)
     }
 
-    fun disable2FA() {
+    fun disable2FA()
+    {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        Authentication.disable2FA(requireActivity(), userId.toString()) { success ->
+            if (success) {
+                Toast.makeText(activity, "2FA Disabled Successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(activity, "Failed to Disable 2FA", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         val twoFAKeyInput = findPreference<EditTextPreference>("two_fa_key")
         twoFAKeyInput?.isEnabled = false
-
-        //FaKeyInput?.setText("")
     }
+
+
+
 
 
 }

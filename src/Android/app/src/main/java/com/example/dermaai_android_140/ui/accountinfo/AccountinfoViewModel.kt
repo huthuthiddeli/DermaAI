@@ -1,10 +1,12 @@
 package com.example.dermaai_android_140.ui.accountinfo
 
+import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.HealthCheckResponse
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
@@ -156,21 +158,15 @@ class AccountinfoViewModel : ViewModel() {
         }
     }
 
-    fun signInFirebase() {
+    fun signInFirebase(activity: Activity) {
         viewModelScope.launch {
-
-            val result = withContext(Dispatchers.IO) {
-                loginRepo.signInFirebase(getUser()!!.email, getUser()!!.password)
-            }
-
-            result.onSuccess { isSuccess ->
-                if (isSuccess) {
-                    _message.postValue("User signed in successfully.")
-                } else {
-                    _message.postValue("Sign-in failed: Unknown error")
+            try {
+                withContext(Dispatchers.Main) {
+                    Authentication.signInWithBrowser(activity, userRepo.getCurrentUser().email)
                 }
-            }.onFailure { exception ->
-                _message.postValue("Sign-in failed: ${exception.message}")
+                _message.postValue("Opening Firebase Sign-In")
+            } catch (e: Exception) {
+                _message.postValue("Unexpected Sign-In Error: ${e.message}")
             }
         }
     }

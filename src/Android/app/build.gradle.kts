@@ -111,13 +111,19 @@ dependencies {
     implementation(libs.koin.androidx.viewmodel)
 
 
-    implementation (libs.firebase.auth.v2110)
-    implementation (libs.firebase.firestore.v2400)
+    //implementation (libs.firebase.auth.v2110)
+    //implementation (libs.firebase.firestore.v2400)
 
     implementation (libs.firebase.common)
 
-    implementation (libs.listenablefuture)
+    //implementation (libs.listenablefuture)
 
+    implementation (libs.firebase.auth)
+    implementation (libs.firebase.firestore)
+
+    implementation(libs.guava)
+
+    //implementation (libs.play.services.base)
 
     implementation (libs.androidx.security.crypto)
 
