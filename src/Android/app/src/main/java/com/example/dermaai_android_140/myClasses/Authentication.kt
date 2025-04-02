@@ -22,8 +22,163 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 
 
-class Authentication {
+class Authentication(private val activity: Activity) {
 
+
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
+
+    companion object {
+        private const val REQUEST_SIGN_IN = 1001
+    }
+
+    /**
+     * Starts sign-in via browser using Firebase Authentication.
+     */
+    fun signInWithBrowser() {
+        val providers = arrayListOf(
+            AuthUI.IdpConfig.GoogleBuilder().build(),  // Google Sign-In
+            AuthUI.IdpConfig.EmailBuilder().build()   // Email + Password
+        )
+
+        val signInIntent = AuthUI.getInstance()
+            .createSignInIntentBuilder()
+            .setAvailableProviders(providers)
+            .build()
+
+        activity.startActivityForResult(signInIntent, REQUEST_SIGN_IN)
+    }
+
+    /**
+     * Handles the sign-in result.
+     */
+    fun handleSignInResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_SIGN_IN) {
+            val response = IdpResponse.fromResultIntent(data)
+            if (resultCode == Activity.RESULT_OK) {
+                val user = auth.currentUser
+                Log.d("Auth", "User signed in: ${user?.email}")
+            } else {
+                Log.e("Auth", "Sign-in failed: ${response?.error?.errorCode}")
+            }
+        }
+    }
+
+    /**
+     * Generates and saves a TOTP secret for 2FA.
+     */
+    fun enable2FA(userId: String, context: Context, callback: (String) -> Unit) {
+        val secret = generateSecret(context)
+
+        val user2FAData = hashMapOf(
+            "2fa_enabled" to true,
+            "secret_key" to secret
+        )
+
+        db.collection("users").document(userId)
+            .set(user2FAData, SetOptions.merge())
+            .addOnSuccessListener {
+                Log.d("Firestore", "2FA key saved successfully")
+                callback(secret)
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error saving 2FA key: ${e.message}")
+            }
+    }
+
+    /**
+     * Verifies a TOTP code entered by the user.
+     */
+    fun verifyTOTP(userId: String, userInputCode: String, callback: (Boolean) -> Unit) {
+        db.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val secretKey = document.getString("secret_key") ?: return@addOnSuccessListener
+
+                    val isValid = validateTOTP(secretKey, userInputCode)
+                    callback(isValid)
+                } else {
+                    callback(false)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error verifying 2FA: ${e.message}")
+                callback(false)
+            }
+    }
+
+    /**
+     * Disables 2FA by removing the TOTP secret from Firestore.
+     */
+    fun disable2FA(userId: String, callback: (Boolean) -> Unit) {
+        db.collection("users").document(userId)
+            .update("2fa_enabled", false, "secret_key", null)
+            .addOnSuccessListener {
+                Log.d("Firestore", "2FA disabled successfully")
+                callback(true)
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error disabling 2FA: ${e.message}")
+                callback(false)
+            }
+    }
+
+    /**
+     * Retrieves the 2FA secret key from Firebase.
+     */
+    fun get2FAKey(userId: String, callback: (String?) -> Unit) {
+        db.collection("users").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val secretKey = document.getString("secret_key")
+                    callback(secretKey)
+                } else {
+                    callback(null)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("Firestore", "Error getting 2FA key: ${e.message}")
+                callback(null)
+            }
+    }
+
+    /**
+     * Generates a TOTP secret key.
+     */
+    private fun generateSecret(context: Context): String {
+        val secretGenerator: SecretGenerator = DefaultSecretGenerator()
+        val secret = secretGenerator.generate()
+        saveHash(secret, context)
+        return secret
+    }
+
+    /**
+     * Validates a TOTP code.
+     */
+    private fun validateTOTP(secret: String, code: String): Boolean {
+        val timeProvider = SystemTimeProvider()
+        val codeGenerator: CodeGenerator = DefaultCodeGenerator()
+        val verifier = DefaultCodeVerifier(codeGenerator, timeProvider)
+        return verifier.isValidCode(secret, code)
+    }
+
+    /**
+     * Saves the secret securely (Placeholder function, modify as needed).
+     */
+    private fun saveHash(secret: String, context: Context) {
+        // Implement secure storage (EncryptedSharedPreferences, Keystore, etc.)
+        Log.d("SecureStorage", "Saving secret securely (not implemented)")
+    }
+
+
+
+
+
+
+
+
+
+    /*
     companion object {
 
         fun generateSecret(context: Context) : String
@@ -141,6 +296,10 @@ class Authentication {
 
             return null
         }
+
+        */
+
+
 
         /*
 
