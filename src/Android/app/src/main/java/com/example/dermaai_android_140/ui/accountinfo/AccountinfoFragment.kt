@@ -23,6 +23,7 @@ import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.HealthCheckResponse
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.ui.login.LoginViewModel
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import java.util.UUID
@@ -52,7 +53,11 @@ class AccountinfoFragment() : Fragment() {
 
         //deleteToken()
 
+
+
         val viewModel = ViewModelProvider(this)[AccountinfoViewModel::class.java]
+
+
 
         view = if (isLogin) {
             inflater.inflate(R.layout.fragment_accountinfo_login, container, false)
@@ -247,11 +252,20 @@ class AccountinfoFragment() : Fragment() {
 
         viewModel.mfaEnabled.observe(viewLifecycleOwner) { mfaEnabled ->
             if (mfaEnabled) {
+                signInFirebase()
                 showTwoFAInputDialog(requireContext(), viewModel)
             }
         }
 
 
+
+    }
+
+    private fun signInFirebase()
+    {
+        val auth = FirebaseAuth.getInstance()
+        val viewModel = ViewModelProvider(this)[AccountinfoViewModel::class.java]
+        viewModel.signInFirebase(auth)
 
     }
 

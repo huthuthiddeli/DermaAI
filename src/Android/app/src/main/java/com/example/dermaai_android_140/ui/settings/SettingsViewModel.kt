@@ -1,24 +1,21 @@
 package com.example.dermaai_android_140.ui.settings
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.Authentication
-import com.example.dermaai_android_140.myClasses.PredictionImage
 import com.example.dermaai_android_140.myClasses.PredictionImageList
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import com.example.dermaai_android_140.repoimpl.UserRepoImpl
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent
-import kotlin.getValue
 
 class SettingsViewModel : ViewModel() {
 
@@ -32,41 +29,52 @@ class SettingsViewModel : ViewModel() {
     private val _allPredictions = MutableLiveData<PredictionImageList?>(null)
     val allPredictions: LiveData<PredictionImageList?> get() = _allPredictions
 
-
-    private val _error = MutableLiveData<String?>()
-    val error : LiveData<String?> get() = _error
-
+    private val _message = MutableLiveData<String?>()
+    val message: LiveData<String?> get() = _message
 
     fun syncImages(url: String) {
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-
-                imageRepo.loadPredictions(getCurrentUser(), url)
-            }
-            result.onSuccess { predictionList ->
-                _allPredictions.postValue(predictionList)
-            }.onFailure { exception ->
-                _error.postValue(exception.message)
-                exception.printStackTrace()
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    imageRepo.loadPredictions(getCurrentUser(), url)
+                }
+                result.onSuccess { predictionList ->
+                    _allPredictions.postValue(predictionList)
+                }.onFailure { exception ->
+                    _message.postValue("Sync Images Error: ${exception.message}")
+                }
+            } catch (e: Exception) {
+                _message.postValue("Unexpected Sync Images Error: ${e.message}")
             }
         }
     }
-
 
     fun setMfa(url: String) {
         viewModelScope.launch {
-            val result = withContext(Dispatchers.IO) {
-                loginRepo.setMFA(userRepo.getCurrentUser(), url)
-            }
-            result.onSuccess { updatedUser ->
-                _currentUser.postValue(updatedUser)
-            }.onFailure { exception ->
-                _error.postValue(exception.message)
-                exception.printStackTrace()
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    loginRepo.setMFA(userRepo.getCurrentUser(), url)
+                }
+                result.onSuccess { updatedUser ->
+                    _currentUser.postValue(updatedUser)
+                }.onFailure { exception ->
+                    _message.postValue("Set MFA Error: ${exception.message}")
+                }
+            } catch (e: Exception) {
+                _message.postValue("Unexpected Set MFA Error: ${e.message}")
             }
         }
     }
 
+    fun signInFirebase() {
+        val user = getCurrentUser()
+        loginRepo.signInFirebase(user.email, user.password)
+    }
+
+    fun save2FAKey()
+    {
+        Authentication.save2FAKey(,)
+    }
 
     fun generate2faKey(context: Context): String {
         return Authentication.generateSecret(context)
@@ -76,14 +84,12 @@ class SettingsViewModel : ViewModel() {
         return Authentication.validateTOTP(secret, code)
     }
 
-
-
-
-
-    fun getCurrentUser() : User
-    {
-        return userRepo.getCurrentUser()
+    fun getCurrentUser(): User {
+        return try {
+            userRepo.getCurrentUser()
+        } catch (e: Exception) {
+            _message.postValue("Get Current User Error: ${e.message}")
+            User("", "", false, false)
+        }
     }
-
-
 }

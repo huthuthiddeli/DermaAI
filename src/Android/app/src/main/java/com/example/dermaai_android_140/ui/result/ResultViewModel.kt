@@ -17,7 +17,6 @@ class ResultViewModel : ViewModel(){
     val currentUser: LiveData<User?> get() = _currentUser
 
 
-
     fun getCurrentUser() : User
     {
         return userRepo.getCurrentUser()

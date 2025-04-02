@@ -56,7 +56,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val logoutBtn: Preference? = findPreference("logout")
         val syncBtn: Preference? = findPreference("sync_images")
 
-        /*
+        settingsViewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
+
+
         settingsViewModel.allPredictions.observe(viewLifecycleOwner) { response ->
             val filesDir : File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
             var imageCount = 0
@@ -85,7 +89,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             }
             Toast.makeText(context, "Synchronized $imageCount images", Toast.LENGTH_LONG).show()
         }
-*/
+
 
         settingsViewModel.currentUser.observe(viewLifecycleOwner){user ->
 
@@ -98,6 +102,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         enable2faSwitch?.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             val is2faEnabled = newValue as Boolean
             if (is2faEnabled) {
+                settingsViewModel.signInFirebase()
+                settingsViewModel.save2FAKey()
                 enable2FA(settingsViewModel)
             } else {
                 disable2FA()

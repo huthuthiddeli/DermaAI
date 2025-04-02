@@ -45,6 +45,10 @@ class ResizeActivity : AppCompatActivity() {
 
         resizeViewModel = ViewModelProvider(this).get(ResizeViewModel::class.java)
 
+        resizeViewModel.message.observe(this) { message ->
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+
 
 
         imageUriString = intent.getStringExtra("image_uri").toString()
@@ -66,9 +70,7 @@ class ResizeActivity : AppCompatActivity() {
         loadImageIntoImageView(imageUri)
         
 
-        resizeViewModel.error.observe(this) { error ->
-            Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
-        }
+
 
         resizeViewModel.resizedImage.observe(this) { resizedImage ->
 

@@ -29,8 +29,8 @@ class ResizeViewModel : ViewModel() {
 
     private lateinit var lastPath: String
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> get() = _error
+    private val _message = MutableLiveData<String?>()
+    val message: LiveData<String?> get() = _message
 
     private val _response = MutableLiveData<String?>(null)
     val response: LiveData<String?> get() = _response
@@ -51,7 +51,7 @@ class ResizeViewModel : ViewModel() {
                 _prediction.postValue(predictionResult)
             }.onFailure { exception ->
                 exception.printStackTrace()
-                _error.postValue(exception.message ?: "Unknown error occurred")
+                _message.postValue(exception.message ?: "Unknown error occurred")
             }
         }
     }
@@ -65,7 +65,7 @@ class ResizeViewModel : ViewModel() {
                 _response.postValue(responseString)
             }.onFailure { exception ->
                 exception.printStackTrace()
-                _error.postValue(exception.message)
+                _message.postValue(exception.message)
                 _response.postValue(null)
             }
         }
@@ -80,7 +80,7 @@ class ResizeViewModel : ViewModel() {
                 _resizedImage.postValue(imageResult)
             }.onFailure { exception ->
                 exception.printStackTrace()
-                _error.postValue(exception.message)
+                _message.postValue(exception.message)
             }
         }
     }

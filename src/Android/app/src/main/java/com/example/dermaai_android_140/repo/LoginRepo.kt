@@ -10,9 +10,9 @@ interface LoginRepo {
 
                 fun register(email: String, password: String, mfa: Boolean, url : String): Result<User>
 
-                fun setMFA(user : User?, url : String) : User?
+                fun setMFA(user : User?, url : String) : Result<User>
 
-                fun checkHealth(model : HealthCheckResponse, url : String) : String
+                fun checkHealth(model : HealthCheckResponse, url : String) : Result<String>
 
 
 }

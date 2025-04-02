@@ -1,65 +1,90 @@
 package com.example.dermaai_android_140.repoimpl
 
-import androidx.lifecycle.MutableLiveData
 import com.example.dermaai_android_140.myClasses.API
 import com.example.dermaai_android_140.myClasses.HealthCheckResponse
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.LoginRepo
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 
 class LoginRepoImpl : LoginRepo {
 
-    val _error = MutableLiveData<String?>()
+    override fun login(email: String, password: String, mfa: Boolean, url: String): Result<User> {
+        return try {
+            val user = User(email, password, mfa)
+            val result = API.callApi(url, "POST", user)
 
-    override fun login(email: String, password: String, mfa: Boolean, url: String): User? {
-        val user = User(email, password, mfa)
-        val result = API.callApi(url, "POST", user)
-
-        return if (result.isSuccess) {
-            Gson().fromJson(result.getOrNull(), User::class.java)
-        } else {
-            _error.postValue("Login failed: ${result.exceptionOrNull()?.message ?: "Unknown error"}")
-            null
-        }
-    }
-
-    override fun register(email: String, password: String, mfa: Boolean, url: String): User? {
-        val user = User(email, password, mfa)
-        val result = API.callApi(url, "POST", user)
-
-        return if (result.isSuccess) {
-            Gson().fromJson(result.getOrNull(), User::class.java)
-        } else {
-            _error.postValue("Registration failed: ${result.exceptionOrNull()?.message ?: "Unknown error"}")
-            null
-        }
-    }
-
-    override fun setMFA(user: User?, url: String): User? {
-        val result = API.callApi(url, "POST", user)
-
-        return if (result.isSuccess) {
-            Gson().fromJson(result.getOrNull(), User::class.java)
-        } else {
-            _error.postValue("MFA setup failed: ${result.exceptionOrNull()?.message ?: "Unknown error"}")
-            null
-        }
-    }
-
-    override fun checkHealth(model: HealthCheckResponse, url: String): String {
-        val result = API.callApi(url, "GET", model)
-
-        return if (result.isSuccess) {
-            val healthResponse = Gson().fromJson(result.getOrNull(), HealthCheckResponse::class.java)
-            if (healthResponse.message == "Application is live") {
-                "Ready to connect!"
+            if (result.isSuccess) {
+                val userResponse = Gson().fromJson(result.getOrThrow(), User::class.java)
+                Result.success(userResponse)
             } else {
-                _error.postValue("Unexpected health check response")
-                "Error"
+                Result.failure(result.exceptionOrNull() ?: Exception("Unknown error"))
             }
-        } else {
-            _error.postValue("Connection failed: ${result.exceptionOrNull()?.message ?: "Unknown error"}")
-            "Error"
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
+    
+    override fun register(email: String, password: String, mfa: Boolean, url: String): Result<User> {
+        return try {
+            val user = User(email, password, mfa)
+            val result = API.callApi(url, "POST", user)
+
+            if (result.isSuccess) {
+                val userResponse = Gson().fromJson(result.getOrThrow(), User::class.java)
+                Result.success(userResponse)
+            } else {
+                Result.failure(result.exceptionOrNull() ?: Exception("Unknown error"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override fun setMFA(user: User?, url: String): Result<User> {
+        return try {
+            val result = API.callApi(url, "POST", user)
+
+            if (result.isSuccess) {
+                val userResponse = Gson().fromJson(result.getOrThrow(), User::class.java)
+                Result.success(userResponse)
+            } else {
+                Result.failure(result.exceptionOrNull() ?: Exception("Unknown error"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    override fun checkHealth(model: HealthCheckResponse, url: String): Result<String> {
+        return try {
+            val result = API.callApi(url, "GET", model)
+
+            if (result.isSuccess) {
+                val healthResponse = Gson().fromJson(result.getOrThrow(), HealthCheckResponse::class.java)
+                Result.success(healthResponse.message)
+            } else {
+                Result.failure(result.exceptionOrNull() ?: Exception("Unknown error"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    fun signInFirebase(email: String, password: String): Result<Boolean> {
+        return try {
+            val auth = FirebaseAuth.getInstance()
+            val task = auth.signInWithEmailAndPassword(email, password)
+
+            if (task.isSuccessful) {
+                Result.success(true)
+            } else {
+                Result.failure(Exception("Sign-in failed"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+
 }

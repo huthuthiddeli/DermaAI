@@ -45,7 +45,7 @@ class Storage {
             var subDir = getSubDir(username)
             val folder = File(filesDir, subDir)
             val images = mutableListOf<File>()
-
+            
             if (folder.isDirectory) {
                 for (file in folder.listFiles()!!) {
                     if (file.extension == "jpg") {

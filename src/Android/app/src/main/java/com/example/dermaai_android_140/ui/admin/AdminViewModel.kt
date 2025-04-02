@@ -34,8 +34,8 @@ class AdminViewModel : ViewModel() {
     private val _responseString = MutableLiveData<String?>()
     val responseString: LiveData<String?> get() = _responseString
 
-    private val _error = MutableLiveData<String?>()
-    val error: LiveData<String?> get() = _error
+    private val _message = MutableLiveData<String?>()
+    val message: LiveData<String?> get() = _message
 
     private val _models = MutableLiveData<ModelTrainer?>()
     val models: LiveData<ModelTrainer?> get() = _models
@@ -62,7 +62,7 @@ class AdminViewModel : ViewModel() {
                 _responseString.postValue(responseString)
             }.onFailure { exception ->
                 exception.printStackTrace()
-                _error.postValue(exception.message)
+                _message.postValue(exception.message)
             }
         }
     }
@@ -76,7 +76,7 @@ class AdminViewModel : ViewModel() {
                 _responseString.postValue(responseString)
             }.onFailure { exception ->
                 exception.printStackTrace()
-                _error.postValue(exception.message)
+                _message.postValue(exception.message)
             }
         }
     }
@@ -90,7 +90,7 @@ class AdminViewModel : ViewModel() {
                 _models.postValue(receivedModels)
             }.onFailure { exception ->
                 exception.printStackTrace()
-                _error.postValue(exception.message)
+                _message.postValue(exception.message)
             }
         }
     }
@@ -122,7 +122,7 @@ class AdminViewModel : ViewModel() {
                 _allReports.postValue(receivedReport)
             }.onFailure { exception ->
                 exception.printStackTrace()
-                _error.postValue(exception.message)
+                _message.postValue(exception.message)
             }
         }
     }
@@ -138,7 +138,7 @@ class AdminViewModel : ViewModel() {
                 _report.postValue(receivedReport)
             }.onFailure { exception ->
                 exception.printStackTrace()
-                _error.postValue(exception.message)
+                _message.postValue(exception.message)
             }
         }
     }

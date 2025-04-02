@@ -40,8 +40,7 @@ class API {
                 return Result.failure(e)
             }
         }
-
-
+        
 
         private fun sendRequest(connection: HttpURLConnection, httpMethod: String, requestModel: Any?) {
 

@@ -28,8 +28,8 @@ class PhotoViewModel() : ViewModel() {
     private val _currentImage = MutableLiveData<File>()
     val currentImage : LiveData<File> get() = _currentImage
 
-    private val _error = MutableLiveData<String?>()
-    val error : LiveData<String?> get() = _error
+    private val _message = MutableLiveData<String?>()
+    val message : LiveData<String?> get() = _message
 
 
     private val modelRepo: ModelRepoImpl by KoinJavaComponent.inject(ModelRepoImpl::class.java)
@@ -51,11 +51,11 @@ class PhotoViewModel() : ViewModel() {
                 _models.postValue(receivedModels)
             }.onFailure { exception ->
                 exception.printStackTrace()
-                _error.postValue(exception.message)
+                _message.postValue(exception.message)
             }
         }
     }
-
+    
 
     fun requestCameraPermission()
     {

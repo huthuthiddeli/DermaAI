@@ -38,11 +38,13 @@ android {
     // Performance / Shrinking
     buildTypes {
         release {
+            // entfernt ungenutzten Code
             isMinifyEnabled = true
+            // entfernt nicht verwendete Ressourcen
             isShrinkResources = true
+            // Lädt die Konfiguration aus der Datei
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-project.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt")
             )
             signingConfig = signingConfigs.getByName("debug")
         }
@@ -64,6 +66,7 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.exifinterface)
+    implementation(libs.firebase.database.ktx)
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.dexmaker.mockito)
     androidTestImplementation(libs.androidx.espresso.contrib)
@@ -105,4 +108,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.viewmodel)
+    implementation(libs.licensing)
+    implementation (libs.firebase.auth)
+    implementation (libs.firebase.firestore)
 }

@@ -16,6 +16,8 @@ import android.text.Spanned
 import android.text.style.StyleSpan
 import android.graphics.Typeface
 import android.text.SpannableStringBuilder
+import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 
 class ResultActivity : AppCompatActivity() {
 
@@ -32,6 +34,8 @@ class ResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         resultViewModel = ViewModelProvider(this).get(ResultViewModel::class.java)
+
+
 
 
         val imagePath = intent.getStringExtra("EXTRA_IMAGE_PATH")

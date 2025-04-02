@@ -58,7 +58,7 @@ class PhotoFragment : Fragment() {
 
         //
 
-
+        setUpObserver()
 
         val takePhotoBtn: Button = binding.takePhotoBtn
 
@@ -80,7 +80,6 @@ class PhotoFragment : Fragment() {
         }
 
 
-        setUpObserver()
 
         return root
     }
@@ -102,8 +101,13 @@ class PhotoFragment : Fragment() {
 
     private fun setUpObserver()
     {
-        photoViewModel.error.observe(viewLifecycleOwner) { error ->
-            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+
+        photoViewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
+
+        photoViewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
 
         photoViewModel.requestCameraPermission.observe(viewLifecycleOwner) { requestCount ->

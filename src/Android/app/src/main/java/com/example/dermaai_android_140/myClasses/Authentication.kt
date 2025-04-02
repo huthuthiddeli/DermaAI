@@ -17,6 +17,9 @@ import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
 import androidx.core.content.edit
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class Authentication {
@@ -142,6 +145,39 @@ class Authentication {
 
             return null
         }
+
+
+
+        fun save2FAKey(userId: String, twoFAKey: String) {
+            val database = FirebaseDatabase.getInstance()
+            val userRef = database.getReference("users/$userId")
+
+            // Save the 2FA key under the user's ID
+            userRef.child("2faKey").setValue(twoFAKey).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    //Log.d("2FA", "2FA key saved successfully.")
+                } else {
+                    //Log.e("2FA", "Failed to save 2FA key: ${task.exception?.message}")
+                }
+            }
+        }
+
+
+        fun get2FAKey(userId: String, callback: (String?) -> Unit) {
+            val database = FirebaseDatabase.getInstance()
+            val userRef = database.getReference("users/$userId/2faKey")
+
+            // Retrieve the 2FA key for the user
+            userRef.get().addOnSuccessListener { snapshot ->
+                val twoFAKey = snapshot.getValue(String::class.java)
+                callback(twoFAKey)
+            }.addOnFailureListener { exception ->
+                Log.e("2FA", "Failed to retrieve 2FA key: ${exception.message}")
+                callback(null)
+            }
+        }
+
+
 
     }
 }

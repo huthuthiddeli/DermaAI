@@ -50,6 +50,10 @@ class AdminFragment : Fragment() {
 
         adminViewModel = ViewModelProvider(this)[AdminViewModel::class.java]
 
+        adminViewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
+
         allReportsBtn.setOnClickListener {
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
                 getAllReports()
@@ -114,8 +118,8 @@ class AdminFragment : Fragment() {
             }
         }
 
-        adminViewModel.error.observe(viewLifecycleOwner){error ->
-            showToast(error.toString())
+        adminViewModel.message.observe(viewLifecycleOwner){message ->
+            showToast(message.toString())
         }
 
     }
