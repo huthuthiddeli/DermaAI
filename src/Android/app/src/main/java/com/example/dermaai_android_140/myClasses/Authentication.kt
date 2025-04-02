@@ -30,19 +30,15 @@ class Authentication {
         {
             val secretGenerator : SecretGenerator = DefaultSecretGenerator()
             val secret = secretGenerator.generate()
-
             saveHash(secret, context)
-
             return secret
         }
-
 
         fun validateTOTP(secret : String, code : String) : Boolean
         {
             val timeProvider = SystemTimeProvider()
             val codeGenerator: CodeGenerator = DefaultCodeGenerator()
             val verifier = DefaultCodeVerifier(codeGenerator, timeProvider)
-
             return verifier.isValidCode(secret, code)
         }
 
@@ -146,6 +142,7 @@ class Authentication {
             return null
         }
 
+        /*
 
 
         fun save2FAKey(userId: String, twoFAKey: String) {
@@ -176,6 +173,11 @@ class Authentication {
                 callback(null)
             }
         }
+        */
+
+
+
+        
 
 
 

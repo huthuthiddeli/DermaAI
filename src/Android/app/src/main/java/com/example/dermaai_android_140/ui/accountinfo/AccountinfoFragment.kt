@@ -213,6 +213,12 @@ class AccountinfoFragment() : Fragment() {
             confirmPassword.error = "Passwords do not match"
             return false
         }
+        if(passwordStr.length < 8)
+        {
+            password.error = "Password must be at least 8 Characters long"
+            return false
+        }
+
         return true
     }
 
@@ -291,7 +297,7 @@ class AccountinfoFragment() : Fragment() {
                 val code = input.text.toString()
                 if (code.isNotEmpty()) {
                     if (Authentication.validateTOTP(viewModel.getKey(), code)) {
-
+                        
                         Toast.makeText(context, "Verified Successfully!", Toast.LENGTH_SHORT).show()
 
                         val intent = Intent(requireContext(), MainActivity::class.java)
