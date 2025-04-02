@@ -1,6 +1,7 @@
 package com.example.dermaai_android_140.myClasses
 
 import android.app.Application
+import com.google.firebase.FirebaseApp
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -15,5 +16,8 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(appModule)
         }
+
+        // Start Firebase
+        FirebaseApp.initializeApp(this)
     }
 }

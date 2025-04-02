@@ -16,7 +16,16 @@ buildscript {
     }
 
     dependencies {
-        classpath("com.google.gms:google-services:4.3.15")
+        classpath(libs.google.services.v442) {
+            exclude(group = "com.google.guava", module = "listenablefuture")
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force("com.google.firebase:firebase-common:24.0.0")
+        force("com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict")
     }
 }
 

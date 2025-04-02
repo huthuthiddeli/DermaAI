@@ -73,15 +73,18 @@ class SettingsViewModel : ViewModel() {
 
     fun save2FAKey()
     {
-        Authentication.save2FAKey(,)
+        //Authentication.save2FAKey()
     }
 
+
     fun generate2faKey(context: Context): String {
-        return Authentication.generateSecret(context)
+        //return Authentication.generateSecret(context)
+        return ""
     }
 
     fun validate2faCode(secret: String, code: String): Boolean {
-        return Authentication.validateTOTP(secret, code)
+        //return Authentication.validateTOTP(secret, code)
+        return false
     }
 
     fun getCurrentUser(): User {

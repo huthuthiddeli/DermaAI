@@ -156,11 +156,11 @@ class AccountinfoViewModel : ViewModel() {
         }
     }
 
-    fun signInFirebase(email: String, password: String) {
+    fun signInFirebase() {
         viewModelScope.launch {
 
             val result = withContext(Dispatchers.IO) {
-                loginRepo.signInFirebase(email, password)
+                loginRepo.signInFirebase(getUser()!!.email, getUser()!!.password)
             }
 
             result.onSuccess { isSuccess ->
