@@ -27,8 +27,7 @@ class SettingsActivity : AppCompatActivity() {
                 .replace(R.id.settings, SettingsFragment())
                 .commit()
         }
-
-        //  back button
+        
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
 
@@ -36,21 +35,22 @@ class SettingsActivity : AppCompatActivity() {
 
             val user = settingsViewModel.getCurrentUser()
 
-            if (response == null || response.isEmpty()) {
+            if (response.isNullOrEmpty()) {
                 Toast.makeText(this, "No predictions to sync", Toast.LENGTH_SHORT).show()
                 return@observe
             }
 
-            val filesDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            var imageCount = 0
-
             try {
+                val filesDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                var imageCount = 0
+
                 val localImages = Storage.retrieveImagesFromStorage(filesDir, user.email)
-                val existingImages =
-                    localImages.mapNotNull { Storage.convertImageToBase64(it) }.toSet()
+                val existingBase64 = localImages.mapNotNull {
+                    Storage.convertImageToBase64(it)
+                }.toSet()
 
                 response.forEach { prediction ->
-                    if (!existingImages.contains(prediction.image)) {
+                    if (!existingBase64.contains(prediction.image)) {
                         val file = Storage.createUniqueImagePath(this, user.email)
                         val newBitmap = Storage.base64ToBitmap(prediction.image)
 
@@ -63,12 +63,12 @@ class SettingsActivity : AppCompatActivity() {
                     }
                 }
 
-                Toast.makeText(this, "Synchronized $imageCount new images", Toast.LENGTH_LONG)
-                    .show()
+                Toast.makeText(this, "Synced $imageCount new images", Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 Toast.makeText(this, "Sync failed: ${e.message}", Toast.LENGTH_LONG).show()
             }
         }
+
     }
     
 
