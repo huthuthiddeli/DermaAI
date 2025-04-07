@@ -23,7 +23,7 @@ export class PredictionProvider{
         let data = await this.parsePredictionReqeust(ctx);
         if(!data){
             logger.error("Coudln't find Prediction")
-            return
+            return ctx.response.notFound("Couldn't find Prediction")
         }
 
         let foundItems = await predictionModel.find({email: data.email, password: data.password})
