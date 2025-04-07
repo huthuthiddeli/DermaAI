@@ -69,6 +69,8 @@ local.properties
 [Ll]ocal
 [Ss]cripts
 pyvenv.cfg
+venv/
+/src/Webscraping/.venv
 .venv
 pip-selfcheck.json
 

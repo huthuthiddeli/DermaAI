@@ -2,6 +2,8 @@ import logger from "@adonisjs/core/services/logger";
 import { HttpContext } from "@adonisjs/core/http";
 import { predictionModel } from "../Models/predictionCollection.js";
 import { userDataModel } from "../Models/userDataCollection.js";
+import { hashPassword } from "../utils/hash.js";
+
 
 export class PredictionProvider{
     private static instance: PredictionProvider;
@@ -36,30 +38,42 @@ export class PredictionProvider{
     }
 
     public async savePrediction(ctx: HttpContext){
-        let data = await this.parsePredictionReqeust(ctx);
+        try{
+            let data = await this.parsePredictionReqeust(ctx);
 
-        if(await this.findOneDB(data.password, data.email)){
-            return ctx.response.notFound("Could not find specified user!");
+            if(data === null){
+                logger.error("Couldn't parse PredictionReqeuest!");
+                return ctx.response.notFound("Couldn't parse PredictionReqeuest!");
+            }
+    
+            let foundUser = await this.findOneDB(await hashPassword(data.password), data.email);
+            
+            if(foundUser === null){
+                logger.info("Couldn't find specified user!");
+                return ctx.response.notFound("Couldn't find specified user!");
+            }
+    
+    
+            const schema = new predictionModel(data);
+            let savedSchema = await schema.save();
+    
+            return ctx.response.status(200).ok(savedSchema);
+        }catch(e){
+            logger.error("Error in savePrediction: " + e);
+            return ctx.response.internalServerError("Error in savePrediction: " + e);
         }
-
-        if(!data){
-            logger.error("Couldn't parse PredictionReqeuest!");
-            return;
-        }
-
-        const schema = new predictionModel(data);
-        let savedSchema = await schema.save();
-
-        return ctx.response.status(200).ok(savedSchema);
     }
 
     private async findOneDB(password: string, email: string){
+
         let data = await userDataModel.find({password: password, email: email})
-        if(!data){
+
+        if(data === null || data === undefined){
+            logger.info("Couldn't find specified user in findOneDB!");
             return null
         }
 
-        return data[0].toObject()
+        return data
     }
 
 }
