@@ -7,10 +7,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.R
-import com.example.dermaai_android_140.myClasses.Storage
-import java.io.File
 import com.example.dermaai_android_140.myClasses.Diagnosis
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.example.dermaai_android_140.myClasses.Storage
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -29,46 +27,48 @@ class SettingsActivity : AppCompatActivity() {
                 .replace(R.id.settings, SettingsFragment())
                 .commit()
         }
-
-        //  back button
+        
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
 
 
         settingsViewModel.allPredictions.observe(this) { response ->
 
-            if(response == null)
-            {
+            val user = settingsViewModel.getCurrentUser()
+
+            if (response.isNullOrEmpty()) {
+                Toast.makeText(this, "No predictions to sync", Toast.LENGTH_SHORT).show()
                 return@observe
             }
 
-            val filesDir : File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            var imageCount = 0
-            val localImages = Storage.retrieveImagesFromStorage(filesDir, settingsViewModel.getCurrentUser()!!.email)
+            try {
+                val filesDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+                var imageCount = 0
 
+                val localImages = Storage.retrieveImagesFromStorage(filesDir, user.email)
+                val existingBase64 = localImages.mapNotNull {
+                    Storage.convertImageToBase64(it)
+                }.toSet()
 
-            response.predictions.forEach { prediction ->
-                for (localImage in localImages) {
-
-
-                    val localBase64 = Storage.convertImageToBase64(localImage)
-                    if(!localBase64.equals(prediction.image))
-                    {
-                        val file = Storage.createUniqueImagePath(this, settingsViewModel.getCurrentUser()!!.email)
+                response.forEach { prediction ->
+                    if (!existingBase64.contains(prediction.image)) {
+                        val file = Storage.createUniqueImagePath(this, user.email)
                         val newBitmap = Storage.base64ToBitmap(prediction.image)
-                        if (newBitmap != null) {
-                            Storage.saveFileToStorage(newBitmap, baseContext, file.absolutePath)
-                            val diagnosis = Diagnosis(prediction.prediction,file.absolutePath)
-                            Storage.saveDiagnosis(this,diagnosis, settingsViewModel.getCurrentUser()!!.email)
+
+                        newBitmap?.let {
+                            Storage.saveFileToStorage(it, this, file.absolutePath)
+                            val diagnosis = Diagnosis(prediction.prediction, file.absolutePath)
+                            Storage.saveDiagnosis(this, diagnosis, user.email)
                             imageCount++
                         }
-
                     }
-
                 }
+
+                Toast.makeText(this, "Synced $imageCount new images", Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Toast.makeText(this, "Sync failed: ${e.message}", Toast.LENGTH_LONG).show()
             }
-            //Toast.makeText(context, "Synchronized $imageCount images", Toast.LENGTH_LONG).show()
         }
+
     }
     
 

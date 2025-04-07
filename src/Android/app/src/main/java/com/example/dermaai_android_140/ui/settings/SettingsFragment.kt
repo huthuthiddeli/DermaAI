@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Environment
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.edit
@@ -15,10 +14,7 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import com.example.dermaai_android_140.R
-import com.example.dermaai_android_140.myClasses.Diagnosis
-import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.ui.login.LoginActivity
-import java.io.File
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -47,38 +43,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
 
 
-        settingsViewModel.allPredictions.observe(viewLifecycleOwner) { response ->
-            val filesDir : File? = requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-            var imageCount = 0
-            val localImages = Storage.retrieveImagesFromStorage(filesDir, settingsViewModel.getCurrentUser()!!.email)
-
-
-            if(response != null)
-            {
-                response.predictions.forEach { prediction ->
-                    for (localImage in localImages) {
-
-
-                        val localBase64 = Storage.convertImageToBase64(localImage)
-                        if(!localBase64.equals(prediction.image))
-                        {
-                            val file = Storage.createUniqueImagePath(requireActivity(), settingsViewModel.getCurrentUser()!!.email)
-                            val newBitmap = Storage.base64ToBitmap(prediction.image)
-                            if (newBitmap != null) {
-                                Storage.saveFileToStorage(newBitmap, requireContext(), file.absolutePath)
-                                val diagnosis = Diagnosis(prediction.prediction,file.absolutePath)
-                                Storage.saveDiagnosis(requireActivity(),diagnosis, settingsViewModel.getCurrentUser()!!.email)
-                                imageCount++
-                            }
-
-                        }
-
-                    }
-                }
-            }
-
-            Toast.makeText(context, "Synchronized $imageCount images", Toast.LENGTH_LONG).show()
-        }
 
 
         settingsViewModel.currentUser.observe(viewLifecycleOwner){user ->
