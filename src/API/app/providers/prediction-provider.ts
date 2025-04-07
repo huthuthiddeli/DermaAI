@@ -4,7 +4,6 @@ import { predictionModel } from "../Models/predictionCollection.js";
 import { userDataModel } from "../Models/userDataCollection.js";
 import { hashPassword } from "../utils/hash.js";
 
-
 export class PredictionProvider{
     private static instance: PredictionProvider;
 
@@ -23,16 +22,20 @@ export class PredictionProvider{
 
     public async loadPrediction(ctx: HttpContext){
         let data = await this.parsePredictionReqeust(ctx);
-        if(!data){
+        if(data === null){
             logger.error("Coudln't find Prediction")
             return ctx.response.notFound("Couldn't find Prediction")
         }
-
         let foundItems = await predictionModel.find({email: data.email, password: data.password})
+        
+        for(let i = 0; i < foundItems.length; i++){
+            foundItems[i].image = "bogenskind";
+        }
+
         return foundItems
     }
 
-    private async parsePredictionReqeust(ctx: HttpContext){
+    public async parsePredictionReqeust(ctx: HttpContext){
         const {email = "", password = "", image = "", prediction ="" } = ctx.request.body()
         return {email, password, image, prediction}
     }
