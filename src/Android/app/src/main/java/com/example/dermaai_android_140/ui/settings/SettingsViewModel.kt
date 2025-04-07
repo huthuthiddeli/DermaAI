@@ -1,7 +1,6 @@
 package com.example.dermaai_android_140.ui.settings
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -26,8 +25,8 @@ class SettingsViewModel : ViewModel() {
     private val _currentUser = MutableLiveData<User?>()
     val currentUser: LiveData<User?> get() = _currentUser
 
-    private val _allPredictions = MutableLiveData<PredictionImageList?>(null)
-    val allPredictions: LiveData<PredictionImageList?> get() = _allPredictions
+    private val _allPredictions = MutableLiveData<PredictionImageList>(null)
+    val allPredictions: LiveData<PredictionImageList> get() = _allPredictions
 
     private val _message = MutableLiveData<String?>()
     val message: LiveData<String?> get() = _message

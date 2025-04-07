@@ -9,31 +9,16 @@ import android.os.Environment
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.edit
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.activity
 import androidx.preference.EditTextPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreferenceCompat
 import com.example.dermaai_android_140.R
-import com.example.dermaai_android_140.databinding.SettingsActivityBinding
-import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.Diagnosis
 import com.example.dermaai_android_140.myClasses.Storage
-import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
-import com.example.dermaai_android_140.repoimpl.UserRepoImpl
-import com.example.dermaai_android_140.ui.accountinfo.AccountinfoViewModel
-import com.example.dermaai_android_140.ui.admin.AdminViewModel
-import com.example.dermaai_android_140.ui.gallery.GalleryViewModel
 import com.example.dermaai_android_140.ui.login.LoginActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.java.KoinJavaComponent
 import java.io.File
-import kotlin.getValue
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
@@ -68,26 +53,30 @@ class SettingsFragment : PreferenceFragmentCompat() {
             val localImages = Storage.retrieveImagesFromStorage(filesDir, settingsViewModel.getCurrentUser()!!.email)
 
 
-            response!!.predictions.forEach { prediction ->
-                for (localImage in localImages) {
+            if(response != null)
+            {
+                response.predictions.forEach { prediction ->
+                    for (localImage in localImages) {
 
 
-                    val localBase64 = Storage.convertImageToBase64(localImage)
-                    if(!localBase64.equals(prediction.image))
-                    {
-                        val file = Storage.createUniqueImagePath(requireActivity(), settingsViewModel.getCurrentUser()!!.email)
-                        val newBitmap = Storage.base64ToBitmap(prediction.image)
-                        if (newBitmap != null) {
-                            Storage.saveFileToStorage(newBitmap, requireContext(), file.absolutePath)
-                            val diagnosis = Diagnosis(prediction.prediction,file.absolutePath)
-                            Storage.saveDiagnosis(requireActivity(),diagnosis, settingsViewModel.getCurrentUser()!!.email)
-                            imageCount++
+                        val localBase64 = Storage.convertImageToBase64(localImage)
+                        if(!localBase64.equals(prediction.image))
+                        {
+                            val file = Storage.createUniqueImagePath(requireActivity(), settingsViewModel.getCurrentUser()!!.email)
+                            val newBitmap = Storage.base64ToBitmap(prediction.image)
+                            if (newBitmap != null) {
+                                Storage.saveFileToStorage(newBitmap, requireContext(), file.absolutePath)
+                                val diagnosis = Diagnosis(prediction.prediction,file.absolutePath)
+                                Storage.saveDiagnosis(requireActivity(),diagnosis, settingsViewModel.getCurrentUser()!!.email)
+                                imageCount++
+                            }
+
                         }
 
                     }
-
                 }
             }
+
             Toast.makeText(context, "Synchronized $imageCount images", Toast.LENGTH_LONG).show()
         }
 

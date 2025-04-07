@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.FragmentAdminBinding
 import com.example.dermaai_android_140.myClasses.InputEpochReshapeDialog
@@ -21,7 +19,6 @@ import com.example.dermaai_android_140.myClasses.ReportAll
 import com.example.dermaai_android_140.myClasses.Retrain
 import com.example.dermaai_android_140.myClasses.RetrainAll
 import com.example.dermaai_android_140.myClasses.Storage
-import kotlinx.serialization.json.Json
 
 class AdminFragment : Fragment() {
 
@@ -49,6 +46,7 @@ class AdminFragment : Fragment() {
         val oneReportBtn = view.findViewById<Button>(R.id.oneReportBtn)
 
         adminViewModel = ViewModelProvider(this)[AdminViewModel::class.java]
+        adminViewModel.setCurrentUser()
 
         adminViewModel.message.observe(viewLifecycleOwner) { message ->
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
