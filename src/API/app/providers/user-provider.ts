@@ -133,11 +133,18 @@ export class UserProvider{
 
         let obj = await this.getBodyWithHashedPassword(ctx.request.body());
         let foundObj = await this.getOneFromDB(obj.password, obj.email); 
-        if(!foundObj){ return ctx.response.notFound(); }
+        if(!foundObj){
+            logger.error("Item not found in DB!")
+            return ctx.response.notFound();
+        }
+        
         foundObj.mfa = !foundObj.mfa;
         await userDataModel.updateOne({password: foundObj.password, email: foundObj.email}, foundObj)
         let item = await this.getOneFromDB(foundObj.password, foundObj.email);
-        if(!item) { return ctx.response.badGateway();}
+        if(!item) { 
+            logger.error("Item not found in DB!")
+            return ctx.response.badGateway();
+        }
         const {password, ...params} = item;
         
         return ctx.response.status(200).json(params);

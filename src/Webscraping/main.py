@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 import re
 import time
 import picture as Picture
-# from Pictrue import picture
 import json
 import sys
 import subprocess
@@ -13,8 +12,6 @@ outcome_diagnosis_regex_ENG_ISIC = r'\'outcome_diagnosis\':\s*\'([^\']+)'
 pic_regex_ENG_ISIC = r"'full':\s*{\s*'url':\s*'([^']+)'"
 next_ENG_ISIC = r"'next':\s*'([^']+)','"
 connection_string = 'https://api.isic-archive.com/api/v2/lesions/'
-MAX_THREADS = 5
-CUR_THREADS = 0
 
 
 def fetch_html(url):
@@ -52,17 +49,10 @@ def fetch_from_isic_archive(link):
             if diagnosis is None or picture is None:
                 print("Iteration skipped!")
                 continue
-
             if len(diagnosis) < 0 or len(picture) < 0:
                 print("Iteration skipped!")
                 continue
-
-            # print(f'Diagnosis: {diagnosis}')
-            # print(f'Pictures: {picture}')
             download_images(Picture.Picture(picture, diagnosis))
-
-        except AttributeError as e:
-            print(f'AttributeError: {e}', )
 
         except Exception as e:
             print(f'Critical Error: {e}')
@@ -71,18 +61,14 @@ def fetch_from_isic_archive(link):
         fetch_from_isic_archive(next_link)
 
 def download_images(obj: Picture.Picture):
-    # RUN IS NOT ASYNC BUT RATHER WAITS FOR THE RESPONSE
-    # CODING IT ASYNC WITHOUT PROPER LIMITATION OF THREAD-USAGE WOULD DESTROY LAPTOP
     result = subprocess.run([sys.executable, 'DownloadImage.py', str(obj.to_dict())],
                             cwd=os.getcwd(), capture_output=True)
 
     if len(result.stdout) > 5:
         print(f"STANDARD OUTPUT={result.stdout}")
-
     if len(result.stderr) > 5:
         print(f"STANDARD ERROR={result.stderr}")
 
-    exit(0)
 
 if __name__ == '__main__':
     start_time = time.perf_counter()
