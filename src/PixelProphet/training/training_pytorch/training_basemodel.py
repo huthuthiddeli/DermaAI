@@ -123,7 +123,16 @@ class BaseModelTorch(IModel):
             x, y = dataset
             x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
 
+            label_encoder = LabelEncoder()
+            y_encoded = label_encoder.fit_transform(y_test)
 
+            x_test_tensor = torch.tensor(x_test, dtype=torch.float32).to(self.device)
+            y_test_tensor = torch.tensor(y_encoded, dtype=torch.long).to(self.device)
+
+            x_test_tensor = adjust_input_channels_pytorch_tensor(self.model, x_test_tensor, reshape_size)
+
+            dataset = TensorDataset(x_test_tensor, y_test_tensor)
+            test_loader = DataLoader(dataset, batch_size=16, shuffle=False)
 
             self.model.eval()
 
