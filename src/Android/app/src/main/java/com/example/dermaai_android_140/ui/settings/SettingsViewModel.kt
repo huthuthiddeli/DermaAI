@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.myClasses.Authentication
-import com.example.dermaai_android_140.myClasses.PredictionImageList
+import com.example.dermaai_android_140.myClasses.ReceivedPredictionsAndImages
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
@@ -25,8 +25,8 @@ class SettingsViewModel : ViewModel() {
     private val _currentUser = MutableLiveData<User?>()
     val currentUser: LiveData<User?> get() = _currentUser
 
-    private val _allPredictions = MutableLiveData<PredictionImageList>(null)
-    val allPredictions: LiveData<PredictionImageList> get() = _allPredictions
+    private val _allPredictions = MutableLiveData<List<ReceivedPredictionsAndImages>>(null)
+    val allPredictions: LiveData<List<ReceivedPredictionsAndImages>> get() = _allPredictions
 
     private val _message = MutableLiveData<String?>()
     val message: LiveData<String?> get() = _message

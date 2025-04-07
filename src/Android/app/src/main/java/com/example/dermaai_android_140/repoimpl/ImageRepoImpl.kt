@@ -5,7 +5,7 @@ import com.example.dermaai_android_140.myClasses.AiModel
 import com.example.dermaai_android_140.myClasses.Image
 import com.example.dermaai_android_140.myClasses.Prediction
 import com.example.dermaai_android_140.myClasses.PredictionImage
-import com.example.dermaai_android_140.myClasses.PredictionImageList
+import com.example.dermaai_android_140.myClasses.ReceivedPredictionsAndImages
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.ImageRepo
 import com.google.gson.Gson
@@ -42,22 +42,24 @@ class ImageRepoImpl : ImageRepo {
             Result.failure(Exception("Failed to save prediction: ${e.message}"))
         }
     }
+    
 
-    override fun loadPredictions(model: User, url: String): Result<PredictionImageList> {
+    override fun loadPredictions(model: User, url: String): Result<List<ReceivedPredictionsAndImages>> {
         return try {
             val result = API.callApi(url, "POST", model)
             if (result.isSuccess) {
                 try {
-                    val predictions = Gson().fromJson(result.getOrThrow(), PredictionImageList::class.java)
+                    val jsonString = result.getOrThrow()
+                    val predictions = Gson().fromJson(jsonString, Array<ReceivedPredictionsAndImages>::class.java).toList()
                     Result.success(predictions)
                 } catch (e: Exception) {
-                    Result.failure(Exception("Failed to parse predictions: ${e.message}"))
+                    Result.failure(Exception("Parsing failed: ${e.message}"))
                 }
             } else {
-                Result.failure(Exception("Failed to load predictions: ${result.exceptionOrNull()?.message ?: "Unknown error"}"))
+                Result.failure(Exception("API error: ${result.exceptionOrNull()?.message ?: "Unknown"}"))
             }
         } catch (e: Exception) {
-            Result.failure(Exception("Failed to load predictions: ${e.message}"))
+            Result.failure(Exception("Network error: ${e.message}"))
         }
     }
 
