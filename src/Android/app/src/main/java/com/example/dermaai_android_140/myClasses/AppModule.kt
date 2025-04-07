@@ -18,7 +18,6 @@ val appModule = module {
     single { ModelRepoImpl() }
     single { AdminRepoImpl() }
 
-
     viewModel { SettingsViewModel() }
     
 

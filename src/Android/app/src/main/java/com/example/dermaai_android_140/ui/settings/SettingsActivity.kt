@@ -15,13 +15,13 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class SettingsActivity : AppCompatActivity() {
 
 
-    private val settingsViewModel: SettingsViewModel by viewModel()
+    private lateinit var settingsViewModel: SettingsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
 
-        //settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
+        settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
 
         if (savedInstanceState == null) {

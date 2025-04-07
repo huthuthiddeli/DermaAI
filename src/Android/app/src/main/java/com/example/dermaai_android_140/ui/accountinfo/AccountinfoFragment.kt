@@ -23,7 +23,6 @@ import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.HealthCheckResponse
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.ui.login.LoginViewModel
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import java.util.UUID
@@ -117,7 +116,7 @@ class AccountinfoFragment() : Fragment() {
             loginBtn.setOnClickListener {
 
                 //
-                hardcoded(viewModel)
+                //hardcoded(viewModel)
                 //
                 
                 val email = editTextEmail.text.toString()
@@ -129,7 +128,6 @@ class AccountinfoFragment() : Fragment() {
 
                 
             }
-
         } else {
 
 
@@ -258,7 +256,6 @@ class AccountinfoFragment() : Fragment() {
 
         viewModel.mfaEnabled.observe(viewLifecycleOwner) { mfaEnabled ->
             if (mfaEnabled) {
-                signInFirebase()
                 showTwoFAInputDialog(requireContext(), viewModel)
             }
         }
@@ -267,13 +264,7 @@ class AccountinfoFragment() : Fragment() {
 
     }
 
-    private fun signInFirebase()
-    {
-        val auth = FirebaseAuth.getInstance()
-        val viewModel = ViewModelProvider(this)[AccountinfoViewModel::class.java]
-        viewModel.signInFirebase(requireActivity())
 
-    }
 
     private fun hardcoded(viewModel: AccountinfoViewModel)
     {
@@ -296,17 +287,16 @@ class AccountinfoFragment() : Fragment() {
             .setPositiveButton("Submit") { _, _ ->
                 val code = input.text.toString()
                 if (code.isNotEmpty()) {
+                    if (Authentication.validateTOTP(viewModel.getKey(), code)) {
+                        
+                        Toast.makeText(context, "Verified Successfully!", Toast.LENGTH_SHORT).show()
 
-                    Authentication.verifyTOTP(requireActivity(), viewModel.getKey(), code) { isValid ->
-                        if (isValid) {
-                            Toast.makeText(context, "Verified Successfully!", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(requireContext(), MainActivity::class.java)
-                            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
-                        } else {
-                            Toast.makeText(context, "Verification Failed!", Toast.LENGTH_SHORT).show()
-                        }
+                        val intent = Intent(requireContext(), MainActivity::class.java)
+                        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+
+                    } else {
+                        Toast.makeText(context, "Invalid Code!", Toast.LENGTH_SHORT).show()
                     }
-
                 }
             }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }

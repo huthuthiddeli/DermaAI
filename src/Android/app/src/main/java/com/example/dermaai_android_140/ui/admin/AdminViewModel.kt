@@ -51,6 +51,7 @@ class AdminViewModel : ViewModel() {
     private val _allReports = MutableLiveData<ReceivedReportAll>()
     val allReports: LiveData<ReceivedReportAll> get() = _allReports
 
+    private val timeoutMillis = 10_000L
 
     fun retrainAll(url: String, model: RetrainAll) {
         viewModelScope.launch {
@@ -142,4 +143,3 @@ class AdminViewModel : ViewModel() {
         }
     }
 }
-

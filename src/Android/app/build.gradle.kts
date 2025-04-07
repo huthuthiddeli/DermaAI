@@ -4,8 +4,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.compose.compiler)
-    alias(libs.plugins.google.firebase.firebase.perf)
-    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -67,8 +65,6 @@ dependencies {
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.exifinterface)
     implementation(libs.firebase.database.ktx)
-    implementation(libs.security.crypto.ktx)
-    implementation(libs.firebaseui.firebase.ui.auth)
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.dexmaker.mockito)
     androidTestImplementation(libs.androidx.espresso.contrib)
@@ -104,27 +100,10 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.coil)
+    implementation(libs.androidx.exifinterface)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.viewmodel)
-
-
-    //implementation (libs.firebase.auth.v2110)
-    //implementation (libs.firebase.firestore.v2400)
-
-    implementation (libs.firebase.common)
-
-    //implementation (libs.listenablefuture)
-
-    implementation (libs.firebase.auth)
-    implementation (libs.firebase.firestore)
-
-    implementation(libs.guava)
-
-    //implementation (libs.play.services.base)
-
-    implementation (libs.androidx.security.crypto)
-
 }
