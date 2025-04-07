@@ -7,3 +7,4 @@ data class User(
     var isAdmin : Boolean = false,
     var id: String? = "",
 )
+

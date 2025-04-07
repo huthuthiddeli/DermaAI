@@ -15,7 +15,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.myClasses.AiModel
 import com.example.dermaai_android_140.myClasses.Prediction
+import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
+import com.example.dermaai_android_140.repoimpl.UserRepoImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -26,7 +28,8 @@ import java.io.File
 class CameraViewModel : ViewModel() {
 
     private val imageRepo: ImageRepoImpl by KoinJavaComponent.inject(ImageRepoImpl::class.java)
-    
+    private val userRepo: UserRepoImpl by KoinJavaComponent.inject(UserRepoImpl::class.java)
+
     private var myJob: Job? = null
 
 
@@ -64,30 +67,14 @@ class CameraViewModel : ViewModel() {
     fun getLastPath(): String {
         return lastPath
     }
-    
 
 
-    /*
-    fun sendImage(url: String, modelIndex : Int, trainerString : String, base64Image: String, lastPathOfImg: String?) {
+    fun getCurrentUser() : User
+    {
+        return userRepo.getCurrentUser()
+    }
 
-        viewModelScope.launch {
-            try {
 
-                val prediction = withContext(Dispatchers.IO) {
-
-                    val model = AiModel(modelIndex, trainerString, base64Image)
-                    lastPath = lastPathOfImg.toString()
-                    imageRepo.sendImage(model, url)
-                }
-
-                _prediction.postValue(prediction)
-            } catch (e: Exception) {
-                e.printStackTrace()
-                _error.postValue(e.message)
-                _prediction.postValue(null)
-            }
-        }
-    }*/
 
 
 }

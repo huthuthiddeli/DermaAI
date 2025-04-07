@@ -10,20 +10,20 @@ class UserRepoImpl(context : Context) : UserRepo {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("user_data", Context.MODE_PRIVATE)
 
-    override suspend fun getCurrentUser(): User? {
+    override fun getCurrentUser(): User {
         val password = sharedPreferences.getString("password", null).toString()
         val email = sharedPreferences.getString("email", null).toString()
-        val mfa = sharedPreferences.getString("mfa", null)
+        val mfa = sharedPreferences.getBoolean("mfa", false)
         val isAdmin = sharedPreferences.getBoolean("isAdmin", false)
         
-        return User(email,password,mfa.toBoolean(), isAdmin)
+        return User(email,password,mfa, isAdmin)
     }
 
     override suspend fun saveCurrentUser(user: User) {
         sharedPreferences.edit().apply {
             putString("password", user.password)
             putString("email", user.email)
-            putString("mfa", user.mfa.toString())
+            putBoolean("mfa", user.mfa)
             putBoolean("isAdmin", user.isAdmin)
             
             apply() //  asynchronously

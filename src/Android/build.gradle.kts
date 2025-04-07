@@ -6,8 +6,22 @@ plugins {
     alias(libs.plugins.compose.compiler) apply false
     alias(libs.plugins.google.firebase.firebase.perf) apply false
     alias(libs.plugins.google.gms.google.services) apply false
+    //id("com.google.gms.google-services") version "4.4.2" apply false
 }
 
+
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+
+    dependencies {
+        classpath(libs.google.services.v442)
+    }
+}
 
 
 

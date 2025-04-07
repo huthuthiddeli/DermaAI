@@ -1,99 +1,75 @@
 package com.example.dermaai_android_140.repoimpl
 
-import android.annotation.SuppressLint
-import android.widget.Toast
 import com.example.dermaai_android_140.myClasses.API
+import com.example.dermaai_android_140.myClasses.HealthCheckResponse
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.LoginRepo
+import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
-import kotlinx.coroutines.Dispatchers
-import kotlin.Result
-
 
 class LoginRepoImpl : LoginRepo {
 
+    override fun login(email: String, password: String, mfa: Boolean, url: String): Result<User> {
+        return try {
+            val user = User(email, password, mfa)
+            val result = API.callApi(url, "POST", user)
+
+            if (result.isSuccess) {
+                val userResponse = Gson().fromJson(result.getOrThrow(), User::class.java)
+                Result.success(userResponse)
+            } else {
+                Result.failure(result.exceptionOrNull() ?: Exception("Unknown error"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
     
-
-        override fun login(email : String, password : String, mfa : Boolean, url : String) : User?
-        {
-            val user = User(email,password, mfa)
-
-            var receivedUserObject : User? = null
-
+    override fun register(email: String, password: String, mfa: Boolean, url: String): Result<User> {
+        return try {
+            val user = User(email, password, mfa)
             val result = API.callApi(url, "POST", user)
 
             if (result.isSuccess) {
-                val receivedData = result.getOrNull()
-                val gson = Gson()
-                try{
-                    receivedUserObject = gson.fromJson(receivedData, User::class.java)
-
-                }
-                catch (e: Exception)
-                {
-
-                }
-
-            } else if (result.isFailure) {
-
+                val userResponse = Gson().fromJson(result.getOrThrow(), User::class.java)
+                Result.success(userResponse)
+            } else {
+                Result.failure(result.exceptionOrNull() ?: Exception("Unknown error"))
             }
-            return receivedUserObject
+        } catch (e: Exception) {
+            Result.failure(e)
         }
+    }
 
-
-        @SuppressLint("SuspiciousIndentation")
-        override fun register(email : String, password : String, mfa : Boolean, url : String) : User?
-        {
-            val user = User(email,password, false)
-
-            var receivedUserObject : User? = null
-
-
-            val result = API.callApi(url, "POST", user)
-
-                if (result.isSuccess) {
-
-
-                    val receivedData = result.getOrNull()
-
-                    val gson = Gson()
-
-                    try{
-                        receivedUserObject = gson.fromJson(receivedData, User::class.java)
-
-                    }
-                    catch (e: Exception)
-                    {
-
-                    }
-
-
-                } else if (result.isFailure) {
-
-                }
-
-            return receivedUserObject
-        }
-
-
-        override fun setMFA(user : User?, url : String) : User?
-        {
+    override fun setMFA(user: User?, url: String): Result<User> {
+        return try {
             val result = API.callApi(url, "POST", user)
 
             if (result.isSuccess) {
-                val receivedData = result.getOrNull()
-
-                val gson = Gson()
-
-                val receivedUserObject = gson.fromJson(receivedData, User::class.java)
-                return receivedUserObject
+                val userResponse = Gson().fromJson(result.getOrThrow(), User::class.java)
+                Result.success(userResponse)
+            } else {
+                Result.failure(result.exceptionOrNull() ?: Exception("Unknown error"))
             }
-            else
-            {
-                return null;
-            }
+        } catch (e: Exception) {
+            Result.failure(e)
         }
+    }
 
+    override fun checkHealth(model: HealthCheckResponse, url: String): Result<String> {
+        return try {
+            val result = API.callApi(url, "GET", model)
+
+            if (result.isSuccess) {
+                val healthResponse = Gson().fromJson(result.getOrThrow(), HealthCheckResponse::class.java)
+                Result.success(healthResponse.message)
+            } else {
+                Result.failure(result.exceptionOrNull() ?: Exception("Unknown error"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
 
 

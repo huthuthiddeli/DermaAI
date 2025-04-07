@@ -1,5 +1,6 @@
 package com.example.dermaai_android_140.ui.resize
 
+import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
@@ -10,15 +11,18 @@ import android.widget.Button
 import android.net.Uri
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.net.toUri
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import com.example.dermaai_android_140.MainActivity
 import com.example.dermaai_android_140.myClasses.Diagnosis
 import com.example.dermaai_android_140.myClasses.Prediction
 import com.example.dermaai_android_140.myClasses.PredictionImage
 import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.ui.camera.CameraViewModel
 import com.example.dermaai_android_140.ui.home.HomeFragment
+import com.example.dermaai_android_140.ui.result.ResultViewModel
 import java.io.File
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -28,6 +32,7 @@ class ResizeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityResizeBinding
     private lateinit var base64: String
     private lateinit var imageUriString: String
+    private lateinit var resizeViewModel: ResizeViewModel
 
 
     @OptIn(ExperimentalEncodingApi::class)
@@ -38,9 +43,12 @@ class ResizeActivity : AppCompatActivity() {
         binding = ActivityResizeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val resizeViewModel = ViewModelProvider(this).get(ResizeViewModel::class.java)
+        resizeViewModel = ViewModelProvider(this).get(ResizeViewModel::class.java)
 
-        resizeViewModel.setCurrentUser()
+        resizeViewModel.message.observe(this) { message ->
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+
 
 
         imageUriString = intent.getStringExtra("image_uri").toString()
@@ -62,14 +70,13 @@ class ResizeActivity : AppCompatActivity() {
         loadImageIntoImageView(imageUri)
         
 
-        resizeViewModel.error.observe(this) { error ->
-            Toast.makeText(baseContext, error, Toast.LENGTH_SHORT).show()
-        }
+
 
         resizeViewModel.resizedImage.observe(this) { resizedImage ->
 
             if(resizedImage != null)
             {
+                Toast.makeText(this, "Image sending to Server to resize! Wait a few Seconds!", Toast.LENGTH_SHORT).show()
                 base64 = resizedImage.image
                 loadBase64ImageIntoImageView(resizedImage.image)
             }
@@ -79,6 +86,7 @@ class ResizeActivity : AppCompatActivity() {
         val acceptAndSendBtn = findViewById<Button>(R.id.acceptBtn)
 
         acceptAndSendBtn.setOnClickListener{
+            Toast.makeText(this, "Sending Image to Server! Wait a few Seconds!", Toast.LENGTH_SHORT).show()
             resizeViewModel.sendImage(url, modelIndex, framework, base64, imageUriString)
         }
 
@@ -87,13 +95,12 @@ class ResizeActivity : AppCompatActivity() {
             // Save Prediction to JSON
             val diagnosis = Diagnosis(prediction!!.getPredictionMap(), imageUriString)
 
-            Storage.saveDiagnosis(this,imageUriString, diagnosis)
+            Storage.saveDiagnosis(this, diagnosis, resizeViewModel.getCurrentUser()!!.email)
 
-            savePrediction(resizeViewModel, prediction)
+            savePrediction(prediction)
 
-            prediction?.let {
-                 findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.nav_home)
-            }
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
             
         }
 
@@ -105,7 +112,7 @@ class ResizeActivity : AppCompatActivity() {
     }
 
 
-    private fun savePrediction(resizeViewModel: ResizeViewModel, prediction : Prediction)
+    private fun savePrediction(prediction : Prediction)
     {
         val url = getString(R.string.main) +
                 getString(R.string.user_controller_gateway) +
@@ -116,7 +123,6 @@ class ResizeActivity : AppCompatActivity() {
         val model = PredictionImage(user.email,user.password,base64,prediction.getPredictionMap())
 
         resizeViewModel.savePrediction(url,model)
-
     }
 
 

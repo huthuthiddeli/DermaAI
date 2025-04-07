@@ -1,103 +1,81 @@
 package com.example.dermaai_android_140.repoimpl
 
 import com.example.dermaai_android_140.myClasses.API
-import com.example.dermaai_android_140.myClasses.AiModel
-import com.example.dermaai_android_140.myClasses.Prediction
-import com.example.dermaai_android_140.myClasses.Report
-import com.example.dermaai_android_140.myClasses.ReportAll
 import com.example.dermaai_android_140.myClasses.Retrain
 import com.example.dermaai_android_140.myClasses.RetrainAll
+import com.example.dermaai_android_140.myClasses.Report
+import com.example.dermaai_android_140.myClasses.ReportAll
 import com.example.dermaai_android_140.repo.AdminRepo
 import com.google.gson.Gson
+import kotlin.Result
 
 class AdminRepoImpl : AdminRepo {
 
-    override fun retrainModel(model : Retrain?, url : String) : String? {
-
+    override fun retrainModel(model: Retrain?, url: String): Result<String> {
         val result = API.callApi(url, "POST", model)
-
-        if (result.isSuccess) {
-
-            val receivedData = result.getOrNull()
-
-            try{
-                val stringResponse = Gson().fromJson(receivedData, String::class.java)
-                return stringResponse
+        return result.fold(
+            onSuccess = { response ->
+                try {
+                    val parsedResponse = Gson().fromJson(response, String::class.java)
+                    Result.success(parsedResponse)
+                } catch (e: Exception) {
+                    Result.failure(Exception("Failed to parse response: ${e.message}"))
+                }
+            },
+            onFailure = { exception ->
+                Result.failure(Exception("Retraining failed: ${exception.message}"))
             }
-            catch (e: Exception)
-            {
-
-            }
-
-        } else if (result.isFailure) {
-            result.exceptionOrNull()?.message
-        }
-
-        return null
-
+        )
     }
 
-    override fun retrainAllModel(model : RetrainAll, url : String) : String? {
-
+    override fun retrainAllModel(model: RetrainAll, url: String): Result<String> {
         val result = API.callApi(url, "POST", model)
-
-        if (result.isSuccess) {
-
-            val receivedData = result.getOrNull()
-
-            try{
-                val stringResponse = Gson().fromJson(receivedData, String::class.java)
-                return stringResponse
-
+        return result.fold(
+            onSuccess = { response ->
+                try {
+                    val parsedResponse = Gson().fromJson(response, String::class.java)
+                    Result.success(parsedResponse)
+                } catch (e: Exception) {
+                    Result.failure(Exception("Failed to parse response: ${e.message}"))
+                }
+            },
+            onFailure = { exception ->
+                Result.failure(Exception("Retraining all failed: ${exception.message}"))
             }
-            catch (e: Exception)
-            {
+        )
+    }
 
+    override fun getOneReport(model: Report, url: String): Result<String> {
+        val result = API.callApi(url, "GET", model)
+        return result.fold(
+            onSuccess = { response ->
+                try {
+                    val parsedReport = Gson().fromJson(response, String::class.java)
+                    Result.success(parsedReport)
+                } catch (e: Exception) {
+                    Result.failure(Exception("Failed to parse report: ${e.message}"))
+                }
+            },
+            onFailure = { exception ->
+                Result.failure(Exception("Failed to fetch report: ${exception.message}"))
             }
-
-        } else if (result.isFailure) {
-            result.exceptionOrNull()?.message
-        }
-
-        return null
+        )
     }
 
-
-
-    override fun getOneReport(model : Report, url : String) : String? {
-
+    override fun getAllReports(model: ReportAll, url: String): Result<String> {
         val result = API.callApi(url, "GET", model)
-        
-        if (result.isSuccess) {
-
-            val receivedData = result.getOrNull()
-            return receivedData
-
-        } else if (result.isFailure) {
-            result.exceptionOrNull()?.message
-        }
-        
-        return null
+        return result.fold(
+            onSuccess = { response ->
+                try {
+                    val parsedReports = Gson().fromJson(response, String::class.java)
+                    Result.success(parsedReports)
+                } catch (e: Exception) {
+                    Result.failure(Exception("Failed to parse reports: ${e.message}"))
+                }
+            },
+            onFailure = { exception ->
+                Result.failure(Exception("Failed to fetch reports: ${exception.message}"))
+            }
+        )
     }
-
-    override fun getAllReports(model : ReportAll, url : String) : String? {
-
-        val result = API.callApi(url, "GET", model)
-        
-
-        if (result.isSuccess) {
-
-            val receivedData = result.getOrNull()
-            return receivedData
-
-        } else if (result.isFailure) {
-            result.exceptionOrNull()?.message
-        }
-
-        return null
-    }
-
-    
-
-
 }

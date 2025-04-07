@@ -8,6 +8,7 @@ import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.FragmentAdminBinding
@@ -26,7 +27,7 @@ class AdminFragment : Fragment() {
 
     private var _binding: FragmentAdminBinding? = null
     private val binding get() = _binding!!
-    private val adminViewModel: AdminViewModel by viewModels()
+    private lateinit var adminViewModel: AdminViewModel
     private lateinit var decision : String
 
     override fun onCreateView(
@@ -37,22 +38,25 @@ class AdminFragment : Fragment() {
         _binding = FragmentAdminBinding.inflate(inflater, container, false)
         return binding.root
     }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        adminViewModel.setCurrentUser()
-
 
         val retrainAllBtn = view.findViewById<Button>(R.id.retrainAllBtn)
         val retrainBtn = view.findViewById<Button>(R.id.retrainBtn)
 
         val allReportsBtn = view.findViewById<Button>(R.id.allReportsBtn)
         val oneReportBtn = view.findViewById<Button>(R.id.oneReportBtn)
-        
+
+        adminViewModel = ViewModelProvider(this)[AdminViewModel::class.java]
+
+        adminViewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
+
         allReportsBtn.setOnClickListener {
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
-
+                getAllReports()
             } else {
                 showToast("You are not an Admin!")
             }
@@ -104,15 +108,20 @@ class AdminFragment : Fragment() {
         
 
         adminViewModel.report.observe(viewLifecycleOwner){report ->
-            showToast("Report received!")
-
-            Storage.createReportFile(requireActivity(), report.toString())
+            if(report != null)
+            {
+                showToast("Report received!")
+                Storage.createReportFile(requireActivity(), report.toString(), adminViewModel.getCurrentUser()!!.email)
+            }else
+            {
+                showToast("Error receiving report")
+            }
         }
 
-        adminViewModel.error.observe(viewLifecycleOwner){error ->
-            showToast(error.toString())
+        adminViewModel.message.observe(viewLifecycleOwner){message ->
+            showToast(message.toString())
         }
-        
+
     }
 
     private fun getAllReports()

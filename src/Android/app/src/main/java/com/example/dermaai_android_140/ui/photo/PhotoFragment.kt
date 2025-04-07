@@ -26,6 +26,7 @@ import com.example.dermaai_android_140.myClasses.ModelTrainer
 import com.example.dermaai_android_140.ui.camera.CameraActivity
 import java.io.File
 import com.example.dermaai_android_140.myClasses.ModelSelectionDialog
+import com.example.dermaai_android_140.ui.settings.SettingsViewModel
 
 class PhotoFragment : Fragment() {
 
@@ -35,6 +36,8 @@ class PhotoFragment : Fragment() {
 
 
     private lateinit var photoFile: File
+
+    private lateinit var photoViewModel: PhotoViewModel
 
 
     // This property is only valid between onCreateView and
@@ -46,8 +49,8 @@ class PhotoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val photoViewModel =
-            ViewModelProvider(this)[PhotoViewModel::class.java]
+
+        photoViewModel = ViewModelProvider(this)[PhotoViewModel::class.java]
 
 
         _binding = FragmentPhotoBinding.inflate(inflater, container, false)
@@ -55,7 +58,7 @@ class PhotoFragment : Fragment() {
 
         //
 
-
+        setUpObserver()
 
         val takePhotoBtn: Button = binding.takePhotoBtn
 
@@ -77,7 +80,6 @@ class PhotoFragment : Fragment() {
         }
 
 
-        setUpObserver(photoViewModel)
 
         return root
     }
@@ -97,12 +99,15 @@ class PhotoFragment : Fragment() {
 
 
 
-
-    private fun setUpObserver(photoViewModel : PhotoViewModel)
+    private fun setUpObserver()
     {
 
-        photoViewModel.error.observe(viewLifecycleOwner) { error ->
-            Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
+        photoViewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+        }
+
+        photoViewModel.message.observe(viewLifecycleOwner) { message ->
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
 
         photoViewModel.requestCameraPermission.observe(viewLifecycleOwner) { requestCount ->

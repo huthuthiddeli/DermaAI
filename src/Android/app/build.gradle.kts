@@ -38,11 +38,13 @@ android {
     // Performance / Shrinking
     buildTypes {
         release {
+            // entfernt ungenutzten Code
             isMinifyEnabled = true
+            // entfernt nicht verwendete Ressourcen
             isShrinkResources = true
+            // Lädt die Konfiguration aus der Datei
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-project.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt")
             )
             signingConfig = signingConfigs.getByName("debug")
         }
@@ -64,6 +66,9 @@ dependencies {
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.exifinterface)
+    implementation(libs.firebase.database.ktx)
+    implementation(libs.security.crypto.ktx)
+    implementation(libs.firebaseui.firebase.ui.auth)
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.dexmaker.mockito)
     androidTestImplementation(libs.androidx.espresso.contrib)
@@ -99,10 +104,27 @@ dependencies {
     implementation(libs.androidx.fragment.ktx)
     implementation(libs.androidx.preference.ktx)
     implementation(libs.coil)
-    implementation(libs.androidx.exifinterface)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.viewmodel)
+
+
+    //implementation (libs.firebase.auth.v2110)
+    //implementation (libs.firebase.firestore.v2400)
+
+    implementation (libs.firebase.common)
+
+    //implementation (libs.listenablefuture)
+
+    implementation (libs.firebase.auth)
+    implementation (libs.firebase.firestore)
+
+    implementation(libs.guava)
+
+    //implementation (libs.play.services.base)
+
+    implementation (libs.androidx.security.crypto)
+
 }

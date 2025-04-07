@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "911974375708",
+    "firebase_url": "https://dermaai-android-14-0-default-rtdb.europe-west1.firebasedatabase.app",
     "project_id": "dermaai-android-14-0",
     "storage_bucket": "dermaai-android-14-0.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.dermaai_android_140"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "911974375708-gdtkbd2l5frfc6jat3e9bbsflibkb0u0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dermaai_android_140",
+            "certificate_hash": "780a7510495fffde29fe51d8d53deeafedf2a52c"
+          }
+        },
+        {
+          "client_id": "911974375708-4k0ti8ocp84b57scvrik3hrecgo7epl6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyCii3S_x3o47vK3K7JIE2ZwKhjT-7f6qhQ"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "911974375708-4k0ti8ocp84b57scvrik3hrecgo7epl6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

@@ -4,7 +4,7 @@ import com.example.dermaai_android_140.myClasses.User
 
 interface UserRepo {
 
-    suspend fun getCurrentUser(): User?
+    fun getCurrentUser(): User?
     suspend fun saveCurrentUser(user: User)
     
 }

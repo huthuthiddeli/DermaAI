@@ -13,6 +13,7 @@
     <string name="validateUser_gateway">login/</string>
     <string name="savePrediction_gateway">login/</string>
     <string name="loadPrediction_gateway">load-prediction/</string>
+    <string name="checkHealth_gateway">health/</string>
 
     <string name="getModels_gateway">models/</string>
     <string name="getAllReports_gateway">classifier-reports/</string>
