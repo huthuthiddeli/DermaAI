@@ -42,7 +42,7 @@ class ImageRepoImpl : ImageRepo {
             Result.failure(Exception("Failed to save prediction: ${e.message}"))
         }
     }
-    
+
 
     override fun loadPredictions(model: User, url: String): Result<List<ReceivedPredictionsAndImages>> {
         return try {

@@ -45,12 +45,10 @@ class SettingsActivity : AppCompatActivity() {
             var imageCount = 0
 
             try {
-                // Get existing images once
                 val localImages = Storage.retrieveImagesFromStorage(filesDir, user.email)
                 val existingImages =
                     localImages.mapNotNull { Storage.convertImageToBase64(it) }.toSet()
 
-                // Process each prediction
                 response.forEach { prediction ->
                     if (!existingImages.contains(prediction.image)) {
                         val file = Storage.createUniqueImagePath(this, user.email)
@@ -64,7 +62,7 @@ class SettingsActivity : AppCompatActivity() {
                         }
                     }
                 }
-                
+
                 Toast.makeText(this, "Synchronized $imageCount new images", Toast.LENGTH_LONG)
                     .show()
             } catch (e: Exception) {
