@@ -52,6 +52,8 @@ class AdminFragment : Fragment() {
             Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
 
+
+
         allReportsBtn.setOnClickListener {
             if (adminViewModel.getCurrentUser()?.isAdmin == true) {
                 getAllReports()
@@ -120,6 +122,33 @@ class AdminFragment : Fragment() {
             showToast(message.toString())
         }
 
+        adminViewModel.currentUser.observe(viewLifecycleOwner){user ->
+
+            if(user != null)
+            {
+                observeReports(adminViewModel.getCurrentUser()!!.email)
+            }
+
+        }
+
+
+    }
+
+    fun observeReports(username: String) {
+
+        adminViewModel.report.observe(viewLifecycleOwner) { reportJson ->
+            reportJson?.let {
+                Storage.createReportFile(requireActivity(), it, username)
+            }
+            Toast.makeText(context, "Successfully created Report!", Toast.LENGTH_LONG).show()
+        }
+
+        adminViewModel.allReports.observe(viewLifecycleOwner) { allReportsJson ->
+            allReportsJson?.let {
+                Storage.createReportFile(requireActivity(), it, username)
+            }
+            Toast.makeText(context, "Successfully created Report!", Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun getAllReports()

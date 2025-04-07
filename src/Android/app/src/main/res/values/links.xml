@@ -10,7 +10,7 @@
     <string name="picture_controller_gateway">image/</string>
     <string name="saveUser_gateway">create-user/</string>
     <string name="validateUser_gateway">login/</string>
-    <string name="savePrediction_gateway">login/</string>
+    <string name="savePrediction_gateway">save-prediction/</string>
     <string name="loadPrediction_gateway">load-predictions/</string>
     <string name="checkHealth_gateway">health/</string>
 

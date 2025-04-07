@@ -21,12 +21,8 @@ import com.example.dermaai_android_140.MainActivity
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.HealthCheckResponse
-import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.ui.login.LoginViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
 import java.util.UUID
-import kotlin.jvm.java
 
 class AccountinfoFragment() : Fragment() {
 
