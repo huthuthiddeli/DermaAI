@@ -27,7 +27,7 @@ class ModelController:
                 raise HTTPException(status_code=500, detail=f"Error while fetching models: {str(e)}")
 
         # Get a specific classifier report
-        @self.router.get("/classifier-report/")
+        @self.router.post("/classifier-report/")
         def get_classifier_report(request: ClassifierReportRequest):
             request = request.dict()
             try:
@@ -52,7 +52,7 @@ class ModelController:
                 raise HTTPException(status_code=500, detail=f"Error while fetching report: {str(e)}")
 
         # Get all classifier reports
-        @self.router.get("/classifier-reports/")
+        @self.router.post("/classifier-reports/")
         def get_all_models(request: ClassifierReportsRequest):
             request = request.dict()
             try:
