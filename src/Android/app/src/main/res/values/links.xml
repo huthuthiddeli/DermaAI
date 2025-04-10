@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
-    <string name="main">http://10.10.1.160:8000/</string>
+    <string name="main">http://83.215.17.250:8000/</string>
     <string name="user_controller">user/</string>
-
 
     <string name="user_controller_gateway">user/</string>
     <string name="model_controller_gateway">model/</string>
@@ -11,8 +10,8 @@
     <string name="picture_controller_gateway">image/</string>
     <string name="saveUser_gateway">create-user/</string>
     <string name="validateUser_gateway">login/</string>
-    <string name="savePrediction_gateway">login/</string>
-    <string name="loadPrediction_gateway">load-prediction/</string>
+    <string name="savePrediction_gateway">save-prediction/</string>
+    <string name="loadPrediction_gateway">load-predictions/</string>
     <string name="checkHealth_gateway">health/</string>
 
     <string name="getModels_gateway">models/</string>
@@ -28,7 +27,7 @@
 
     <string name="saveUser">saveUser/</string>
     <string name="validateUser">validateUser/</string>
-    <string name="setMfa">switchMfa/</string>
+    <string name="setMfa">switch-mfa/</string>
 
 
     <string name="picture_controller">picture/</string>
