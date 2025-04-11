@@ -79,8 +79,6 @@ class PhotoFragment : Fragment() {
             }
         }
 
-
-
         return root
     }
 
@@ -89,10 +87,7 @@ class PhotoFragment : Fragment() {
         val photoViewModel =
             ViewModelProvider(this)[PhotoViewModel::class.java]
 
-        val url =
-            getString(R.string.main) + getString(R.string.model_controller_gateway) + getString(
-                R.string.getModels_gateway
-            )
+        val url = getString(R.string.main) + getString(R.string.model_controller_gateway) + getString(R.string.getModels_gateway)
 
         photoViewModel.getModels(url)
     }

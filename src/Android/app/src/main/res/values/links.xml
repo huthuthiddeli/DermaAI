@@ -2,10 +2,11 @@
 <resources>
     
     <string name="main">http://83.215.17.250:8000/</string>
-    <string name="user_controller">user/</string>
-
     <string name="user_controller_gateway">user/</string>
     <string name="model_controller_gateway">model/</string>
+
+    <string name="user_controller">user/</string>
+
     <string name="model_predict_gateway">predict/</string>
     <string name="picture_controller_gateway">image/</string>
     <string name="saveUser_gateway">create-user/</string>
