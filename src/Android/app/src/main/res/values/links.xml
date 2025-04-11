@@ -7,6 +7,9 @@
 
     <string name="user_controller">user/</string>
 
+    <string name="getModelDescription_gateway">infos/</string>
+
+
     <string name="model_predict_gateway">predict/</string>
     <string name="picture_controller_gateway">image/</string>
     <string name="saveUser_gateway">create-user/</string>
@@ -18,6 +21,7 @@
     <string name="getModels_gateway">models/</string>
     <string name="getAllReports_gateway">classifier-reports/</string>
     <string name="getReport_gateway">classifier-report/</string>
+
 
     <string name="retrainAll_gateway">retrain-all/</string>
     <string name="retrain_gateway">retrain/</string>

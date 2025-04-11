@@ -27,9 +27,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         //settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
         settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
-        
-
     }
+
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -154,7 +154,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val clip = ClipData.newPlainText("2FA Key copied to Clipboard", key)
         clipboard.setPrimaryClip(clip)
     }
-
+    
     fun disable2FA() {
 
         val twoFAKeyInput = findPreference<EditTextPreference>("two_fa_key")
