@@ -65,6 +65,7 @@ dependencies {
     implementation(libs.firebase.crashlytics.buildtools)
     implementation(libs.exifinterface)
     implementation(libs.firebase.database.ktx)
+    implementation(libs.google.material)
     androidTestImplementation(libs.mockito.core)
     androidTestImplementation(libs.dexmaker.mockito)
     androidTestImplementation(libs.androidx.espresso.contrib)
@@ -106,4 +107,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.viewmodel)
+
 }

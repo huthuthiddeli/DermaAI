@@ -49,6 +49,7 @@ legacySupportV4 = "1.0.0"
 firebaseCrashlyticsBuildtools = "3.0.3"
 exifinterfaceVersion = "1.4.0"
 firebaseDatabaseKtx = "21.0.0"
+materialVersion = "1.6.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -109,6 +110,7 @@ androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 exifinterface = { group = "androidx.exifinterface", name = "exifinterface", version.ref = "exifinterfaceVersion" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx", version.ref = "firebaseDatabaseKtx" }
+google-material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

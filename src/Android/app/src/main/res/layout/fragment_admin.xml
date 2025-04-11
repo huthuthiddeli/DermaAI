@@ -71,6 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
+                app:icon="@drawable/ic_train"
                 android:text="@string/admin_retrain" />
 
             <View
@@ -111,6 +112,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
+                app:icon="@drawable/ic_train"
                 android:text="@string/admin_retrain_all" />
 
             <TextView

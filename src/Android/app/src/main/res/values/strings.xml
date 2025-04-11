@@ -18,6 +18,8 @@
     <string name="menu_photo">Photo</string>
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_admin">Admin</string>
+    <string name="menu_models">Models</string>
+
 
     <string name="admin_report_title">Report anfordern</string>
     <string name="admin_report_all">Report für alle Modelle anfordern:</string>
