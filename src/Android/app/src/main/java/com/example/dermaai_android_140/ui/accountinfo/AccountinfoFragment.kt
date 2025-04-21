@@ -283,7 +283,8 @@ class AccountinfoFragment() : Fragment() {
             .setPositiveButton("Submit") { _, _ ->
                 val code = input.text.toString()
                 if (code.isNotEmpty()) {
-                    if (Authentication.validateTOTP(viewModel.getKey(), code)) {
+                    val secret = Authentication.retrieveEncryptedHashFromKeystore(requireContext(), "2FA_Key").toString()
+                    if (Authentication.validateTOTP(secret, code)) {
                         
                         Toast.makeText(context, "Verified Successfully!", Toast.LENGTH_SHORT).show()
 

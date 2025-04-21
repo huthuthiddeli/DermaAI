@@ -58,9 +58,10 @@ class SettingsActivity : AppCompatActivity() {
                             Storage.saveFileToStorage(it, this, file.absolutePath)
                             val diagnosis = Diagnosis(prediction.prediction, file.absolutePath)
                             Storage.saveDiagnosis(this, diagnosis, user.email)
-                            imageCount++
+
                         }
                     }
+                    imageCount = imageCount + 1
                 }
 
                 Toast.makeText(this, "Synced $imageCount new images", Toast.LENGTH_LONG).show()

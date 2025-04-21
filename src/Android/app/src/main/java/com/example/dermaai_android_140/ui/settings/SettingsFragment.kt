@@ -44,7 +44,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
 
 
-
         settingsViewModel.currentUser.observe(viewLifecycleOwner){user ->
 
             if (enable2faSwitch != null && user != null) {

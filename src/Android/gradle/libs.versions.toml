@@ -1,6 +1,6 @@
 [versions]
 androidxComposeBom = "2025.01.00"
-agp = "8.10.0-alpha07"
+agp = "8.10.0-alpha05"
 dexmakerMockito = "dexMakerVersion"
 firebaseAuth = "22.0.0"
 firebaseFirestore = "24.7.1"

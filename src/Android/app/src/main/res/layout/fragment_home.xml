@@ -26,7 +26,7 @@
         android:layout_width="257dp"
         android:layout_height="262dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="320dp"
+        android:layout_marginBottom="340dp"
         android:text="@string/home_purposeDesc"
         android:textColor="@android:color/white"
         android:textSize="18sp"
@@ -35,8 +35,8 @@
 
     <TextView
         android:id="@+id/homeDesc2"
-        android:layout_width="279dp"
-        android:layout_height="119dp"
+        android:layout_width="280dp"
+        android:layout_height="92dp"
         android:text="@string/home_desktopApp"
         android:textColor="@android:color/white"
         android:textSize="18sp"
@@ -56,10 +56,32 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintHorizontal_bias="0.601"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/homeDesc2"
-        app:layout_constraintVertical_bias="0.225" />
+        app:layout_constraintVertical_bias="0.226" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/background_fragment_line_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.94"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeDesc2" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/background_fragment_line_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/homeDesc" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
