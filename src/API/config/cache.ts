@@ -4,6 +4,15 @@
 //   default: 'redis',
   
 //   stores: {
+//     /**
+//      * Cache data only on DynamoDB
+//      */
+//     dynamodb: store().useL2Layer(drivers.dynamodb({})),
+
+//     /**
+//      * Cache data using your Lucid-configured database
+//      */
+//     database: store().useL2Layer(drivers.database({ connectionName: 'default' })),
 
 //     /**
 //      * Cache data in-memory as the primary store and Redis as the secondary store.
@@ -18,6 +27,3 @@
 // })
 
 // export default cacheConfig
-
-
-// TODO: https://docs.adonisjs.com/guides/digging-deeper/cache

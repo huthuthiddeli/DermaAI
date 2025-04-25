@@ -92,7 +92,7 @@ export class UserProvider{
         let obj = await this.getBodyWithHashedPassword(ctx.request.body());
         const foundObj = await this.getOneFromDB(obj.password, obj.email);
 
-        if(foundObj === null){ return ctx.response.notFound("Body has not been found!"); }
+        if(foundObj === null){ return ctx.response.notFound("User has not been found!"); }
 
         const {password, ...safeData} = foundObj;
         return ctx.response.status(200).json(safeData);
@@ -103,11 +103,11 @@ export class UserProvider{
 
         let obj = await this.getBodyWithHashedPassword(ctx.request.body());
         const foundObj = await this.getOneFromDB(obj.password, obj.email);
-        if(foundObj === null){ return ctx.response.notFound("Body has not been found!"); }
+        if(foundObj === null){ return ctx.response.notFound("User has not been found!"); }
         foundObj.isAdmin = true;
         await userDataModel.updateOne({password: foundObj.password, email: foundObj.email}, foundObj);
         let item = await this.getOneFromDB(foundObj.password, foundObj.email)
-        if(!item) {return ctx.response.badGateway();}
+        if(!item) {return ctx.response.internalServerError("An internal server error has occured!");}
         const {password, ...params} = item;
 
         return ctx.response.status(200).json(params);
@@ -118,11 +118,11 @@ export class UserProvider{
 
         let obj = await this.getBodyWithHashedPassword(ctx.request.body());
         const foundObj = await this.getOneFromDB(obj.password, obj.email);
-        if(foundObj === null){ return ctx.response.notFound("Body has not been found!"); }
+        if(foundObj === null){ return ctx.response.notFound("User has not been found!"); }
         foundObj.isAdmin = false;
         await userDataModel.updateOne({password: foundObj.password, email: foundObj.email}, foundObj);
         let item = await this.getOneFromDB(foundObj.password, foundObj.email)
-        if(!item) {return ctx.response.badGateway();}
+        if(!item) {return ctx.response.internalServerError("An internal server error has occured!");}
         const {password, ...params} = item;
 
         return ctx.response.status(200).json(params);
@@ -134,8 +134,7 @@ export class UserProvider{
         let obj = await this.getBodyWithHashedPassword(ctx.request.body());
         let foundObj = await this.getOneFromDB(obj.password, obj.email); 
         if(!foundObj){
-            logger.error("Item not found in DB!")
-            return ctx.response.notFound();
+            return ctx.response.notFound("User has not been found!");
         }
         
         foundObj.mfa = !foundObj.mfa;
@@ -143,7 +142,7 @@ export class UserProvider{
         let item = await this.getOneFromDB(foundObj.password, foundObj.email);
         if(!item) { 
             logger.error("Item not found in DB!")
-            return ctx.response.badGateway();
+            return ctx.response.internalServerError("An internal server error has occured!");
         }
         const {password, ...params} = item;
         
