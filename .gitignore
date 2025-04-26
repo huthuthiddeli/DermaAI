@@ -45,7 +45,6 @@ local.properties
 .jar
 *.jar
 *.log
-*.bin
 *.out
 /src/Android/caches
 /src/Android/.tmp
