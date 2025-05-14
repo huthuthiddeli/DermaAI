@@ -15,7 +15,6 @@ import androidx.core.graphics.scale
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.R
-import com.example.dermaai_android_140.ui.camera.CameraViewModel
 import com.example.dermaai_android_140.ui.result.ResultActivity
 import java.io.File
 
@@ -36,7 +35,6 @@ class GalleryFragment : Fragment() {
 
         val root = inflater.inflate(R.layout.fragment_gallery, container, false)
 
-        // Find views by ID
         textView = root.findViewById(R.id.text_gallery)
         imageContainer = root.findViewById(R.id.imageContainer)
 

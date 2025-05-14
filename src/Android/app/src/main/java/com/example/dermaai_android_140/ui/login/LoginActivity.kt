@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.ActivityMainBinding
-import com.example.dermaai_android_140.myClasses.Storage
 import com.example.dermaai_android_140.ui.accountinfo.AccountinfoFragment
 
 
@@ -24,9 +23,6 @@ class LoginActivity : AppCompatActivity() {
                 .commit()
         }
         
-
-
-
 
     }
 

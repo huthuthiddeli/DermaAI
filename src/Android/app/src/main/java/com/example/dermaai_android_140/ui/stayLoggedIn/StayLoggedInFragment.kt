@@ -21,7 +21,6 @@ class StayLoggedInFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_stay_logged_in, container, false)
 
-        //val accountInfoViewModel: AccountinfoViewModel by viewModels()
 
         val loginViewModel: LoginViewModel by activityViewModels()
 
@@ -30,7 +29,6 @@ class StayLoggedInFragment : Fragment() {
 
         switch.setOnCheckedChangeListener {_, isChecked ->
             loginViewModel.setStayLoggedIn(isChecked)
-            //accountInfoViewModel.setStayLoggedIn(isChecked)
         }
         
         return view

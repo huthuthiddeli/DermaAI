@@ -2,6 +2,7 @@ package com.example.dermaai_android_140.myClasses
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +12,9 @@ import android.widget.ListView
 import android.widget.TabHost
 import android.widget.TextView
 import com.example.dermaai_android_140.R
-import android.graphics.Color
 
 
-public class ModelSelectionDialog(
+class ModelSelectionDialog(
     context: Context,
     private val pytorchModels: List<String>, 
     private val sklearnModels: List<String>,
@@ -26,13 +26,13 @@ public class ModelSelectionDialog(
         super.onCreate(savedInstanceState)
         setContentView(R.layout.fragment_dialog_model_selection)
 
-        // Set layout parameters inside onCreate
+        // Set layout parameters
         window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
         )
 
-        setupTabs(pytorchModels, sklearnModels, tensorflowModels) // Now it's correct!
+        setupTabs(pytorchModels, sklearnModels, tensorflowModels)
     }
 
 
@@ -40,7 +40,7 @@ public class ModelSelectionDialog(
         val tabHost = findViewById<TabHost>(R.id.tabHost)
         tabHost.setup()
 
-        // Create tabs with dynamic data
+        // Create tabs
         listOf(
             Triple("PyTorch", R.id.pytorch_list, pytorch),
             Triple("Scikit-Learn", R.id.sklearn_list, sklearn),
@@ -66,14 +66,13 @@ public class ModelSelectionDialog(
                 android.R.layout.simple_list_item_1,
                 models
             ) {
-                // Override getView inside the adapter class for text: black color
+                // Override getView to change text color
                 override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                     val view = super.getView(position, convertView, parent)
                     view.findViewById<TextView>(android.R.id.text1).setTextColor(Color.BLACK)
                     return view
                 }
             }
-
 
             setOnItemClickListener { _, _, position, _ ->
                 onModelSelected(framework, models[position])

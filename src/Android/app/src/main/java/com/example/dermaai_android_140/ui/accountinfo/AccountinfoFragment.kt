@@ -48,8 +48,6 @@ class AccountinfoFragment() : Fragment() {
 
         //deleteToken()
 
-
-
         val viewModel = ViewModelProvider(this)[AccountinfoViewModel::class.java]
 
 
@@ -86,7 +84,6 @@ class AccountinfoFragment() : Fragment() {
                 //loginViewModel.setStayLoggedIn(true)
             }
 
-            //val stayLoggedInContainer = view.findViewById<View>(R.id.stayLoggedInContainer)
 
             switchToRegisterBtn.setOnClickListener {
                 parentFragmentManager.beginTransaction()
@@ -99,21 +96,10 @@ class AccountinfoFragment() : Fragment() {
             val editTextEmail = view.findViewById<EditText>(R.id.editTextEmail)
             val editTextPassword = view.findViewById<EditText>(R.id.editTextPassword)
 
-            /*
-            editTextEmail.setOnClickListener {input ->
-                viewModel.setEmail(input.toString())
-            }
-
-            editTextPassword.setOnClickListener {input ->
-                viewModel.setPassword(input.toString())
-            }*/
 
 
             loginBtn.setOnClickListener {
 
-                //
-                //hardcoded(viewModel)
-                //
                 
                 val email = editTextEmail.text.toString()
                 val password = editTextPassword.text.toString()
@@ -144,22 +130,21 @@ class AccountinfoFragment() : Fragment() {
 
             registerBtn.setOnClickListener {
 
-                /*
-                val email = view.findViewById<EditText>(R.id.editTextEmail)
-                val password = view.findViewById<EditText>(R.id.editTextPassword)
-                val confirmPassword = view.findViewById<EditText>(R.id.editTextConfirmPassword)
-                 */
 
                 val emailStr = view.findViewById<EditText>(R.id.editTextEmail).text.toString()
                 val passwordStr = view.findViewById<EditText>(R.id.editTextPassword).text.toString()
-                //val confirmPasswordStr = view.findViewById<EditText>(R.id.editTextConfirmPassword).text.toString()
+                val confirmPasswordStr = view.findViewById<EditText>(R.id.editTextConfirmPassword).text.toString()
 
 
+                if(passwordStr.equals(confirmPasswordStr))
+                {
+                    val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.saveUser_gateway)
+                    viewModel.register(emailStr, passwordStr, url)
+                }
+                else{
+                    Toast.makeText(context, "Passwords do not match!", Toast.LENGTH_LONG).show()
+                }
 
-
-                val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.saveUser_gateway)
-
-                viewModel.register(emailStr, passwordStr, url)
 
 
             }
