@@ -26,7 +26,7 @@ class UserRepoImpl(context : Context) : UserRepo {
             putBoolean("mfa", user.mfa)
             putBoolean("isAdmin", user.isAdmin)
             
-            apply() //  asynchronously
+            apply()
         }
     }
 

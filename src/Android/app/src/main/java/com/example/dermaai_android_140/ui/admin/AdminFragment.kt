@@ -234,9 +234,9 @@ class AdminFragment : Fragment() {
     private fun showModelSelectionDialog(modelTrainer: ModelTrainer) {
         ModelSelectionDialog(
             requireContext(),
-            modelTrainer.ModelTrainerPyTorch,
-            modelTrainer.ModelTrainerSKLearn,
-            modelTrainer.ModelTrainerTensorFlow
+            modelTrainer.modelTrainerPyTorch,
+            modelTrainer.modelTrainerSKLearn,
+            modelTrainer.modelTrainerTensorFlow
         ) { framework, model ->
             handleModelSelection(framework, model, modelTrainer)
         }.show()
@@ -261,11 +261,11 @@ class AdminFragment : Fragment() {
         }
 
         val index = if (framework == "PyTorch") {
-            modelTrainer.ModelTrainerPyTorch.indexOf(model)
+            modelTrainer.modelTrainerPyTorch.indexOf(model)
         } else if (framework == "Scikit-Learn") {
-            modelTrainer.ModelTrainerSKLearn.indexOf(model)
+            modelTrainer.modelTrainerSKLearn.indexOf(model)
         } else if (framework == "TensorFlow") {
-            modelTrainer.ModelTrainerTensorFlow.indexOf(model)
+            modelTrainer.modelTrainerTensorFlow.indexOf(model)
         } else {
             null
         } ?: return

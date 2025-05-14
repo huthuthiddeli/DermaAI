@@ -19,13 +19,11 @@ import com.example.dermaai_android_140.ui.login.LoginActivity
 class SettingsFragment : PreferenceFragmentCompat() {
 
 
-    //private var settingsViewModel: SettingsViewModel by viewModel()
     private lateinit var  settingsViewModel : SettingsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        //settingsViewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
         settingsViewModel = ViewModelProvider(requireActivity())[SettingsViewModel::class.java]
     }
 
@@ -119,7 +117,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             if(correctCode)
             {
                 Toast.makeText(context, "Correct Code: 2FA Activated", Toast.LENGTH_SHORT).show()
-                //
+
 
                 val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.setMfa)
 
@@ -159,7 +157,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val twoFAKeyInput = findPreference<EditTextPreference>("two_fa_key")
         twoFAKeyInput?.isEnabled = false
 
-        //FaKeyInput?.setText("")
     }
 
 

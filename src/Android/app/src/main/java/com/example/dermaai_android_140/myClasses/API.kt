@@ -1,9 +1,6 @@
 package com.example.dermaai_android_140.myClasses
 
 import com.google.gson.Gson
-import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
@@ -21,7 +18,6 @@ class API {
 
                 connection.requestMethod = httpMethod
 
-                //setRequestHeaders(connection, token)
                 sendRequest(connection, httpMethod, requestModel)
 
                 val responseCode = connection.responseCode
@@ -42,18 +38,16 @@ class API {
         }
         
 
+        // GET-Request
         private fun sendRequest(connection: HttpURLConnection, httpMethod: String, requestModel: Any?) {
-
-            // GET is handled automatically
-
             if (httpMethod == "POST" || httpMethod == "PUT") {
                 sendPost(connection, requestModel)
             }
         }
 
+        // POST-Request
         private fun sendPost(connection: HttpURLConnection, requestModel: Any?)
         {
-            // senden
             connection.doOutput = true
 
             connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8")

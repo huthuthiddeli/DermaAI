@@ -12,21 +12,18 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.FragmentPhotoBinding
+import com.example.dermaai_android_140.myClasses.ModelSelectionDialog
 import com.example.dermaai_android_140.myClasses.ModelTrainer
 import com.example.dermaai_android_140.ui.camera.CameraActivity
 import java.io.File
-import com.example.dermaai_android_140.myClasses.ModelSelectionDialog
-import com.example.dermaai_android_140.ui.settings.SettingsViewModel
 
 class PhotoFragment : Fragment() {
 
@@ -40,8 +37,6 @@ class PhotoFragment : Fragment() {
     private lateinit var photoViewModel: PhotoViewModel
 
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -56,7 +51,7 @@ class PhotoFragment : Fragment() {
         _binding = FragmentPhotoBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        //
+
 
         setUpObserver()
 
@@ -65,14 +60,9 @@ class PhotoFragment : Fragment() {
         takePhotoBtn.setOnClickListener {
             
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                //openCamera(photoViewModel)
 
                 getModels()
 
-                //val intent = Intent(requireContext(), CameraActivity::class.java)
-                //startActivity(intent)
-
-                
             }else{
                 ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), CAMERA_PERMISSION_CODE)
                 photoViewModel.requestCameraPermission()
@@ -125,11 +115,11 @@ class PhotoFragment : Fragment() {
     private fun showModelSelectionDialog(modelTrainer: ModelTrainer) {
         ModelSelectionDialog(
             requireContext(),
-            modelTrainer.ModelTrainerPyTorch,
-            modelTrainer.ModelTrainerSKLearn,
-            modelTrainer.ModelTrainerTensorFlow
+            modelTrainer.modelTrainerPyTorch,
+            modelTrainer.modelTrainerSKLearn,
+            modelTrainer.modelTrainerTensorFlow
         ) { framework, model ->
-            // 6. Use the correct ViewModel reference
+
             val photoViewModel = ViewModelProvider(this)[PhotoViewModel::class.java]
 
 
@@ -207,54 +197,6 @@ class PhotoFragment : Fragment() {
     }
 
 
-    /*
-    private fun openCamera(photoViewModel : PhotoViewModel) {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
-        // if Camera app exists
-        if (takePictureIntent.resolveActivity(requireActivity().packageManager) != null) {
-
-            val storage = Storage()
-            photoFile = storage.createUniqueImagePath(requireActivity(), true)
-            photoViewModel.setTmpImage(photoFile)
-
-
-            photoFile.also {
-                val photoURI : Uri = FileProvider.getUriForFile(requireContext(), requireActivity().packageName + ".fileprovider", it)
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-
-                startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE)
-            }
-        }
-        
-    }
-
-
-
-    @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-
-        val photoViewModel =
-            ViewModelProvider(this)[PhotoViewModel::class.java]
-
-
-
-        photoViewModel.currentImage.observe(viewLifecycleOwner) { currentImage ->
-            photoViewModel.sendImage(currentImage)
-        }
-
-        photoViewModel.setCurrentImage(photoFile)
-
-        val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
-        val storage = Storage()
-
-        storage.saveFileToStorage(bitmap, requireContext(),photoFile.absolutePath)
-
-
-    }
-    */
 
 
 
@@ -264,5 +206,5 @@ class PhotoFragment : Fragment() {
     }
 
     
-    //
+
 }

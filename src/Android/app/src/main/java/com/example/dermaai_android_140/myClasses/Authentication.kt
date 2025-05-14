@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
+import androidx.core.content.edit
 import dev.samstevens.totp.code.CodeGenerator
 import dev.samstevens.totp.code.DefaultCodeGenerator
 import dev.samstevens.totp.code.DefaultCodeVerifier
@@ -16,7 +17,6 @@ import javax.crypto.Cipher
 import javax.crypto.KeyGenerator
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
-import androidx.core.content.edit
 
 
 class Authentication {
@@ -60,7 +60,7 @@ class Authentication {
                 )
                     .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
                     .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-                    .setUserAuthenticationRequired(false) // true: biometric or PIN protection
+                    .setUserAuthenticationRequired(false)
                     .build()
 
                 keyGenerator.init(keyGenParameterSpec)
@@ -90,8 +90,6 @@ class Authentication {
                 putString("${keyAlias}_iv", ivBase64)
                 putString("${keyAlias}_hash", encryptedHashBase64)
             }
-
-            //val oriKey = retrieveEncryptedHashFromKeystore(context, "2FA_Key")
 
         }
 
@@ -138,44 +136,6 @@ class Authentication {
 
             return null
         }
-
-        /*
-
-
-        fun save2FAKey(userId: String, twoFAKey: String) {
-            val database = FirebaseDatabase.getInstance()
-            val userRef = database.getReference("users/$userId")
-
-            // Save the 2FA key under the user's ID
-            userRef.child("2faKey").setValue(twoFAKey).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    //Log.d("2FA", "2FA key saved successfully.")
-                } else {
-                    //Log.e("2FA", "Failed to save 2FA key: ${task.exception?.message}")
-                }
-            }
-        }
-
-
-        fun get2FAKey(userId: String, callback: (String?) -> Unit) {
-            val database = FirebaseDatabase.getInstance()
-            val userRef = database.getReference("users/$userId/2faKey")
-
-            // Retrieve the 2FA key for the user
-            userRef.get().addOnSuccessListener { snapshot ->
-                val twoFAKey = snapshot.getValue(String::class.java)
-                callback(twoFAKey)
-            }.addOnFailureListener { exception ->
-                Log.e("2FA", "Failed to retrieve 2FA key: ${exception.message}")
-                callback(null)
-            }
-        }
-        */
-
-
-
-        
-
 
 
     }

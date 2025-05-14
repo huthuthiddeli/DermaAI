@@ -1,23 +1,18 @@
 package com.example.dermaai_android_140.ui.result
 
 import android.graphics.BitmapFactory
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.databinding.ActivityResultBinding
 import com.example.dermaai_android_140.myClasses.Storage
-import com.example.dermaai_android_140.ui.camera.CameraViewModel
-import com.example.dermaai_android_140.ui.resize.ResizeViewModel
-import com.google.gson.Gson
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.style.StyleSpan
-import android.graphics.Typeface
-import android.text.SpannableStringBuilder
-import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
 
 class ResultActivity : AppCompatActivity() {
 
@@ -40,7 +35,7 @@ class ResultActivity : AppCompatActivity() {
 
         val imagePath = intent.getStringExtra("EXTRA_IMAGE_PATH")
 
-        //val predictionString : String = storage.readPredictionFromImageMetadata(imagePath.toString()).toString()
+
         val user = resultViewModel.getCurrentUser()!!.email
         val predicitionMap = Storage.readDiagnosisForImage(this, imagePath.toString(), user)
 
@@ -56,6 +51,7 @@ class ResultActivity : AppCompatActivity() {
 
 
 
+
     fun formatPredictionSimple(predictionMap: Map<String, Double>): SpannableString {
         val finalResult = SpannableStringBuilder()
 
@@ -67,12 +63,12 @@ class ResultActivity : AppCompatActivity() {
             finalResult.setSpan(
                 StyleSpan(Typeface.BOLD),
                 start,
-                start + key.length + 1,  // +1 to include the colon
+                start + key.length + 1,
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
         }
 
-        // Remove last newline if needed
+        // Remove line
         if (finalResult.isNotEmpty()) {
             finalResult.delete(finalResult.length - 1, finalResult.length)
         }

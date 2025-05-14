@@ -3,26 +3,20 @@ package com.example.dermaai_android_140.ui.resize
 import android.app.ActivityOptions
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.example.dermaai_android_140.databinding.ActivityResizeBinding
-import com.example.dermaai_android_140.R
-import android.widget.Button
 import android.net.Uri
+import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.core.net.toUri
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import com.example.dermaai_android_140.MainActivity
+import com.example.dermaai_android_140.R
+import com.example.dermaai_android_140.databinding.ActivityResizeBinding
 import com.example.dermaai_android_140.myClasses.Diagnosis
 import com.example.dermaai_android_140.myClasses.Prediction
 import com.example.dermaai_android_140.myClasses.PredictionImage
 import com.example.dermaai_android_140.myClasses.Storage
-import com.example.dermaai_android_140.ui.camera.CameraViewModel
-import com.example.dermaai_android_140.ui.home.HomeFragment
-import com.example.dermaai_android_140.ui.result.ResultViewModel
 import java.io.File
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -64,7 +58,6 @@ class ResizeActivity : AppCompatActivity() {
         base64 = Base64.encode(imageBytes)
 
 
-       //val imageUri = imageUriString.toUri()
         val imageUri = Uri.fromFile(File(imageUriString))
 
         loadImageIntoImageView(imageUri)
