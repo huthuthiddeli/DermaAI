@@ -4,14 +4,7 @@ from api.APIHandler import APIHandler
 PATH_TO_MODEL = 'trained_models/trained_knn.joblib'
 MODEL_SAVE_PATH = 'trained_models/'
 PATH_TO_TESTDATA = 'test/IMAGES.images.json'
-<<<<<<< HEAD
 DB_API_URI = ('http://46.74.86.29:3333', 'http://46.74.86.29::6969')
-
-=======
-#DB_API_URI = ('http://10.10.1.193:3333', 'http://10.10.1.193:6969')
-DB_API_URI = ('http://46.75.195.135:3333', 'http://46.75.195.135:6969')
->>>>>>> 84af8eede7c54baef71ad00f4c1beec0736e231d
-
 
 # ----------- START APPLICATION ----------- #
 def main():
