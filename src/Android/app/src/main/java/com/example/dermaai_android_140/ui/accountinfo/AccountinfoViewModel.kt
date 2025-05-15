@@ -1,17 +1,14 @@
 package com.example.dermaai_android_140.ui.accountinfo
 
-import android.app.Activity
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.HealthCheckResponse
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
 import com.example.dermaai_android_140.repoimpl.UserRepoImpl
-import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -153,20 +150,7 @@ class AccountinfoViewModel : ViewModel() {
         healthCheckJob = viewModelScope.launch {
             while (isActive) {
                 checkHealth(model, url)
-                delay(10_000)
-            }
-        }
-    }
-
-    fun signInFirebase(activity: Activity) {
-        viewModelScope.launch {
-            try {
-                withContext(Dispatchers.Main) {
-                    Authentication.signInWithBrowser(activity, userRepo.getCurrentUser().email)
-                }
-                _message.postValue("Opening Firebase Sign-In")
-            } catch (e: Exception) {
-                _message.postValue("Unexpected Sign-In Error: ${e.message}")
+                delay(90_000)
             }
         }
     }

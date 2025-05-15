@@ -17,7 +17,7 @@ class InputReshapeDialog(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.dialog_input_reshape) // You'll need to create this layout
+        setContentView(R.layout.dialog_input_reshape)
 
         window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,

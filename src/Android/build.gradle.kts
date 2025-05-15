@@ -4,11 +4,7 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.kotlin.android) apply false
     alias(libs.plugins.compose.compiler) apply false
-    alias(libs.plugins.google.firebase.firebase.perf) apply false
-    alias(libs.plugins.google.gms.google.services) apply false
-    //id("com.google.gms.google-services") version "4.4.2" apply false
 }
-
 
 
 buildscript {
@@ -16,13 +12,7 @@ buildscript {
         google()
         mavenCentral()
     }
-
-
-    dependencies {
-        classpath(libs.google.services.v442)
-    }
 }
-
 
 
 val compileSdkVersion = 35

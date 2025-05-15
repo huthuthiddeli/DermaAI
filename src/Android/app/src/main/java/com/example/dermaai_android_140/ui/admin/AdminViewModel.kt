@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.ModelTrainer
-import com.example.dermaai_android_140.myClasses.ReceivedReport
-import com.example.dermaai_android_140.myClasses.ReceivedReportAll
 import com.example.dermaai_android_140.myClasses.Report
 import com.example.dermaai_android_140.myClasses.ReportAll
 import com.example.dermaai_android_140.myClasses.Retrain
@@ -16,11 +13,8 @@ import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repoimpl.AdminRepoImpl
 import com.example.dermaai_android_140.repoimpl.ModelRepoImpl
 import com.example.dermaai_android_140.repoimpl.UserRepoImpl
-import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.java.KoinJavaComponent
@@ -45,20 +39,21 @@ class AdminViewModel : ViewModel() {
     private val _currentUser = MutableLiveData<User?>(null)
     val currentUser: LiveData<User?> get() = _currentUser
 
-    private val _report = MutableLiveData<ReceivedReport>()
-    val report: LiveData<ReceivedReport> get() = _report
+    private val _report = MutableLiveData<String>()
+    val report: LiveData<String> get() = _report
 
-    private val _allReports = MutableLiveData<ReceivedReportAll>()
-    val allReports: LiveData<ReceivedReportAll> get() = _allReports
+    private val _allReports = MutableLiveData<String>()
+    val allReports: LiveData<String> get() = _allReports
 
+    private val timeoutMillis = 10_000L
 
     fun retrainAll(url: String, model: RetrainAll) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {
                 adminRepo.retrainAllModel(model, url)
             }
-            result.onSuccess { responseString ->
-                _responseString.postValue(responseString)
+            result.onSuccess { response ->
+                _responseString.postValue(response.message)
             }.onFailure { exception ->
                 exception.printStackTrace()
                 _message.postValue(exception.message)
@@ -71,8 +66,8 @@ class AdminViewModel : ViewModel() {
             val result = withContext(Dispatchers.IO) {
                 adminRepo.retrainModel(model, url)
             }
-            result.onSuccess { responseString ->
-                _responseString.postValue(responseString)
+            result.onSuccess { response ->
+                _responseString.postValue(response.message)
             }.onFailure { exception ->
                 exception.printStackTrace()
                 _message.postValue(exception.message)
@@ -94,17 +89,17 @@ class AdminViewModel : ViewModel() {
         }
     }
 
-    fun setCurrentUser(){
-        
-        val currentUserJob = viewModelScope.launch {
-            userRepo.getCurrentUser()
-        }
-
-        currentUserJob.invokeOnCompletion {
-            _currentUser.postValue(currentUser.value)
+    fun setCurrentUser() {
+        viewModelScope.launch {
+            try {
+                val user = userRepo.getCurrentUser()
+                _currentUser.postValue(user)
+            } catch (e: Exception) {
+                // Handle error (e.g., post error state)
+                _message.postValue("User could not be found!")
+            }
         }
     }
-
 
     fun getCurrentUser(): User? {
         return currentUser.value
@@ -116,15 +111,15 @@ class AdminViewModel : ViewModel() {
                 adminRepo.getAllReports(model, url)
             }
             result.onSuccess { allReportsJson ->
-                val gson = Gson()
-                val receivedReport = gson.fromJson(allReportsJson, ReceivedReportAll::class.java)
-                _allReports.postValue(receivedReport)
+                _allReports.postValue(allReportsJson)
             }.onFailure { exception ->
                 exception.printStackTrace()
                 _message.postValue(exception.message)
             }
         }
     }
+    
+
 
     fun getOneReport(url: String, model: Report) {
         viewModelScope.launch {
@@ -132,9 +127,9 @@ class AdminViewModel : ViewModel() {
                 adminRepo.getOneReport(model, url)
             }
             result.onSuccess { reportJson ->
-                val gson = Gson()
-                val receivedReport = gson.fromJson(reportJson, ReceivedReport::class.java)
-                _report.postValue(receivedReport)
+                //val gson = Gson()
+                //val receivedReport = gson.fromJson(reportJson, ReceivedReport::class.java)
+                _report.postValue(reportJson)
             }.onFailure { exception ->
                 exception.printStackTrace()
                 _message.postValue(exception.message)

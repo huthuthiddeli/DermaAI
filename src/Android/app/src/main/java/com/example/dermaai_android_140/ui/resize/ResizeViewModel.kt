@@ -71,6 +71,7 @@ class ResizeViewModel : ViewModel() {
         }
     }
 
+
     fun resizeImage(url: String, base64: String) {
         viewModelScope.launch {
             val result = withContext(Dispatchers.IO) {

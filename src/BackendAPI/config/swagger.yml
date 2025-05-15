@@ -1,0 +1,358 @@
+openapi: 3.0.0
+info:
+  title: DermaAI API
+  version: 1.0.0
+  description: API documentation for DermaAI. Sehr schmerzhaft es halbwegs zum Laufen zu bringen. Aber es funktioniert jetzt.
+
+ignore:
+  - /swagger
+  - /docs
+
+paths:
+  /user/saveUser:
+    post:
+      tags:
+        - user
+      summary: Save a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User saved successfully
+        '400':
+          description: Bad request
+
+  /user/validateUser:
+    post:
+      tags:
+        - user
+      summary: Validates a user with email and password.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User validated successfully
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+
+  /user/getAllUsers:
+    get:
+      summary: Get all users
+      tags:
+        - user
+      responses:
+        '200':
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    mfa:
+                      type: boolean
+                    isAdmin:
+                      type: boolean
+        '500':
+          description: Internal server error
+
+  /user/setAdmin:
+    post:
+      summary: Sets the User to Admin
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User Admin-status updated successfully
+        '404':
+          description: User Admin-status change was not successful.
+
+  /user/setUser:
+    post:
+      summary: Sets the User to role User
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User User-status updated successfully
+        '404':
+          description: User User-status change was not successful.
+
+  /user/mfa:
+    post:
+      summary: Get user MFA status
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: User MFA status retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  mfa:
+                    type: boolean
+        '400':
+          description: Bad request
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+  /user/switchMfa:
+    post:
+      summary: Switch MFA status for a user
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: MFA status switched successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  mfa:
+                    type: boolean
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error
+
+  /user/clearCollection:
+    delete:
+      summary: Clear the user collection
+      tags:
+        - user
+      responses:
+        '200':
+          description: Collection cleared successfully
+        '500':
+          description: Failed to clear collection
+
+  /picture/picture:
+    post:
+      summary: Post a picture. Datatype file
+      tags:
+        - picture
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                picture:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Picture posted successfully
+        '400':
+          description: Bad request
+
+    get:
+      summary: Get a picture with pagination
+      tags:
+        - picture
+      responses:
+        '200':
+          description: Picture retrieved successfully
+        '404':
+          description: Picture not found
+
+  /picture/count:
+    get:
+      summary: Get the length of the collection.
+      tags:
+        - picture
+      responses:
+        '200':
+          description: Length retrieved successfully.
+        '500':
+          description: A critical error occurred.
+
+  /picture/labels:
+    get:
+      summary: Get all unique diagnoses
+      tags:
+        - picture
+      responses:
+        '200':
+          description: Unique diagnoses retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  diagnoses:
+                    type: array
+                    items:
+                      type: string
+        '500':
+          description: A critical error occurred
+
+  /prediction/loadPrediction:
+    post:
+      summary: Load predictions
+      tags:
+        - Prediction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: 'test@example.com'
+                password:
+                  type: string
+                  example: 'password123'
+      responses:
+        '200':
+          description: Predictions loaded successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                    password:
+                      type: string
+                    image:
+                      type: string
+                    prediction:
+                      type: string
+        '400':
+          description: Bad request
+        '404':
+          description: Predictions not found
+
+  /prediction/savePrediction:
+    post:
+      summary: Save a prediction
+      tags:
+        - Prediction
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: 'test@example.com'
+                password:
+                  type: string
+                  example: 'password123'
+                image:
+                  type: string
+                  example: 'base64encodedimage'
+                prediction:
+                  type: object
+                  properties:
+                    label:
+                      type: string
+                      example: 0.666
+                    confidence:
+                      type: number
+                      format: float
+                      example: 0.98
+      responses:
+        '200':
+          description: Prediction saved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                  password:
+                    type: string
+                  image:
+                    type: string
+                  prediction:
+                    type: string
+        '400':
+          description: Bad request
+        '500':
+          description: Internal server error

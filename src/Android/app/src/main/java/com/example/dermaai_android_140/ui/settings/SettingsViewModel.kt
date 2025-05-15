@@ -1,14 +1,12 @@
 package com.example.dermaai_android_140.ui.settings
 
-import android.app.Activity
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.dermaai_android_140.myClasses.Authentication
-import com.example.dermaai_android_140.myClasses.PredictionImageList
+import com.example.dermaai_android_140.myClasses.ReceivedPredictionsAndImages
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repoimpl.ImageRepoImpl
 import com.example.dermaai_android_140.repoimpl.LoginRepoImpl
@@ -27,14 +25,11 @@ class SettingsViewModel : ViewModel() {
     private val _currentUser = MutableLiveData<User?>()
     val currentUser: LiveData<User?> get() = _currentUser
 
-    private val _allPredictions = MutableLiveData<PredictionImageList?>(null)
-    val allPredictions: LiveData<PredictionImageList?> get() = _allPredictions
+    private val _allPredictions = MutableLiveData<List<ReceivedPredictionsAndImages>>(null)
+    val allPredictions: LiveData<List<ReceivedPredictionsAndImages>> get() = _allPredictions
 
     private val _message = MutableLiveData<String?>()
     val message: LiveData<String?> get() = _message
-
-    private val _secretKey = MutableLiveData<String>()
-    val secretKey: LiveData<String> get() = _secretKey
 
     fun syncImages(url: String) {
         viewModelScope.launch {
@@ -53,6 +48,7 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
+
     fun setMfa(url: String) {
         viewModelScope.launch {
             try {
@@ -70,36 +66,15 @@ class SettingsViewModel : ViewModel() {
         }
     }
 
-    fun signInFirebase(activity: Activity) {
-        viewModelScope.launch {
-            try {
-                withContext(Dispatchers.Main) {
-                    Authentication.signInWithBrowser(activity, getCurrentUser().email)
-                }
-                _message.postValue("Opening Firebase Sign-In")
-            } catch (e: Exception) {
-                _message.postValue("Unexpected Sign-In Error: ${e.message}")
-            }
-        }
-    }
 
 
-    fun enable2FA(activity: Activity, userId: String){
-
-        val secret = Authentication.enable2FA(activity, userId) { secret ->
-            _message.postValue("2FA Enabled successfully")
-            _secretKey.postValue(secret)
-        }
-    }
 
     fun generate2faKey(context: Context): String {
-        //return Authentication.generateSecret(context)
-        return ""
+        return Authentication.generateSecret(context)
     }
 
     fun validate2faCode(secret: String, code: String): Boolean {
-        //return Authentication.validateTOTP(secret, code)
-        return false
+        return Authentication.validateTOTP(secret, code)
     }
 
     fun getCurrentUser(): User {

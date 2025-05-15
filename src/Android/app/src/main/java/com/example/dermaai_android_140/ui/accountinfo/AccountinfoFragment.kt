@@ -21,13 +21,8 @@ import com.example.dermaai_android_140.MainActivity
 import com.example.dermaai_android_140.R
 import com.example.dermaai_android_140.myClasses.Authentication
 import com.example.dermaai_android_140.myClasses.HealthCheckResponse
-import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.ui.login.LoginViewModel
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.combine
 import java.util.UUID
-import kotlin.jvm.java
 
 class AccountinfoFragment() : Fragment() {
 
@@ -52,8 +47,6 @@ class AccountinfoFragment() : Fragment() {
         var view: View? = null
 
         //deleteToken()
-
-
 
         val viewModel = ViewModelProvider(this)[AccountinfoViewModel::class.java]
 
@@ -91,7 +84,6 @@ class AccountinfoFragment() : Fragment() {
                 //loginViewModel.setStayLoggedIn(true)
             }
 
-            //val stayLoggedInContainer = view.findViewById<View>(R.id.stayLoggedInContainer)
 
             switchToRegisterBtn.setOnClickListener {
                 parentFragmentManager.beginTransaction()
@@ -104,21 +96,10 @@ class AccountinfoFragment() : Fragment() {
             val editTextEmail = view.findViewById<EditText>(R.id.editTextEmail)
             val editTextPassword = view.findViewById<EditText>(R.id.editTextPassword)
 
-            /*
-            editTextEmail.setOnClickListener {input ->
-                viewModel.setEmail(input.toString())
-            }
-
-            editTextPassword.setOnClickListener {input ->
-                viewModel.setPassword(input.toString())
-            }*/
 
 
             loginBtn.setOnClickListener {
 
-                //
-                hardcoded(viewModel)
-                //
                 
                 val email = editTextEmail.text.toString()
                 val password = editTextPassword.text.toString()
@@ -129,7 +110,6 @@ class AccountinfoFragment() : Fragment() {
 
                 
             }
-
         } else {
 
 
@@ -150,22 +130,21 @@ class AccountinfoFragment() : Fragment() {
 
             registerBtn.setOnClickListener {
 
-                /*
-                val email = view.findViewById<EditText>(R.id.editTextEmail)
-                val password = view.findViewById<EditText>(R.id.editTextPassword)
-                val confirmPassword = view.findViewById<EditText>(R.id.editTextConfirmPassword)
-                 */
 
                 val emailStr = view.findViewById<EditText>(R.id.editTextEmail).text.toString()
                 val passwordStr = view.findViewById<EditText>(R.id.editTextPassword).text.toString()
-                //val confirmPasswordStr = view.findViewById<EditText>(R.id.editTextConfirmPassword).text.toString()
+                val confirmPasswordStr = view.findViewById<EditText>(R.id.editTextConfirmPassword).text.toString()
 
 
+                if(passwordStr.equals(confirmPasswordStr))
+                {
+                    val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.saveUser_gateway)
+                    viewModel.register(emailStr, passwordStr, url)
+                }
+                else{
+                    Toast.makeText(context, "Passwords do not match!", Toast.LENGTH_LONG).show()
+                }
 
-
-                val url = getString(R.string.main) + getString(R.string.user_controller_gateway) + getString(R.string.saveUser_gateway)
-
-                viewModel.register(emailStr, passwordStr, url)
 
 
             }
@@ -258,7 +237,6 @@ class AccountinfoFragment() : Fragment() {
 
         viewModel.mfaEnabled.observe(viewLifecycleOwner) { mfaEnabled ->
             if (mfaEnabled) {
-                signInFirebase()
                 showTwoFAInputDialog(requireContext(), viewModel)
             }
         }
@@ -267,13 +245,7 @@ class AccountinfoFragment() : Fragment() {
 
     }
 
-    private fun signInFirebase()
-    {
-        val auth = FirebaseAuth.getInstance()
-        val viewModel = ViewModelProvider(this)[AccountinfoViewModel::class.java]
-        viewModel.signInFirebase(requireActivity())
 
-    }
 
     private fun hardcoded(viewModel: AccountinfoViewModel)
     {
@@ -296,17 +268,17 @@ class AccountinfoFragment() : Fragment() {
             .setPositiveButton("Submit") { _, _ ->
                 val code = input.text.toString()
                 if (code.isNotEmpty()) {
+                    val secret = Authentication.retrieveEncryptedHashFromKeystore(requireContext(), "2FA_Key").toString()
+                    if (Authentication.validateTOTP(secret, code)) {
+                        
+                        Toast.makeText(context, "Verified Successfully!", Toast.LENGTH_SHORT).show()
 
-                    Authentication.verifyTOTP(requireActivity(), viewModel.getKey(), code) { isValid ->
-                        if (isValid) {
-                            Toast.makeText(context, "Verified Successfully!", Toast.LENGTH_SHORT).show()
-                            val intent = Intent(requireContext(), MainActivity::class.java)
-                            startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
-                        } else {
-                            Toast.makeText(context, "Verification Failed!", Toast.LENGTH_SHORT).show()
-                        }
+                        val intent = Intent(requireContext(), MainActivity::class.java)
+                        startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(requireActivity()).toBundle())
+
+                    } else {
+                        Toast.makeText(context, "Invalid Code!", Toast.LENGTH_SHORT).show()
                     }
-
                 }
             }
             .setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }

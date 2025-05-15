@@ -4,7 +4,6 @@ import com.example.dermaai_android_140.myClasses.API
 import com.example.dermaai_android_140.myClasses.HealthCheckResponse
 import com.example.dermaai_android_140.myClasses.User
 import com.example.dermaai_android_140.repo.LoginRepo
-import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 
 class LoginRepoImpl : LoginRepo {
@@ -70,6 +69,7 @@ class LoginRepoImpl : LoginRepo {
             Result.failure(e)
         }
     }
+
 
 
 

@@ -37,8 +37,7 @@ class PhotoViewModel() : ViewModel() {
 
     private val _models = MutableLiveData<ModelTrainer?>()
     val models: LiveData<ModelTrainer?> get() = _models
-
-
+    
     private lateinit var tmpImage : File
 
 
