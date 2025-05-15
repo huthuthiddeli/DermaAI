@@ -106,8 +106,6 @@ def __fetchDataFromAPI(api_uri):
     except requests.exceptions.RequestException as err:
         print(f"Error: {err}")
     return None
-
-
 def preprocess_image(image, reshape_size):
     image = image.convert("L")
     image = image.resize((reshape_size, reshape_size), resample=PIL.Image.BICUBIC)

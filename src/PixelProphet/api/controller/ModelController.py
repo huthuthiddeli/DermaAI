@@ -1,9 +1,11 @@
+import json
 from datetime import datetime
+from pathlib import Path
 
 from fastapi import APIRouter, HTTPException, UploadFile, File
 import requests
 from pydantic import BaseModel
-from starlette.responses import JSONResponse
+from starlette.responses import JSONResponse, FileResponse
 import base64
 import io
 from PIL import Image as PILImage
@@ -25,6 +27,20 @@ class ModelController:
                 return JSONResponse(content=models, status_code=200)
             except Exception as e:
                 raise HTTPException(status_code=500, detail=f"Error while fetching models: {str(e)}")
+
+                # Get model info for frontend from static JSON
+
+        @self.router.get("/info")
+        async def get_model_info():
+            try:
+                json_path = Path("static/model_information.json")
+                if not json_path.exists():
+                    raise HTTPException(status_code=404, detail="Model info file not found.")
+                with open(json_path, "r", encoding="utf-8") as f:
+                    model_info = json.load(f)
+                return JSONResponse(content=model_info, status_code=200)
+            except Exception as e:
+                raise HTTPException(status_code=500, detail=f"Error while loading model info: {str(e)}")
 
         # Get a specific classifier report
         @self.router.post("/classifier-report/")
