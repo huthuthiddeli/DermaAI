@@ -38,7 +38,7 @@ def readFile() -> List[Entry]:
 
 def download_image(entry:Entry):
     print(json.dumps(entry.__dict__))
-    result = subprocess.run([sys.executable, './src/download_image.py', json.dumps(entry.__dict__)],
+    result = subprocess.run([sys.executable, './download_image.py', json.dumps(entry.__dict__)],
                             cwd=os.getcwd(), capture_output=True)
 
     print(result.stdout)

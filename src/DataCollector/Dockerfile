@@ -4,11 +4,18 @@ FROM python:3.11-slim
 # Prevent prompts from interactive installers
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install OpenCV dependencies
-RUN apt-get update && apt-get install -y \
+# Install system dependencies
+RUN apt-get -o Acquire::Check-Valid-Until=false update && \
+    apt-get install -y --no-install-recommends \
+    apt-utils \
+    ca-certificates \
+    wget \
+    curl \
+    gnupg \
     libgl1 \
     libglib2.0-0 \
     && rm -rf /var/lib/apt/lists/*
+
 
 # Set environment variables
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -25,7 +32,7 @@ RUN pip install --upgrade pip && pip install -r requirements.txt
 COPY ./src ./src
 
 # Copy the HAM10000_metadata.csv file
-COPY HAM10000_metadata.csv .
+COPY HAM10000_metadata.csv ./src/
 
 # Set working directory to where your API.py is
 WORKDIR /app/src

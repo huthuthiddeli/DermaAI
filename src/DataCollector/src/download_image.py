@@ -14,7 +14,7 @@ import cv2
 assert len(sys.argv) > 1, "No arguments given!"
 
 # PRODUCTION LINKG
-URL = "http://localhost:3333/picture/picture"
+URL = "http://node-app:3333/picture/picture"
 
 # DEV LINK
 # URL = "http://localhost:3333/picture/picture"
