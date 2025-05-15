@@ -1,0 +1,144 @@
+{
+  "groups": [
+    {
+      "group": "Vision Models",
+      "description": "Diese Modelle sind speziell darauf ausgelegt, Bilder zu analysieren und zu klassifizieren. Sie kommen häufig in Bereichen wie Bilderkennung, medizinischer Bildanalyse oder Produkterkennung zum Einsatz und liefern besonders genaue Ergebnisse.",
+      "models": [
+        {
+          "name": "AlexNet",
+          "description": "AlexNet ist ein bahnbrechendes Bildklassifikationsmodell, das Bilder zuverlässig in Klassen einordnet. Es ist besonders gut für allgemeine Aufgaben geeignet. Verlässlich für Standardbilder."
+        },
+        {
+          "name": "ConvNeXt",
+          "description": "ConvNeXt kombiniert klassische Methoden mit neuen Ansätzen für moderne Bildanalyse. Es erkennt sehr genau visuelle Muster. Sehr verlässlich."
+        },
+        {
+          "name": "DenseNet",
+          "description": "DenseNet analysiert Bilder besonders genau, indem es Informationen effizient weitergibt. Gut für komplexe visuelle Inhalte. Sehr verlässlich."
+        },
+        {
+          "name": "EfficientNet",
+          "description": "EfficientNet-Modelle bieten ein hervorragendes Gleichgewicht zwischen Genauigkeit und Effizienz. Ideal für leistungsstarke Bildanalysen. Sehr verlässlich."
+        },
+        {
+          "name": "GoogLeNet",
+          "description": "GoogLeNet nutzt ein intelligentes Netzwerkdesign, um Bilder effizient zu analysieren. Verlässlich bei allgemeinen Klassifikationsaufgaben."
+        },
+        {
+          "name": "Inception v3",
+          "description": "Inception v3 erkennt feine Bildunterschiede und ist ideal für anspruchsvolle Bildklassifikation. Sehr verlässlich."
+        },
+        {
+          "name": "RegNet",
+          "description": "RegNet ist ein flexibles Modell, das über eine breite Skala hinweg gute Leistung liefert. Verlässlich in verschiedenen Szenarien."
+        },
+        {
+          "name": "ResNet",
+          "description": "ResNet analysiert Bilder sehr tiefgehend und erkennt auch kleinste Details. Es gehört zu den robustesten Modellen. Sehr verlässlich."
+        },
+        {
+          "name": "ResNeXt",
+          "description": "ResNeXt ist eine optimierte Variante von ResNet und bietet höhere Effizienz bei gleichbleibend hoher Genauigkeit. Sehr verlässlich."
+        },
+        {
+          "name": "VGG",
+          "description": "VGG ist ein einfaches, aber bewährtes Modell für die Bildklassifikation. Verlässlich bei Standardbildern."
+        },
+        {
+          "name": "Xception",
+          "description": "Xception kombiniert tiefe Bildanalyse mit hoher Effizienz. Besonders geeignet für anspruchsvolle Bildklassifikation. Sehr verlässlich."
+        }
+      ]
+    },
+    {
+      "group": "Lightweight Models",
+      "description": "Diese Modelle sind besonders ressourcenschonend und daher ideal für mobile Geräte, eingebettete Systeme oder Web-Anwendungen. Sie bieten gute Leistung bei minimalem Speicher- und Rechenbedarf.",
+      "models": [
+        {
+          "name": "MobileNetV2",
+          "description": "MobileNetV2 ist ein kompaktes Modell für mobile und eingebettete Systeme. Es liefert solide Ergebnisse bei geringem Ressourcenverbrauch. Verlässlich."
+        },
+        {
+          "name": "MobileNetV3",
+          "description": "MobileNetV3 verbessert die Genauigkeit gegenüber dem Vorgänger und ist weiterhin sehr effizient. Verlässlich für vielfältige mobile Anwendungen."
+        },
+        {
+          "name": "ShuffleNetV2",
+          "description": "ShuffleNetV2 ist auf Schnelligkeit optimiert und eignet sich gut für mobile Anwendungen. Verlässlich bei einfachen Aufgaben."
+        },
+        {
+          "name": "SqueezeNet",
+          "description": "SqueezeNet ist extrem kompakt und schnell. Gut geeignet für Anwendungen mit begrenzten Ressourcen. Eingeschränkt verlässlich bei komplexen Bildern."
+        },
+        {
+          "name": "MNASNet",
+          "description": "MNASNet ist ein effizientes Modell für mobile Geräte. Es bietet gute Genauigkeit bei geringem Rechenaufwand. Verlässlich bei einfachen Aufgaben."
+        },
+        {
+          "name": "Sequential CNN",
+          "description": "Ein einfaches, schrittweises Modell für Bildanalysen. Gut für typische Klassifikationsaufgaben. Verlässlich für grundlegende Szenarien."
+        }
+      ]
+    },
+    {
+      "group": "Transformer Models",
+      "description": "Diese modernen Modelle nutzen Konzepte aus der Sprachverarbeitung und sind besonders stark darin, Bildinhalte kontextbezogen zu verstehen. Sie bieten exzellente Genauigkeit bei komplexen und vielfältigen Aufgaben.",
+      "models": [
+        {
+          "name": "Vision Transformer",
+          "description": "Der Vision Transformer betrachtet Bilder wie Textblöcke und analysiert sie besonders präzise. Ideal für komplexe Aufgaben. Sehr verlässlich."
+        },
+        {
+          "name": "Swin Transformer",
+          "description": "Swin Transformer analysiert Bilder in Teilen und liefert hervorragende Ergebnisse bei sehr komplexen Aufgaben. Hoch verlässlich."
+        },
+        {
+          "name": "MaxVit",
+          "description": "MaxVit kombiniert klassische und moderne KI-Techniken zur sehr genauen Analyse visueller Inhalte. Hoch verlässlich."
+        }
+      ]
+    },
+    {
+      "group": "Classic ML Models",
+      "description": "Diese Modelle stammen aus dem klassischen Machine Learning und kommen oft bei strukturierten Daten oder kleineren Datensätzen zum Einsatz. Sie sind schnell, interpretierbar und in vielen Szenarien eine solide Wahl.",
+      "models": [
+        {
+          "name": "KNeighborsClassifier",
+          "description": "Dieses Modell klassifiziert neue Daten, indem es sie mit bekannten Beispielen vergleicht. Einfach, verständlich und verlässlich bei kleinen Datensätzen."
+        },
+        {
+          "name": "SVC (linear)",
+          "description": "Ein Modell, das klare Trennlinien zwischen Gruppen zieht. Gut für einfach strukturierte Daten. Verlässlich bei klaren Klassifikationen."
+        },
+        {
+          "name": "SVC (RBF)",
+          "description": "Diese Version erkennt auch nicht-lineare Zusammenhänge. Sie ist flexibel und sehr genau. Hoch verlässlich."
+        },
+        {
+          "name": "GaussianProcessClassifier",
+          "description": "Dieses Modell arbeitet probabilistisch und ist besonders gut bei Unsicherheit und kleinen Datenmengen. Verlässlich, aber rechnerisch aufwendig."
+        },
+        {
+          "name": "DecisionTreeClassifier",
+          "description": "Entscheidungsbäume klassifizieren Daten durch einfache Regeln. Verständlich, aber bei neuen Daten manchmal ungenau. Mäßig verlässlich."
+        },
+        {
+          "name": "RandomForestClassifier",
+          "description": "Ein Zusammenspiel vieler Entscheidungsbäume führt zu stabilen Vorhersagen. Sehr verlässlich."
+        },
+        {
+          "name": "MLPClassifier",
+          "description": "Ein künstliches neuronales Netz, das Muster erkennt. Vielseitig einsetzbar. Verlässlich mit ausreichend Daten."
+        },
+        {
+          "name": "AdaBoostClassifier",
+          "description": "Dieses Modell kombiniert viele einfache Modelle zu einem starken Gesamtmodell. Verlässlich, aber empfindlich gegenüber Ausreißern."
+        },
+        {
+          "name": "GaussianNB",
+          "description": "Ein einfaches probabilistisches Modell, das schnell arbeitet. Gut bei klaren Daten, aber eingeschränkt verlässlich bei komplexen Mustern."
+        }
+      ]
+    }
+  ]
+}
