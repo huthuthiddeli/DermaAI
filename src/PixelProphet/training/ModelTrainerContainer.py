@@ -87,11 +87,9 @@ class ModelTrainerContainer     :
         base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "test"))
         file_path = os.path.join(base_dir, "IMAGES1.images.json")
 
-        # Prüfen, ob die Datei existiert
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"File not found: {file_path}")
 
-        # Lade die Datei
         dataset = loadImagesAs1DVectorFromJson(file_path, reshape_size)
         #dataset = loadImagesAs1DVectorFromAPI(self.api_base_url + "/picture/picture", reshape_size)
         return dataset
